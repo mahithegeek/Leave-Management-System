@@ -1,0 +1,11 @@
+{
+  "name": "LMS-Server",
+  "version": "1.0.0",
+  "private": true,
+  "description" : "Leave Management Server for Kofax Server",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "*",
+    "mysql": "*"
+  }
+}
