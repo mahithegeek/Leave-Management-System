@@ -8,11 +8,11 @@ var pool;
 function Storage() {
      pool      =    mysql.createPool({
       connectionLimit : 100, //important
-      host     : 'localhost',
-      port : '8889',
-      user     : 'root',
-      password : 'root',
-      database : 'LMS',
+      host     : 'localhost', // use your own
+      port : 'XXXX',          //use your own port
+      user     : 'username',  //use your own
+      password : 'password',  //use your own
+      database : 'Your DB',
       debug    :  false
   });
 

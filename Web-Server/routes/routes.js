@@ -11,8 +11,7 @@ var appRouter = function(app) {
 
 	app.use(function (req,res,next){
 
-		res.setHeader('Access-Control-Allow-Origin', 'http://172.26.34.33:1111','http://localhost:1111');
-		//res.setHeader('Access-Control-Allow-Origin', 'http://localhost:1111');
+		res.setHeader('Access-Control-Allow-Origin', 'your host');
 		res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 		res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Accept');
 		next();
