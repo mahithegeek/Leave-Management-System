@@ -27,7 +27,8 @@ InternalWebService.prototype.getAvailableLeaves = function (req,response) {
 InternalWebService.prototype.applyLeave = function (req,response) {
 	if(utils.validateDate(req.body.fromDate) && utils.validateDate(req.body.toDate)) {
 		console.log("dates are valid");
-		response.send ( "successfully applied");
+		sqlHandle.insertLeaves (function (success){response.send ( "successfully applied");},function (error){response.send ( error);},req.body);
+		
 	}
 	else {
 		response.send ("Invalid dates");
