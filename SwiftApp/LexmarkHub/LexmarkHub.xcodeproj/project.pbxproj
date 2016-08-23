@@ -1,0 +1,680 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1BE8553F1D6C703500BEAE45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE8553E1D6C703500BEAE45 /* AppDelegate.swift */; };
+		1BE855411D6C703500BEAE45 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855401D6C703500BEAE45 /* ViewController.swift */; };
+		1BE855441D6C703500BEAE45 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BE855421D6C703500BEAE45 /* Main.storyboard */; };
+		1BE855471D6C703500BEAE45 /* LexmarkHub.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855451D6C703500BEAE45 /* LexmarkHub.xcdatamodeld */; };
+		1BE855491D6C703500BEAE45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BE855481D6C703500BEAE45 /* Assets.xcassets */; };
+		1BE8554C1D6C703500BEAE45 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BE8554A1D6C703500BEAE45 /* LaunchScreen.storyboard */; };
+		1BE855571D6C703500BEAE45 /* LexmarkHubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855561D6C703500BEAE45 /* LexmarkHubTests.swift */; };
+		1BE855621D6C703500BEAE45 /* LexmarkHubUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855611D6C703500BEAE45 /* LexmarkHubUITests.swift */; };
+		1BE855941D6C729A00BEAE45 /* LeaveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855801D6C729A00BEAE45 /* LeaveManager.swift */; };
+		1BE855951D6C729A00BEAE45 /* ServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855811D6C729A00BEAE45 /* ServerManager.swift */; };
+		1BE855961D6C729A00BEAE45 /* Leave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855841D6C729A00BEAE45 /* Leave.swift */; };
+		1BE855971D6C729A00BEAE45 /* LeaveRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855851D6C729A00BEAE45 /* LeaveRequest.swift */; };
+		1BE855981D6C729A00BEAE45 /* LHCallBacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855901D6C729A00BEAE45 /* LHCallBacks.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1BE855531D6C703500BEAE45 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1BE855331D6C703400BEAE45 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1BE8553A1D6C703400BEAE45;
+			remoteInfo = LexmarkHub;
+		};
+		1BE8555E1D6C703500BEAE45 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1BE855331D6C703400BEAE45 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1BE8553A1D6C703400BEAE45;
+			remoteInfo = LexmarkHub;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1BE8553B1D6C703400BEAE45 /* LexmarkHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LexmarkHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1BE8553E1D6C703500BEAE45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		1BE855401D6C703500BEAE45 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1BE855431D6C703500BEAE45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1BE855461D6C703500BEAE45 /* LexmarkHub.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LexmarkHub.xcdatamodel; sourceTree = "<group>"; };
+		1BE855481D6C703500BEAE45 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1BE8554B1D6C703500BEAE45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1BE8554D1D6C703500BEAE45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1BE855521D6C703500BEAE45 /* LexmarkHubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LexmarkHubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1BE855561D6C703500BEAE45 /* LexmarkHubTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LexmarkHubTests.swift; sourceTree = "<group>"; };
+		1BE855581D6C703500BEAE45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1BE8555D1D6C703500BEAE45 /* LexmarkHubUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LexmarkHubUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1BE855611D6C703500BEAE45 /* LexmarkHubUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LexmarkHubUITests.swift; sourceTree = "<group>"; };
+		1BE855631D6C703500BEAE45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1BE855801D6C729A00BEAE45 /* LeaveManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveManager.swift; sourceTree = "<group>"; };
+		1BE855811D6C729A00BEAE45 /* ServerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerManager.swift; sourceTree = "<group>"; };
+		1BE855841D6C729A00BEAE45 /* Leave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Leave.swift; sourceTree = "<group>"; };
+		1BE855851D6C729A00BEAE45 /* LeaveRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveRequest.swift; sourceTree = "<group>"; };
+		1BE855901D6C729A00BEAE45 /* LHCallBacks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHCallBacks.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1BE855381D6C703400BEAE45 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1BE8554F1D6C703500BEAE45 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1BE8555A1D6C703500BEAE45 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1BE855321D6C703400BEAE45 = {
+			isa = PBXGroup;
+			children = (
+				1BE8553D1D6C703500BEAE45 /* LexmarkHub */,
+				1BE855551D6C703500BEAE45 /* LexmarkHubTests */,
+				1BE855601D6C703500BEAE45 /* LexmarkHubUITests */,
+				1BE8553C1D6C703400BEAE45 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1BE8553C1D6C703400BEAE45 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1BE8553B1D6C703400BEAE45 /* LexmarkHub.app */,
+				1BE855521D6C703500BEAE45 /* LexmarkHubTests.xctest */,
+				1BE8555D1D6C703500BEAE45 /* LexmarkHubUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1BE8553D1D6C703500BEAE45 /* LexmarkHub */ = {
+			isa = PBXGroup;
+			children = (
+				1BE8557E1D6C729A00BEAE45 /* ExternalLibraries */,
+				1BE8557F1D6C729A00BEAE45 /* Managers */,
+				1BE855821D6C729A00BEAE45 /* Models */,
+				1BE855861D6C729A00BEAE45 /* PresentationLayer */,
+				1BE8558D1D6C729A00BEAE45 /* Utilities */,
+				1BE8553E1D6C703500BEAE45 /* AppDelegate.swift */,
+				1BE855401D6C703500BEAE45 /* ViewController.swift */,
+				1BE855421D6C703500BEAE45 /* Main.storyboard */,
+				1BE855481D6C703500BEAE45 /* Assets.xcassets */,
+				1BE8554A1D6C703500BEAE45 /* LaunchScreen.storyboard */,
+				1BE8554D1D6C703500BEAE45 /* Info.plist */,
+				1BE855451D6C703500BEAE45 /* LexmarkHub.xcdatamodeld */,
+			);
+			path = LexmarkHub;
+			sourceTree = "<group>";
+		};
+		1BE855551D6C703500BEAE45 /* LexmarkHubTests */ = {
+			isa = PBXGroup;
+			children = (
+				1BE855561D6C703500BEAE45 /* LexmarkHubTests.swift */,
+				1BE855581D6C703500BEAE45 /* Info.plist */,
+			);
+			path = LexmarkHubTests;
+			sourceTree = "<group>";
+		};
+		1BE855601D6C703500BEAE45 /* LexmarkHubUITests */ = {
+			isa = PBXGroup;
+			children = (
+				1BE855611D6C703500BEAE45 /* LexmarkHubUITests.swift */,
+				1BE855631D6C703500BEAE45 /* Info.plist */,
+			);
+			path = LexmarkHubUITests;
+			sourceTree = "<group>";
+		};
+		1BE8557E1D6C729A00BEAE45 /* ExternalLibraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ExternalLibraries;
+			sourceTree = "<group>";
+		};
+		1BE8557F1D6C729A00BEAE45 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				1BE855801D6C729A00BEAE45 /* LeaveManager.swift */,
+				1BE855811D6C729A00BEAE45 /* ServerManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		1BE855821D6C729A00BEAE45 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1BE855831D6C729A00BEAE45 /* AppModels */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		1BE855831D6C729A00BEAE45 /* AppModels */ = {
+			isa = PBXGroup;
+			children = (
+				1BE855841D6C729A00BEAE45 /* Leave.swift */,
+				1BE855851D6C729A00BEAE45 /* LeaveRequest.swift */,
+			);
+			path = AppModels;
+			sourceTree = "<group>";
+		};
+		1BE855861D6C729A00BEAE45 /* PresentationLayer */ = {
+			isa = PBXGroup;
+			children = (
+				1BE855871D6C729A00BEAE45 /* CustomCells */,
+				1BE855881D6C729A00BEAE45 /* ViewControllers */,
+				1BE8558C1D6C729A00BEAE45 /* Views */,
+			);
+			path = PresentationLayer;
+			sourceTree = "<group>";
+		};
+		1BE855871D6C729A00BEAE45 /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CustomCells;
+			sourceTree = "<group>";
+		};
+		1BE855881D6C729A00BEAE45 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				1BE855891D6C729A00BEAE45 /* Dashboard */,
+				1BE8558A1D6C729A00BEAE45 /* Leaves */,
+				1BE8558B1D6C729A00BEAE45 /* Login */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		1BE855891D6C729A00BEAE45 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		1BE8558A1D6C729A00BEAE45 /* Leaves */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Leaves;
+			sourceTree = "<group>";
+		};
+		1BE8558B1D6C729A00BEAE45 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		1BE8558C1D6C729A00BEAE45 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1BE8558D1D6C729A00BEAE45 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				1BE8558E1D6C729A00BEAE45 /* AppUtilities */,
+				1BE8558F1D6C729A00BEAE45 /* CallBacks */,
+				1BE855911D6C729A00BEAE45 /* ErrorLog */,
+				1BE855921D6C729A00BEAE45 /* Extensions */,
+				1BE855931D6C729A00BEAE45 /* Threading */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		1BE8558E1D6C729A00BEAE45 /* AppUtilities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AppUtilities;
+			sourceTree = "<group>";
+		};
+		1BE8558F1D6C729A00BEAE45 /* CallBacks */ = {
+			isa = PBXGroup;
+			children = (
+				1BE855901D6C729A00BEAE45 /* LHCallBacks.swift */,
+			);
+			path = CallBacks;
+			sourceTree = "<group>";
+		};
+		1BE855911D6C729A00BEAE45 /* ErrorLog */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ErrorLog;
+			sourceTree = "<group>";
+		};
+		1BE855921D6C729A00BEAE45 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1BE855931D6C729A00BEAE45 /* Threading */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Threading;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1BE8553A1D6C703400BEAE45 /* LexmarkHub */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1BE855661D6C703500BEAE45 /* Build configuration list for PBXNativeTarget "LexmarkHub" */;
+			buildPhases = (
+				1BE855371D6C703400BEAE45 /* Sources */,
+				1BE855381D6C703400BEAE45 /* Frameworks */,
+				1BE855391D6C703400BEAE45 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LexmarkHub;
+			productName = LexmarkHub;
+			productReference = 1BE8553B1D6C703400BEAE45 /* LexmarkHub.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1BE855511D6C703500BEAE45 /* LexmarkHubTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1BE855691D6C703500BEAE45 /* Build configuration list for PBXNativeTarget "LexmarkHubTests" */;
+			buildPhases = (
+				1BE8554E1D6C703500BEAE45 /* Sources */,
+				1BE8554F1D6C703500BEAE45 /* Frameworks */,
+				1BE855501D6C703500BEAE45 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1BE855541D6C703500BEAE45 /* PBXTargetDependency */,
+			);
+			name = LexmarkHubTests;
+			productName = LexmarkHubTests;
+			productReference = 1BE855521D6C703500BEAE45 /* LexmarkHubTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		1BE8555C1D6C703500BEAE45 /* LexmarkHubUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1BE8556C1D6C703500BEAE45 /* Build configuration list for PBXNativeTarget "LexmarkHubUITests" */;
+			buildPhases = (
+				1BE855591D6C703500BEAE45 /* Sources */,
+				1BE8555A1D6C703500BEAE45 /* Frameworks */,
+				1BE8555B1D6C703500BEAE45 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1BE8555F1D6C703500BEAE45 /* PBXTargetDependency */,
+			);
+			name = LexmarkHubUITests;
+			productName = LexmarkHubUITests;
+			productReference = 1BE8555D1D6C703500BEAE45 /* LexmarkHubUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1BE855331D6C703400BEAE45 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = kofax;
+				TargetAttributes = {
+					1BE8553A1D6C703400BEAE45 = {
+						CreatedOnToolsVersion = 7.3.1;
+					};
+					1BE855511D6C703500BEAE45 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 1BE8553A1D6C703400BEAE45;
+					};
+					1BE8555C1D6C703500BEAE45 = {
+						CreatedOnToolsVersion = 7.3.1;
+						TestTargetID = 1BE8553A1D6C703400BEAE45;
+					};
+				};
+			};
+			buildConfigurationList = 1BE855361D6C703400BEAE45 /* Build configuration list for PBXProject "LexmarkHub" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1BE855321D6C703400BEAE45;
+			productRefGroup = 1BE8553C1D6C703400BEAE45 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1BE8553A1D6C703400BEAE45 /* LexmarkHub */,
+				1BE855511D6C703500BEAE45 /* LexmarkHubTests */,
+				1BE8555C1D6C703500BEAE45 /* LexmarkHubUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1BE855391D6C703400BEAE45 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BE8554C1D6C703500BEAE45 /* LaunchScreen.storyboard in Resources */,
+				1BE855491D6C703500BEAE45 /* Assets.xcassets in Resources */,
+				1BE855441D6C703500BEAE45 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1BE855501D6C703500BEAE45 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1BE8555B1D6C703500BEAE45 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1BE855371D6C703400BEAE45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BE855981D6C729A00BEAE45 /* LHCallBacks.swift in Sources */,
+				1BE855951D6C729A00BEAE45 /* ServerManager.swift in Sources */,
+				1BE855961D6C729A00BEAE45 /* Leave.swift in Sources */,
+				1BE855471D6C703500BEAE45 /* LexmarkHub.xcdatamodeld in Sources */,
+				1BE855941D6C729A00BEAE45 /* LeaveManager.swift in Sources */,
+				1BE855411D6C703500BEAE45 /* ViewController.swift in Sources */,
+				1BE8553F1D6C703500BEAE45 /* AppDelegate.swift in Sources */,
+				1BE855971D6C729A00BEAE45 /* LeaveRequest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1BE8554E1D6C703500BEAE45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BE855571D6C703500BEAE45 /* LexmarkHubTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1BE855591D6C703500BEAE45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1BE855621D6C703500BEAE45 /* LexmarkHubUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1BE855541D6C703500BEAE45 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1BE8553A1D6C703400BEAE45 /* LexmarkHub */;
+			targetProxy = 1BE855531D6C703500BEAE45 /* PBXContainerItemProxy */;
+		};
+		1BE8555F1D6C703500BEAE45 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1BE8553A1D6C703400BEAE45 /* LexmarkHub */;
+			targetProxy = 1BE8555E1D6C703500BEAE45 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1BE855421D6C703500BEAE45 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1BE855431D6C703500BEAE45 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1BE8554A1D6C703500BEAE45 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1BE8554B1D6C703500BEAE45 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1BE855641D6C703500BEAE45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1BE855651D6C703500BEAE45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1BE855671D6C703500BEAE45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = LexmarkHub/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kofax.LexmarkHub;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1BE855681D6C703500BEAE45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = LexmarkHub/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kofax.LexmarkHub;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		1BE8556A1D6C703500BEAE45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = LexmarkHubTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kofax.LexmarkHubTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LexmarkHub.app/LexmarkHub";
+			};
+			name = Debug;
+		};
+		1BE8556B1D6C703500BEAE45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = LexmarkHubTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kofax.LexmarkHubTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LexmarkHub.app/LexmarkHub";
+			};
+			name = Release;
+		};
+		1BE8556D1D6C703500BEAE45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = LexmarkHubUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kofax.LexmarkHubUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = LexmarkHub;
+			};
+			name = Debug;
+		};
+		1BE8556E1D6C703500BEAE45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = LexmarkHubUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kofax.LexmarkHubUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = LexmarkHub;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1BE855361D6C703400BEAE45 /* Build configuration list for PBXProject "LexmarkHub" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1BE855641D6C703500BEAE45 /* Debug */,
+				1BE855651D6C703500BEAE45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1BE855661D6C703500BEAE45 /* Build configuration list for PBXNativeTarget "LexmarkHub" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1BE855671D6C703500BEAE45 /* Debug */,
+				1BE855681D6C703500BEAE45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		1BE855691D6C703500BEAE45 /* Build configuration list for PBXNativeTarget "LexmarkHubTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1BE8556A1D6C703500BEAE45 /* Debug */,
+				1BE8556B1D6C703500BEAE45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		1BE8556C1D6C703500BEAE45 /* Build configuration list for PBXNativeTarget "LexmarkHubUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1BE8556D1D6C703500BEAE45 /* Debug */,
+				1BE8556E1D6C703500BEAE45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1BE855451D6C703500BEAE45 /* LexmarkHub.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1BE855461D6C703500BEAE45 /* LexmarkHub.xcdatamodel */,
+			);
+			currentVersion = 1BE855461D6C703500BEAE45 /* LexmarkHub.xcdatamodel */;
+			path = LexmarkHub.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 1BE855331D6C703400BEAE45 /* Project object */;
+}
