@@ -1,12 +1,14 @@
 var store = require("./storage.js");
-var utils = require("./Utilities.js");
-var sqlHandle,utils;
+var utilities = require("./Utilities.js");
+var authentication = require("./OAuth2.js");
+var sqlHandle,utils,auth;
 
 //empty constructor
 function InternalWebService (){
 
 	sqlHandle = new store ();
-	utils = new utils ();
+	utils = new utilities ();
+	auth = new authentication ();
 }
 
 //To DO just check the credentials and see if this is a legitimate request
@@ -34,6 +36,11 @@ InternalWebService.prototype.applyLeave = function (req,response) {
 		response.send ("Invalid dates");
 	}
 };
+
+InternalWebService.prototype.login = function (req, response) {
+
+	auth.verifyTokenID (req.body.tokenID,function(success){console.log("success");response.send("verified id");},function(error){response.send ("some error");});
+}
 
 module.exports = InternalWebService;
 
