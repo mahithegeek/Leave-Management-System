@@ -32,6 +32,11 @@ var appRouter = function(app) {
 		internalServices.applyLeave (req,response);
 	});
 
+	app.post("/login",function (req,response) {
+
+		internalServices.login (req,response);
+	});
+
 	function validateDate (date) {
 		//console.log("received date" + date);
 		var tempDate = new Date (date);
