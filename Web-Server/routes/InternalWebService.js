@@ -28,7 +28,6 @@ InternalWebService.prototype.getAvailableLeaves = function (req,response) {
 
 InternalWebService.prototype.applyLeave = function (req,response) {
 	if(utils.validateDate(req.body.fromDate) && utils.validateDate(req.body.toDate)) {
-		console.log("dates are valid");
 		sqlHandle.insertLeaves (function (success){response.send ( "successfully applied");},function (error){response.send ( error);},req.body);
 		
 	}
@@ -39,7 +38,23 @@ InternalWebService.prototype.applyLeave = function (req,response) {
 
 InternalWebService.prototype.login = function (req, response) {
 
-	auth.verifyTokenID (req.body.tokenID,function(success){console.log("success");response.send("verified id");},function(error){response.send ("some error");});
+	var successCallback = function (tokenEmail) {
+		
+		var verifyResponse = function(success){
+			if(success){
+				response.send ("Successfully Logged In");
+			}
+			else {
+				response.send ("Unable to Find the User");
+			}
+		};
+		validateEmailFromOAuthToken(tokenEmail,verifyResponse);
+	};
+	auth.verifyTokenID (req.body.tokenID,successCallback,function(error){response.send (error);});
+}
+
+function validateEmailFromOAuthToken (tokenEmail,successCallback) {
+	sqlHandle.verifyUserExists (tokenEmail,successCallback);
 }
 
 module.exports = InternalWebService;
