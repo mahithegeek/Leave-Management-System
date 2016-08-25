@@ -1,10 +1,8 @@
 
-
-
 var mysql = require('mysql');
-var utils = require("./Utilities.js");
+var utilities = require("./Utilities.js");
 
-var pool;
+var pool,utils;
 
 function Storage() {
      pool      =    mysql.createPool({
@@ -17,7 +15,7 @@ function Storage() {
       debug    :  false
   });
 
-     utils = new utils ();
+    utils = new utilities();
 
 }
 
@@ -144,6 +142,11 @@ Storage.prototype.verifyUserExists = function verifyUserExists (userEmail,callba
     runSqlQuery(queryString,userEmail,verifyUserCallback);
 };
 
+Storage.prototype.fetchUser = function fetchUser(userEmail,callback) {
+    var queryString = "SELECT 1 FROM user WHERE auth_email = '" + userEmail + "'";
+    runSqlQuery (queryString,callback);
+};
+
 
 function runSqlQuery (sqlQueryString,sqlDataObject,callback) {
   pool.getConnection(function(err,connection){
@@ -157,11 +160,13 @@ function runSqlQuery (sqlQueryString,sqlDataObject,callback) {
             if(!err) {
                 console.log(result);
                 callback(null,result) ;
+                return;
                 
             }
             else{
               console.log (err);
               callback (err,null);
+              return;
             }           
         });
 

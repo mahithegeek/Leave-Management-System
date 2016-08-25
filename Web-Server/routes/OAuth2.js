@@ -12,7 +12,8 @@ function OAuth2 (){
 OAuth2.prototype.verifyTokenID = function (tokenID,callback) {
 
 	//TODO put more stricter verification and validation
-	if(!tokenID){
+	if(!tokenID || typeof tokenID === 'undefined'){
+		console.log("token ID is " + tokenID);
 		callback("Invalid Token ID",null);
 		return;
 	}
