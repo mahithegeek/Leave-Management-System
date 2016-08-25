@@ -1,7 +1,8 @@
+var roleResolver = require("./roleresolver.js");
 var store = require("./storage.js");
 var utilities = require("./Utilities.js");
 var authentication = require("./OAuth2.js");
-var sqlHandle,utils,auth;
+var sqlHandle,utils,auth,role;
 
 //empty constructor
 function InternalWebService (){
@@ -9,11 +10,32 @@ function InternalWebService (){
 	sqlHandle = new store ();
 	utils = new utilities ();
 	auth = new authentication ();
+	role = new roleResolver();
 }
 
 //To DO just check the credentials and see if this is a legitimate request
 InternalWebService.prototype.getUsers = function getUsers (req,response) {
 	
+	var tokenCallback = function (err,email){
+		if(err == null){
+			var roleCallback = function (err,role){
+			if(role == 2 || role == 3) {
+				internalGetUsers (req,response);
+			}
+		 };
+			role.fetchRole (email, roleCallback);
+		}
+		else {
+			console.log (err);
+			response.send(err);
+		}
+		
+	};
+
+	verifyTokenID (req.body.tokenID,tokenCallback);	
+};
+
+function internalGetUsers (req,response) {
 	var callback = function (err,data) {
 		if(err == null){
 			response.send (JSON.stringify(data));
@@ -23,7 +45,7 @@ InternalWebService.prototype.getUsers = function getUsers (req,response) {
 		}
 	}
 	sqlHandle.getUserInfo(callback);
-};
+}
 
 InternalWebService.prototype.getAvailableLeaves = function (req,response) {
 	//TO-DO check if this is valid
@@ -75,15 +97,17 @@ InternalWebService.prototype.login = function (req, response) {
 				response.send ("Unable to Find the User");
 			}
 		};
-
 			validateEmailFromOAuthToken(tokenEmail,verifyResponse);
-
 		}
 		else {
 			response.send(err);
 		}
 	};
-	auth.verifyTokenID (req.body.tokenID,callback);
+	verifyTokenID (req.body.tokenID,callback);
+};
+
+function verifyTokenID (tokenID,callback) {
+	auth.verifyTokenID (tokenID,callback);
 }
 
 function validateEmailFromOAuthToken (tokenEmail,callback) {
