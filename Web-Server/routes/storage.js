@@ -21,22 +21,25 @@ function Storage() {
 
 }
 
-Storage.prototype.getUserInfo = function getUserInfo (successCallback,errorCallback) {
+Storage.prototype.getUserInfo = function getUserInfo (callback) {
 
   pool.getConnection(function(err,connection){
         if (err) {
           res({"code" : 100, "status" : "Error in database connection "});
           return;
         }   
-
-        console.log('connected as id ' + connection.threadId);
-        
         connection.query("select availability.available,user.first_name,user.emp_id,user.email from availability INNER JOIN user ON availability.emp_id = user.emp_id",function(err,rows){
             connection.release();
             if(!err) {
                 console.log(rows);
-                successCallback(rows) ;
-            }           
+                callback(null,rows) ;
+                return;
+            }  
+            else {
+              console.log("error");
+              callback(err,null);
+              return;
+            }         
         });
 
         connection.on('error', function(err) {      
@@ -46,21 +49,24 @@ Storage.prototype.getUserInfo = function getUserInfo (successCallback,errorCallb
   });
 };
 
-Storage.prototype.getAvailableLeaves = function getAvailableLeaves (successCallback,errorCallback,EmployeeID) {
+Storage.prototype.getAvailableLeaves = function getAvailableLeaves (EmployeeID,callback) {
 
     pool.getConnection(function(err,connection){
         if (err) {
           res({"code" : 100, "status" : "Error in database connection "});
           return;
         }   
-
-        console.log('connected as id ' + connection.threadId);
         
         connection.query("select * from availability where emp_id = ?",EmployeeID,function(err,rows){
             connection.release();
             if(!err) {
-                successCallback(rows) ;
-            }           
+                callback(null,rows) ;
+                return;
+            }          
+            else {
+              callback(err,null);
+              return;
+            } 
         });
 
         connection.on('error', function(err) {      
@@ -70,7 +76,7 @@ Storage.prototype.getAvailableLeaves = function getAvailableLeaves (successCallb
   });
 };
 
-Storage.prototype.insertLeaves = function insertLeaves (successCallback,errorCallback,leaveRequest) {
+Storage.prototype.insertLeaves = function insertLeaves (leaveRequest,callback) {
 
    var queryString = "INSERT INTO leaves SET date_from = ?, date_to = ?,half_Day = ?,applied_on = ?,status_id = (SELECT id FROM status WHERE status = 'Applied'),emp_id = ?, type_id = ?";
    
@@ -79,7 +85,7 @@ Storage.prototype.insertLeaves = function insertLeaves (successCallback,errorCal
         var dbRequestObject = {date_from : leaveRequest.fromDate,date_to : leaveRequest.toDate, half_Day : 1,applied_on : date, status_id : 0,type_id : leaveRequest.typeid,emp_id : leaveRequest.emp_id};
         var dataObject = [dbRequestObject.date_from,dbRequestObject.date_to,dbRequestObject.half_Day,dbRequestObject.applied_on,9526,1];
 
-        runSqlQuery(queryString,dataObject,successCallback,errorCallback);
+        runSqlQuery(queryString,dataObject,callback);
 
    /*
    pool.getConnection(function(err,connection){
@@ -118,27 +124,28 @@ Storage.prototype.insertLeaves = function insertLeaves (successCallback,errorCal
         */
   };
 
-Storage.prototype.verifyUserExists = function verifyUserExists (userEmail,callBack) {
+Storage.prototype.verifyUserExists = function verifyUserExists (userEmail,callback) {
     var queryString = "SELECT 1 FROM user WHERE auth_email = '"+userEmail+"' ORDER BY auth_email LIMIT 1";
 
-    var verifyUserCallback = function (rows) {
-        if(rows.length > 0){
-           callBack(true);
+    var verifyUserCallback = function (err,rows) {
+        if(err == null){
+            if(rows.length > 0){
+           callback(null,true);
+          }
+          else {
+            callback(null,false);
+          }
         }
         else {
-          callBack(false);
+          callback(err,null);
         }
+        
     };
-
-    var errorCallback = function (error){
-      //nothing to send back 
-      console.log("verifyUserExists error"+error);
-    }
-    runSqlQuery(queryString,userEmail,verifyUserCallback,function(error){});
+    runSqlQuery(queryString,userEmail,verifyUserCallback);
 };
 
 
-function runSqlQuery (sqlQueryString,sqlDataObject,successCallback,errorCallback) {
+function runSqlQuery (sqlQueryString,sqlDataObject,callback) {
   pool.getConnection(function(err,connection){
         if (err) {
           res({"code" : 100, "status" : "Error in database connection "});
@@ -149,12 +156,12 @@ function runSqlQuery (sqlQueryString,sqlDataObject,successCallback,errorCallback
             connection.release();
             if(!err) {
                 console.log(result);
-                successCallback(result) ;
+                callback(null,result) ;
                 
             }
             else{
               console.log (err);
-              errorCallback (err);
+              callback (err,null);
             }           
         });
 

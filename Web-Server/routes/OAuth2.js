@@ -9,16 +9,16 @@ function OAuth2 (){
 	
 }
 
-OAuth2.prototype.verifyTokenID = function (tokenID,sucessCallback,errorCallback) {
+OAuth2.prototype.verifyTokenID = function (tokenID,callback) {
 
 	//TODO put more stricter verification and validation
 	if(!tokenID){
-		errorCallback("Invalid Token ID");
+		callback("Invalid Token ID",null);
 		return;
 	}
 
 	//console.log ("token id is"+tokenID);
-	validateTokenUsingLib(tokenID,sucessCallback,errorCallback);
+	validateTokenUsingLib(tokenID,callback);
 
 };
 
@@ -69,19 +69,19 @@ function validateGoogleAuthResponse (response) {
 	}
 }
 
-function validateTokenUsingLib (tokenID,sucessCallback,errorCallback) {
+function validateTokenUsingLib (tokenID,callback) {
 	//hardcoded client ID for now - is it good to take this from client??
 	var clientId = '407408718192.apps.googleusercontent.com';
 
 	tokenVerifier.verify (tokenID,clientId,function (error, tokenInfo){
 		if(!error){
 			console.log ("Successfully validated token" + tokenInfo.email);
-			sucessCallback (tokenInfo.email);
+			callback (null,tokenInfo.email);
 			return;
 		}
 		else {
 			console.log ("error is " + error);
-			errorCallback(error);
+			callback(error,null);
 			return;
 		}
 
