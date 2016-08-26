@@ -8,6 +8,6 @@
 
 import UIKit
 
-class ServerManager: NSObject {
-
+class ServerManager: BaseServerManager {
+    
 }
