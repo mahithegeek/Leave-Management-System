@@ -143,8 +143,8 @@ Storage.prototype.verifyUserExists = function verifyUserExists (userEmail,callba
 };
 
 Storage.prototype.fetchUser = function fetchUser(userEmail,callback) {
-    var queryString = "SELECT 1 FROM user WHERE auth_email = '" + userEmail + "'";
-    runSqlQuery (queryString,callback);
+    var queryString = "SELECT * FROM user WHERE auth_email = '" + userEmail + "'";
+    runSqlQuery (queryString,null,callback);
 };
 
 
