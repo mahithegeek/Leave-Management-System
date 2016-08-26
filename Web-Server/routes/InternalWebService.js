@@ -1,8 +1,8 @@
-var roleResolver = require("./roleresolver.js");
+var accessResolver = require("./accessresolver.js");
 var store = require("./storage.js");
 var utilities = require("./Utilities.js");
 var authentication = require("./OAuth2.js");
-var sqlHandle,utils,auth,role;
+var sqlHandle,utils,auth,access;
 
 //empty constructor
 function InternalWebService (){
@@ -10,29 +10,27 @@ function InternalWebService (){
 	sqlHandle = new store ();
 	utils = new utilities ();
 	auth = new authentication ();
-	role = new roleResolver();
+	access = new accessResolver();
 }
 
 //To DO just check the credentials and see if this is a legitimate request
 InternalWebService.prototype.getUsers = function getUsers (req,response) {
-	
-	var tokenCallback = function (err,email){
-		if(err == null){
-			var roleCallback = function (err,role){
-			if(role == 2 || role == 3) {
+	var accessCallback = function (err, role) {
+		if(err == null) {
+			if(role == 2 || role == 3 || role == 0){
 				internalGetUsers (req,response);
 			}
-		 };
-			role.fetchRole (email, roleCallback);
+			else {
+				response.status(500).send ("User has no access to this API");
+			}
 		}
 		else {
-			console.log (err);
-			response.send(err);
+			response.status(500).send(err);
 		}
-		
 	};
 
-	verifyTokenID (req.body.tokenID,tokenCallback);	
+	//console.log(req.body.tokenID);
+	access.determineUserAccess (req.body.tokenID, accessCallback);
 };
 
 function internalGetUsers (req,response) {
@@ -41,7 +39,7 @@ function internalGetUsers (req,response) {
 			response.send (JSON.stringify(data));
 		}
 		else {
-			response.send (err);
+			response.status(500).send (err);
 		}
 	}
 	sqlHandle.getUserInfo(callback);
