@@ -19,14 +19,14 @@ function Storage() {
 
 }
 
-Storage.prototype.getUserInfo = function getUserInfo (callback) {
+Storage.prototype.getUserInfo = function getUserInfo (supervisorID,callback) {
 
   pool.getConnection(function(err,connection){
         if (err) {
           res({"code" : 100, "status" : "Error in database connection "});
           return;
         }   
-        connection.query("select availability.available,user.first_name,user.emp_id,user.email from availability INNER JOIN user ON availability.emp_id = user.emp_id",function(err,rows){
+        connection.query("SELECT availability.available,user.first_name,user.emp_id,user.email from availability INNER JOIN user ON availability.emp_id = user.emp_id WHERE user.supervisor = ?",supervisorID,function(err,rows){
             connection.release();
             if(!err) {
                 console.log(rows);

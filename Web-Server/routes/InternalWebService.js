@@ -15,10 +15,10 @@ function InternalWebService (){
 
 //To DO just check the credentials and see if this is a legitimate request
 InternalWebService.prototype.getUsers = function getUsers (req,response) {
-	var accessCallback = function (err, role) {
+	var accessCallback = function (err, user) {
 		if(err == null) {
-			if(role == 2 || role == 3 || role == 0){
-				internalGetUsers (req,response);
+			if(user.role_id == 2 || user.role_id == 3 || user.role_id == 0){
+				internalGetUsers (req,response,user.emp_id);
 			}
 			else {
 				response.status(500).send ("User has no access to this API");
@@ -30,10 +30,10 @@ InternalWebService.prototype.getUsers = function getUsers (req,response) {
 	};
 
 	//console.log(req.body.tokenID);
-	access.determineUserAccess (req.body.tokenID, accessCallback);
+	access.determineUser (req.body.tokenID, accessCallback);
 };
 
-function internalGetUsers (req,response) {
+function internalGetUsers (req,response,superviosrID) {
 	var callback = function (err,data) {
 		if(err == null){
 			response.send (JSON.stringify(data));
@@ -42,7 +42,7 @@ function internalGetUsers (req,response) {
 			response.status(500).send (err);
 		}
 	}
-	sqlHandle.getUserInfo(callback);
+	sqlHandle.getUserInfo(superviosrID,callback);
 }
 
 InternalWebService.prototype.getAvailableLeaves = function (req,response) {
