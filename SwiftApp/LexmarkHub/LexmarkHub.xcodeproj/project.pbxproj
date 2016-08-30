@@ -21,6 +21,19 @@
 		1BE855971D6C729A00BEAE45 /* LeaveRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855851D6C729A00BEAE45 /* LeaveRequest.swift */; };
 		1BE855981D6C729A00BEAE45 /* LHCallBacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855901D6C729A00BEAE45 /* LHCallBacks.swift */; };
 		AE8D42D81D7017B700CB9EE2 /* BaseServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8D42D71D7017B700CB9EE2 /* BaseServerManager.swift */; };
+		AE923B751D74008D00237D23 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE923B741D74008D00237D23 /* Reachability.swift */; };
+		AE923B771D7400AB00237D23 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE923B761D7400AB00237D23 /* Loader.swift */; };
+		AE955A5A1D75437300DA8849 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A591D75437300DA8849 /* Employee.swift */; };
+		AE955A5C1D75450C00DA8849 /* PendingRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A5B1D75450C00DA8849 /* PendingRequestViewController.swift */; };
+		AE955A5E1D75453800DA8849 /* LeaveHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A5D1D75453800DA8849 /* LeaveHistoryViewController.swift */; };
+		AE955A601D75456B00DA8849 /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A5F1D75456B00DA8849 /* DashboardViewController.swift */; };
+		AE955A621D75458F00DA8849 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A611D75458F00DA8849 /* LoginViewController.swift */; };
+		AE955A641D7545AA00DA8849 /* ApplyLeaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A631D7545AA00DA8849 /* ApplyLeaveViewController.swift */; };
+		AE955A661D754DB800DA8849 /* AppUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A651D754DB800DA8849 /* AppUtilities.swift */; };
+		AE955A681D7555B900DA8849 /* LeaveHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A671D7555B900DA8849 /* LeaveHistoryCell.swift */; };
+		AE955A6A1D7555D100DA8849 /* PendingRequestsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A691D7555D100DA8849 /* PendingRequestsCell.swift */; };
+		AE955A6C1D75615700DA8849 /* PendingRequestDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A6B1D75615700DA8849 /* PendingRequestDetailsViewController.swift */; };
+		AE955A6E1D75617500DA8849 /* LeaveDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A6D1D75617500DA8849 /* LeaveDetailsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +74,19 @@
 		1BE855851D6C729A00BEAE45 /* LeaveRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveRequest.swift; sourceTree = "<group>"; };
 		1BE855901D6C729A00BEAE45 /* LHCallBacks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHCallBacks.swift; sourceTree = "<group>"; };
 		AE8D42D71D7017B700CB9EE2 /* BaseServerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseServerManager.swift; sourceTree = "<group>"; };
+		AE923B741D74008D00237D23 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		AE923B761D7400AB00237D23 /* Loader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
+		AE955A591D75437300DA8849 /* Employee.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
+		AE955A5B1D75450C00DA8849 /* PendingRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PendingRequestViewController.swift; path = "LexmarkHub/PresentationLayer/Pending Requests/PendingRequestViewController.swift"; sourceTree = SOURCE_ROOT; };
+		AE955A5D1D75453800DA8849 /* LeaveHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeaveHistoryViewController.swift; path = "LexmarkHub/PresentationLayer/Leave History/LeaveHistoryViewController.swift"; sourceTree = SOURCE_ROOT; };
+		AE955A5F1D75456B00DA8849 /* DashboardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DashboardViewController.swift; path = LexmarkHub/PresentationLayer/Dashboard/DashboardViewController.swift; sourceTree = SOURCE_ROOT; };
+		AE955A611D75458F00DA8849 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = LexmarkHub/PresentationLayer/Login/LoginViewController.swift; sourceTree = SOURCE_ROOT; };
+		AE955A631D7545AA00DA8849 /* ApplyLeaveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplyLeaveViewController.swift; path = LexmarkHub/PresentationLayer/Leaves/ApplyLeaveViewController.swift; sourceTree = SOURCE_ROOT; };
+		AE955A651D754DB800DA8849 /* AppUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppUtilities.swift; sourceTree = "<group>"; };
+		AE955A671D7555B900DA8849 /* LeaveHistoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveHistoryCell.swift; sourceTree = "<group>"; };
+		AE955A691D7555D100DA8849 /* PendingRequestsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PendingRequestsCell.swift; sourceTree = "<group>"; };
+		AE955A6B1D75615700DA8849 /* PendingRequestDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PendingRequestDetailsViewController.swift; path = "LexmarkHub/PresentationLayer/Pending Requests/PendingRequestDetailsViewController.swift"; sourceTree = SOURCE_ROOT; };
+		AE955A6D1D75617500DA8849 /* LeaveDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeaveDetailsViewController.swift; path = "LexmarkHub/PresentationLayer/Leave History/LeaveDetailsViewController.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +174,8 @@
 		1BE8557E1D6C729A00BEAE45 /* ExternalLibraries */ = {
 			isa = PBXGroup;
 			children = (
+				AE923B741D74008D00237D23 /* Reachability.swift */,
+				AE923B761D7400AB00237D23 /* Loader.swift */,
 			);
 			path = ExternalLibraries;
 			sourceTree = "<group>";
@@ -175,6 +203,7 @@
 			children = (
 				1BE855841D6C729A00BEAE45 /* Leave.swift */,
 				1BE855851D6C729A00BEAE45 /* LeaveRequest.swift */,
+				AE955A591D75437300DA8849 /* Employee.swift */,
 			);
 			path = AppModels;
 			sourceTree = "<group>";
@@ -192,6 +221,8 @@
 		1BE855871D6C729A00BEAE45 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				AE955A671D7555B900DA8849 /* LeaveHistoryCell.swift */,
+				AE955A691D7555D100DA8849 /* PendingRequestsCell.swift */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -211,6 +242,7 @@
 		1BE855891D6C729A00BEAE45 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				AE955A5F1D75456B00DA8849 /* DashboardViewController.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -218,6 +250,7 @@
 		1BE8558A1D6C729A00BEAE45 /* Leaves */ = {
 			isa = PBXGroup;
 			children = (
+				AE955A631D7545AA00DA8849 /* ApplyLeaveViewController.swift */,
 			);
 			path = Leaves;
 			sourceTree = "<group>";
@@ -225,6 +258,7 @@
 		1BE8558B1D6C729A00BEAE45 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				AE955A611D75458F00DA8849 /* LoginViewController.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -251,6 +285,7 @@
 		1BE8558E1D6C729A00BEAE45 /* AppUtilities */ = {
 			isa = PBXGroup;
 			children = (
+				AE955A651D754DB800DA8849 /* AppUtilities.swift */,
 			);
 			path = AppUtilities;
 			sourceTree = "<group>";
@@ -287,6 +322,8 @@
 		AE8D42D91D70189200CB9EE2 /* Leave History */ = {
 			isa = PBXGroup;
 			children = (
+				AE955A5D1D75453800DA8849 /* LeaveHistoryViewController.swift */,
+				AE955A6D1D75617500DA8849 /* LeaveDetailsViewController.swift */,
 			);
 			name = "Leave History";
 			sourceTree = "<group>";
@@ -294,6 +331,8 @@
 		AE8D42DA1D70189B00CB9EE2 /* Pending Requests */ = {
 			isa = PBXGroup;
 			children = (
+				AE955A5B1D75450C00DA8849 /* PendingRequestViewController.swift */,
+				AE955A6B1D75615700DA8849 /* PendingRequestDetailsViewController.swift */,
 			);
 			name = "Pending Requests";
 			sourceTree = "<group>";
@@ -429,14 +468,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE955A641D7545AA00DA8849 /* ApplyLeaveViewController.swift in Sources */,
 				1BE855981D6C729A00BEAE45 /* LHCallBacks.swift in Sources */,
+				AE955A681D7555B900DA8849 /* LeaveHistoryCell.swift in Sources */,
+				AE955A5A1D75437300DA8849 /* Employee.swift in Sources */,
+				AE955A6C1D75615700DA8849 /* PendingRequestDetailsViewController.swift in Sources */,
+				AE955A5E1D75453800DA8849 /* LeaveHistoryViewController.swift in Sources */,
 				1BE855951D6C729A00BEAE45 /* ServerManager.swift in Sources */,
 				1BE855961D6C729A00BEAE45 /* Leave.swift in Sources */,
 				1BE855471D6C703500BEAE45 /* LexmarkHub.xcdatamodeld in Sources */,
 				AE8D42D81D7017B700CB9EE2 /* BaseServerManager.swift in Sources */,
+				AE955A601D75456B00DA8849 /* DashboardViewController.swift in Sources */,
 				1BE855941D6C729A00BEAE45 /* LeaveManager.swift in Sources */,
+				AE955A661D754DB800DA8849 /* AppUtilities.swift in Sources */,
 				1BE855411D6C703500BEAE45 /* ViewController.swift in Sources */,
 				1BE8553F1D6C703500BEAE45 /* AppDelegate.swift in Sources */,
+				AE923B771D7400AB00237D23 /* Loader.swift in Sources */,
+				AE955A621D75458F00DA8849 /* LoginViewController.swift in Sources */,
+				AE955A5C1D75450C00DA8849 /* PendingRequestViewController.swift in Sources */,
+				AE955A6A1D7555D100DA8849 /* PendingRequestsCell.swift in Sources */,
+				AE923B751D74008D00237D23 /* Reachability.swift in Sources */,
+				AE955A6E1D75617500DA8849 /* LeaveDetailsViewController.swift in Sources */,
 				1BE855971D6C729A00BEAE45 /* LeaveRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
