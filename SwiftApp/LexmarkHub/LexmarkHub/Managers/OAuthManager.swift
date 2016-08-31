@@ -37,7 +37,7 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
         super.init()
     }
     
-    func setAuthorizationState(withState authState:OIDAuthState?){
+    private func setAuthorizationState(withState authState:OIDAuthState?){
         if (self.authState == authState) {
             return
         }
@@ -45,6 +45,17 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
         self.authState?.stateChangeDelegate = self
         self.saveState()
     }
+    
+    /*! @fn saveState
+     @brief Saves the @c OIDAuthState to @c NSUSerDefaults.
+     */
+    private func saveState(){
+        let archivedAuthState = NSKeyedArchiver.archivedDataWithRootObject(self.authState!)
+        NSUserDefaults.standardUserDefaults().setObject(archivedAuthState, forKey: kAppAuthExampleAuthStateKey)
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    // Callbacks for OIDAuthStateChangeDelegate, OIDAuthStateErrorDelegate
     
     func didChangeState(state: OIDAuthState) {
         self.saveState()
@@ -60,14 +71,7 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
         }
     }
     
-    /*! @fn saveState
-     @brief Saves the @c OIDAuthState to @c NSUSerDefaults.
-     */
-    func saveState(){
-        let archivedAuthState = NSKeyedArchiver.archivedDataWithRootObject(self.authState!)
-        NSUserDefaults.standardUserDefaults().setObject(archivedAuthState, forKey: kAppAuthExampleAuthStateKey)
-        NSUserDefaults.standardUserDefaults().synchronize()
-    }
+    
     
     /*! @fn loadState
      @brief Loads the @c OIDAuthState from @c NSUSerDefaults.
