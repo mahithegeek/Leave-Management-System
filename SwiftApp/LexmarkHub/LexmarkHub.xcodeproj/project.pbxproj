@@ -20,6 +20,9 @@
 		1BE855961D6C729A00BEAE45 /* Leave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855841D6C729A00BEAE45 /* Leave.swift */; };
 		1BE855971D6C729A00BEAE45 /* LeaveRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855851D6C729A00BEAE45 /* LeaveRequest.swift */; };
 		1BE855981D6C729A00BEAE45 /* LHCallBacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855901D6C729A00BEAE45 /* LHCallBacks.swift */; };
+		2422BFCCFF441991780B1E14 /* Pods_LexmarkHubTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 374CE452A1EC4C0C6D9046AE /* Pods_LexmarkHubTests.framework */; };
+		41B0A7621D76DD9500577998 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B0A7611D76DD9500577998 /* AppConstants.swift */; };
+		41B0A7641D76DDC900577998 /* OAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B0A7631D76DDC900577998 /* OAuthManager.swift */; };
 		AE8D42D81D7017B700CB9EE2 /* BaseServerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8D42D71D7017B700CB9EE2 /* BaseServerManager.swift */; };
 		AE923B751D74008D00237D23 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE923B741D74008D00237D23 /* Reachability.swift */; };
 		AE923B771D7400AB00237D23 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE923B761D7400AB00237D23 /* Loader.swift */; };
@@ -34,6 +37,8 @@
 		AE955A6A1D7555D100DA8849 /* PendingRequestsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A691D7555D100DA8849 /* PendingRequestsCell.swift */; };
 		AE955A6C1D75615700DA8849 /* PendingRequestDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A6B1D75615700DA8849 /* PendingRequestDetailsViewController.swift */; };
 		AE955A6E1D75617500DA8849 /* LeaveDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A6D1D75617500DA8849 /* LeaveDetailsViewController.swift */; };
+		BB3B2E415F157E4533B8D6AF /* Pods_LexmarkHubUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3535017D056CD00D2D212BF9 /* Pods_LexmarkHubUITests.framework */; };
+		CA314C49B2F7A5210C0FD433 /* Pods_LexmarkHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A13F641B2771F745C24E15C /* Pods_LexmarkHub.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +59,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A13F641B2771F745C24E15C /* Pods_LexmarkHub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LexmarkHub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BE8553B1D6C703400BEAE45 /* LexmarkHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LexmarkHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BE8553E1D6C703500BEAE45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1BE855401D6C703500BEAE45 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +79,14 @@
 		1BE855841D6C729A00BEAE45 /* Leave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Leave.swift; sourceTree = "<group>"; };
 		1BE855851D6C729A00BEAE45 /* LeaveRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeaveRequest.swift; sourceTree = "<group>"; };
 		1BE855901D6C729A00BEAE45 /* LHCallBacks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LHCallBacks.swift; sourceTree = "<group>"; };
+		3535017D056CD00D2D212BF9 /* Pods_LexmarkHubUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LexmarkHubUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		374CE452A1EC4C0C6D9046AE /* Pods_LexmarkHubTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LexmarkHubTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CDDACF7080A8B0B729520D4 /* Pods-LexmarkHubUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHubUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHubUITests/Pods-LexmarkHubUITests.release.xcconfig"; sourceTree = "<group>"; };
+		41B0A7611D76DD9500577998 /* AppConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		41B0A7631D76DDC900577998 /* OAuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthManager.swift; sourceTree = "<group>"; };
+		586848E8E6D2FB7A7525C535 /* Pods-LexmarkHubUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHubUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHubUITests/Pods-LexmarkHubUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		70AD746EE54A47FB18C2A87F /* Pods-LexmarkHubTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHubTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHubTests/Pods-LexmarkHubTests.release.xcconfig"; sourceTree = "<group>"; };
+		8A2BBF62A89793EB643AF1E9 /* Pods-LexmarkHub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHub.release.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHub/Pods-LexmarkHub.release.xcconfig"; sourceTree = "<group>"; };
 		AE8D42D71D7017B700CB9EE2 /* BaseServerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseServerManager.swift; sourceTree = "<group>"; };
 		AE923B741D74008D00237D23 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		AE923B761D7400AB00237D23 /* Loader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
@@ -87,6 +101,8 @@
 		AE955A691D7555D100DA8849 /* PendingRequestsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PendingRequestsCell.swift; sourceTree = "<group>"; };
 		AE955A6B1D75615700DA8849 /* PendingRequestDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PendingRequestDetailsViewController.swift; path = "LexmarkHub/PresentationLayer/Pending Requests/PendingRequestDetailsViewController.swift"; sourceTree = SOURCE_ROOT; };
 		AE955A6D1D75617500DA8849 /* LeaveDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeaveDetailsViewController.swift; path = "LexmarkHub/PresentationLayer/Leave History/LeaveDetailsViewController.swift"; sourceTree = SOURCE_ROOT; };
+		B27CAE5472134FBA60CCE0D3 /* Pods-LexmarkHub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHub.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHub/Pods-LexmarkHub.debug.xcconfig"; sourceTree = "<group>"; };
+		C8770A988FEF18E3EDD1333C /* Pods-LexmarkHubTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHubTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHubTests/Pods-LexmarkHubTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA314C49B2F7A5210C0FD433 /* Pods_LexmarkHub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2422BFCCFF441991780B1E14 /* Pods_LexmarkHubTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -108,12 +126,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB3B2E415F157E4533B8D6AF /* Pods_LexmarkHubUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		172FAEAFC377CE844A4072FB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B27CAE5472134FBA60CCE0D3 /* Pods-LexmarkHub.debug.xcconfig */,
+				8A2BBF62A89793EB643AF1E9 /* Pods-LexmarkHub.release.xcconfig */,
+				C8770A988FEF18E3EDD1333C /* Pods-LexmarkHubTests.debug.xcconfig */,
+				70AD746EE54A47FB18C2A87F /* Pods-LexmarkHubTests.release.xcconfig */,
+				586848E8E6D2FB7A7525C535 /* Pods-LexmarkHubUITests.debug.xcconfig */,
+				3CDDACF7080A8B0B729520D4 /* Pods-LexmarkHubUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		1BE855321D6C703400BEAE45 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +153,8 @@
 				1BE855551D6C703500BEAE45 /* LexmarkHubTests */,
 				1BE855601D6C703500BEAE45 /* LexmarkHubUITests */,
 				1BE8553C1D6C703400BEAE45 /* Products */,
+				172FAEAFC377CE844A4072FB /* Pods */,
+				9DC5EAA3A8C3131DB8FFDE6E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -149,6 +183,7 @@
 				1BE8554A1D6C703500BEAE45 /* LaunchScreen.storyboard */,
 				1BE8554D1D6C703500BEAE45 /* Info.plist */,
 				1BE855451D6C703500BEAE45 /* LexmarkHub.xcdatamodeld */,
+				41B0A7611D76DD9500577998 /* AppConstants.swift */,
 			);
 			path = LexmarkHub;
 			sourceTree = "<group>";
@@ -183,6 +218,7 @@
 		1BE8557F1D6C729A00BEAE45 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				41B0A7631D76DDC900577998 /* OAuthManager.swift */,
 				1BE855801D6C729A00BEAE45 /* LeaveManager.swift */,
 				1BE855811D6C729A00BEAE45 /* ServerManager.swift */,
 				AE8D42D71D7017B700CB9EE2 /* BaseServerManager.swift */,
@@ -319,6 +355,16 @@
 			path = Threading;
 			sourceTree = "<group>";
 		};
+		9DC5EAA3A8C3131DB8FFDE6E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1A13F641B2771F745C24E15C /* Pods_LexmarkHub.framework */,
+				374CE452A1EC4C0C6D9046AE /* Pods_LexmarkHubTests.framework */,
+				3535017D056CD00D2D212BF9 /* Pods_LexmarkHubUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		AE8D42D91D70189200CB9EE2 /* Leave History */ = {
 			isa = PBXGroup;
 			children = (
@@ -344,9 +390,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1BE855661D6C703500BEAE45 /* Build configuration list for PBXNativeTarget "LexmarkHub" */;
 			buildPhases = (
+				91D01B6F5FB34578B7EFEEB1 /* [CP] Check Pods Manifest.lock */,
 				1BE855371D6C703400BEAE45 /* Sources */,
 				1BE855381D6C703400BEAE45 /* Frameworks */,
 				1BE855391D6C703400BEAE45 /* Resources */,
+				A32D9692352AFD7C58265E6D /* [CP] Embed Pods Frameworks */,
+				EEC27DBDE4BCC84C0D26BB59 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -361,9 +410,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1BE855691D6C703500BEAE45 /* Build configuration list for PBXNativeTarget "LexmarkHubTests" */;
 			buildPhases = (
+				84119077CD33A0FC28CA8B44 /* [CP] Check Pods Manifest.lock */,
 				1BE8554E1D6C703500BEAE45 /* Sources */,
 				1BE8554F1D6C703500BEAE45 /* Frameworks */,
 				1BE855501D6C703500BEAE45 /* Resources */,
+				EDAB70F76043CA2FFF1FDDD9 /* [CP] Embed Pods Frameworks */,
+				A0B022DAD62B39FE333BB748 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -379,9 +431,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1BE8556C1D6C703500BEAE45 /* Build configuration list for PBXNativeTarget "LexmarkHubUITests" */;
 			buildPhases = (
+				4C57D9ED6BFC4F2135AB64B2 /* [CP] Check Pods Manifest.lock */,
 				1BE855591D6C703500BEAE45 /* Sources */,
 				1BE8555A1D6C703500BEAE45 /* Frameworks */,
 				1BE8555B1D6C703500BEAE45 /* Resources */,
+				634820E9B7289B532D8CAD34 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -463,15 +517,140 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4C57D9ED6BFC4F2135AB64B2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		634820E9B7289B532D8CAD34 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LexmarkHubUITests/Pods-LexmarkHubUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		84119077CD33A0FC28CA8B44 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		91D01B6F5FB34578B7EFEEB1 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A0B022DAD62B39FE333BB748 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LexmarkHubTests/Pods-LexmarkHubTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A32D9692352AFD7C58265E6D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LexmarkHub/Pods-LexmarkHub-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EDAB70F76043CA2FFF1FDDD9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LexmarkHubTests/Pods-LexmarkHubTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EEC27DBDE4BCC84C0D26BB59 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LexmarkHub/Pods-LexmarkHub-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1BE855371D6C703400BEAE45 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				AE955A641D7545AA00DA8849 /* ApplyLeaveViewController.swift in Sources */,
+				41B0A7641D76DDC900577998 /* OAuthManager.swift in Sources */,
 				1BE855981D6C729A00BEAE45 /* LHCallBacks.swift in Sources */,
 				AE955A681D7555B900DA8849 /* LeaveHistoryCell.swift in Sources */,
 				AE955A5A1D75437300DA8849 /* Employee.swift in Sources */,
+				41B0A7621D76DD9500577998 /* AppConstants.swift in Sources */,
 				AE955A6C1D75615700DA8849 /* PendingRequestDetailsViewController.swift in Sources */,
 				AE955A5E1D75453800DA8849 /* LeaveHistoryViewController.swift in Sources */,
 				1BE855951D6C729A00BEAE45 /* ServerManager.swift in Sources */,
@@ -631,6 +810,7 @@
 		};
 		1BE855671D6C703500BEAE45 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B27CAE5472134FBA60CCE0D3 /* Pods-LexmarkHub.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = LexmarkHub/Info.plist;
@@ -643,6 +823,7 @@
 		};
 		1BE855681D6C703500BEAE45 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A2BBF62A89793EB643AF1E9 /* Pods-LexmarkHub.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = LexmarkHub/Info.plist;
@@ -655,6 +836,7 @@
 		};
 		1BE8556A1D6C703500BEAE45 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C8770A988FEF18E3EDD1333C /* Pods-LexmarkHubTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = LexmarkHubTests/Info.plist;
@@ -667,6 +849,7 @@
 		};
 		1BE8556B1D6C703500BEAE45 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 70AD746EE54A47FB18C2A87F /* Pods-LexmarkHubTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = LexmarkHubTests/Info.plist;
@@ -679,6 +862,7 @@
 		};
 		1BE8556D1D6C703500BEAE45 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 586848E8E6D2FB7A7525C535 /* Pods-LexmarkHubUITests.debug.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = LexmarkHubUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -690,6 +874,7 @@
 		};
 		1BE8556E1D6C703500BEAE45 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CDDACF7080A8B0B729520D4 /* Pods-LexmarkHubUITests.release.xcconfig */;
 			buildSettings = {
 				INFOPLIST_FILE = LexmarkHubUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
