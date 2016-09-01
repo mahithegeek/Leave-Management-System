@@ -1,0 +1,6 @@
+framework module Pods_LexmarkHubTests {
+  umbrella header "Pods-LexmarkHubTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
