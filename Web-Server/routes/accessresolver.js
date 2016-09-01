@@ -1,6 +1,7 @@
 
 var sql = require("./storage.js");
 var authentication = require("./OAuth2.js");
+var User = require("./User.js");
 var sqlHandle,auth;
 
 function accessresolver () {
@@ -9,14 +10,14 @@ function accessresolver () {
 }
 
 
-accessresolver.prototype.fetchRole = function fetchRole (email,callback) {
+accessresolver.prototype.fetchUser = function fetchUser (email,callback) {
 	console.log ("roleresolver : " + email);
 	var fetchUserCallback = function (err,data){
 		if(err == null && data){
 			if(data.length > 0) {
 				var parsedData = JSON.stringify(data);
 				console.log("roleresolver" + "data parsed is" + parsedData);
-				callback(null,data[0].role_id);
+				callback(null,createUser(data[0]));
 				return;
 			}
 		}
@@ -28,30 +29,38 @@ accessresolver.prototype.fetchRole = function fetchRole (email,callback) {
 	sqlHandle.fetchUser (email,fetchUserCallback);
 };
 
-accessresolver.prototype.determineUserAccess = function determineUserAccess (tokenID,callback) {
-	var temp = this;
+accessresolver.prototype.determineUser = function determineUserAccess (tokenID,callback) {
+	var tempContext = this;
 	var tokenCallback = function (err,email){
 			if(err == null){
-				var roleCallback = function (err,role){
+				var userCallback = function (err,user){
 				if(err == null){
-					callback (null,parseInt(role));
+					callback (null,user);
+					return;
 				}
 				else {
 					callback(err,null);
+					return;
 				}
 				
 			 };
 				
-				temp.fetchRole (email, roleCallback);
+				tempContext.fetchUser (email, userCallback);
 			}
 			else {
 				console.log (err);
 				callback(err,null);
+				return;
 			}
 			
 		};
 	auth.verifyTokenID (tokenID,tokenCallback);
 };
+
+function createUser (sqlUser) {
+	user = new User (sqlUser.first_name,sqlUser.last_name,sqlUser.email,sqlUser.role_id,sqlUser.emp_id);
+	return user;
+}
 
 module.exports = accessresolver;
 

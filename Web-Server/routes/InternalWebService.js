@@ -15,10 +15,10 @@ function InternalWebService (){
 
 //To DO just check the credentials and see if this is a legitimate request
 InternalWebService.prototype.getUsers = function getUsers (req,response) {
-	var accessCallback = function (err, role) {
+	var accessCallback = function (err, user) {
 		if(err == null) {
-			if(role == 2 || role == 3 || role == 0){
-				internalGetUsers (req,response);
+			if(user.role == 2 || user.role == 3 || user.role == 0){
+				internalGetUsers (req,response,user.empID);
 			}
 			else {
 				response.status(500).send ("User has no access to this API");
@@ -30,10 +30,10 @@ InternalWebService.prototype.getUsers = function getUsers (req,response) {
 	};
 
 	//console.log(req.body.tokenID);
-	access.determineUserAccess (req.body.tokenID, accessCallback);
+	access.determineUser (req.body.tokenID, accessCallback);
 };
 
-function internalGetUsers (req,response) {
+function internalGetUsers (req,response,supervisorID) {
 	var callback = function (err,data) {
 		if(err == null){
 			response.send (JSON.stringify(data));
@@ -42,29 +42,59 @@ function internalGetUsers (req,response) {
 			response.status(500).send (err);
 		}
 	}
-	sqlHandle.getUserInfo(callback);
+	sqlHandle.getUserInfo(supervisorID,callback);
 }
 
 InternalWebService.prototype.getAvailableLeaves = function (req,response) {
 	//TO-DO check if this is valid
-	if(req.body.empid ) {
-		
-		var callback = function (err,data){
+	var accessCallback = function (err, user) {
+		if(err == null) {
+			if(user.role_id == 2 || user.role_id == 3 || user.role_id == 0 || user.role_id == 1){
+				getLeavesForUser (req,response,user.emp_id);
+			}
+			else {
+				response.status(500).send ("User has no access to this API");
+			}
+		}
+		else {
+			response.status(500).send(err);
+		}
+	};
+
+	access.determineUser (req.body.tokenID, accessCallback);
+};
+
+function getLeavesForUser (req,response,empID) {
+	var callback = function (err,data){
 			if (err == null) {
 				response.send(JSON.stringify(data));
 			}
 			else {
-				response.send(error);
+				response.status(500).send(error);
 			}
 		}
-		sqlHandle.getAvailableLeaves(req.body.empid,callback);
-	}
-	else {
-		response.send ("Invalid Employee ID");
-	}
-};
+		sqlHandle.getAvailableLeaves(empID,callback);
+}
 
 InternalWebService.prototype.applyLeave = function (req,response) {
+
+	var accessCallback = function (err, user) {
+		if(err == null) {
+			if(user.role_id == 2 || user.role_id == 3 || user.role_id == 0 || user.role_id == 1){
+				internalApplyLeave (req,response,req.body.leaveRequest);
+			}
+			else {
+				response.status(500).send ("User has no access to this API");
+			}
+		}
+		else {
+			response.status(500).send(err);
+		}
+	};
+	access.determineUser (req.body.tokenID, accessCallback);
+};
+
+function internalApplyLeave (req,response,leaveRequest) {
 	if(utils.validateDate(req.body.fromDate) && utils.validateDate(req.body.toDate)) {
 		var callback = function (err,data) {
 			if(err == null){
@@ -74,43 +104,34 @@ InternalWebService.prototype.applyLeave = function (req,response) {
 				response.send(error);
 			}
 		}
-		sqlHandle.insertLeaves (req.body,callback);
+		sqlHandle.insertLeaves (leaveRequest,callback);
 		
 	}
 	else {
 		response.send ("Invalid dates");
 	}
-};
+}
 
 InternalWebService.prototype.login = function (req, response) {
 
-	var callback = function (err,tokenEmail) {
-		if(err == null){
-			//now that token is validated from google service, verify if the user existst in our db
-			var verifyResponse = function(err,success){
-			if(err == null && success){
-				response.send ("Successfully Logged In");
-			}
-			else {
-				response.send ("Unable to Find the User");
-			}
-		};
-			validateEmailFromOAuthToken(tokenEmail,verifyResponse);
+	var accessCallback = function (err, user) {
+		console.log("callback triggered");
+		if(err == null ) {
+			console.log("creating user" + user);
+			response.send("user");
+			
 		}
 		else {
-			response.send(err);
+			console.log("login user" + err);
+			response.status(500).send(err);
 		}
 	};
-	verifyTokenID (req.body.tokenID,callback);
+
+	//console.log(req.body.tokenID);
+	access.determineUser (req.body.tokenID, accessCallback);
 };
 
-function verifyTokenID (tokenID,callback) {
-	auth.verifyTokenID (tokenID,callback);
-}
 
-function validateEmailFromOAuthToken (tokenEmail,callback) {
-	sqlHandle.verifyUserExists (tokenEmail,callback);
-}
 
 module.exports = InternalWebService;
 
