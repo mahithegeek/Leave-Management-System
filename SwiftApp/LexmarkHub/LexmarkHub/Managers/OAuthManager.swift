@@ -25,6 +25,7 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
     private var viewController:UIViewController?
     private var authorizationErrorCallback:OIDAuthCallback?
     private var authState:OIDAuthState?
+    private (set) var accessToken:String?
     
     private override init() {
     }
@@ -35,6 +36,7 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
         self.redirectURI = redirecURI
         self.viewController = viewController
         super.init()
+        self.loadState()
     }
     
     private func setAuthorizationState(withState authState:OIDAuthState?){
@@ -55,6 +57,16 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    /*! @fn loadState
+     @brief Loads the @c OIDAuthState from @c NSUSerDefaults.
+     */
+    private func loadState() {
+        // loads OIDAuthState from NSUSerDefaults
+        let archivedAuthState = NSUserDefaults.standardUserDefaults().objectForKey(kAppAuthExampleAuthStateKey)
+        let authState:OIDAuthState = NSKeyedUnarchiver .unarchiveObjectWithData(archivedAuthState! as! NSData) as! OIDAuthState
+        self.setAuthorizationState(withState: authState)
+    }
+    
     // Callbacks for OIDAuthStateChangeDelegate, OIDAuthStateErrorDelegate
     
     func didChangeState(state: OIDAuthState) {
@@ -69,18 +81,6 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
         OIDAuthorizationService .discoverServiceConfigurationForIssuer(issuer!) { (oidServiceConfiguration, error) in
             completion(oidServiceConfiguration,error)
         }
-    }
-    
-    
-    
-    /*! @fn loadState
-     @brief Loads the @c OIDAuthState from @c NSUSerDefaults.
-     */
-    func loadState() {
-    // loads OIDAuthState from NSUSerDefaults
-        let archivedAuthState = NSUserDefaults.standardUserDefaults().objectForKey(kAppAuthExampleAuthStateKey)
-        let authState:OIDAuthState = NSKeyedUnarchiver .unarchiveObjectWithData(archivedAuthState! as! NSData) as! OIDAuthState
-        self.setAuthorizationState(withState: authState)
     }
     
     func authWithAutoCodeExchange(withCompletion completion:OIDAuthCallback){
@@ -99,12 +99,14 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
             appDelegate.currentAuthorizationFlow = OIDAuthState.authStateByPresentingAuthorizationRequest(request, presentingViewController: self.viewController!, callback: { (authState, error) in
                 if (authState != nil){
                     completion(token: authState?.lastTokenResponse!.accessToken, nil)
+                    self.accessToken = authState?.lastTokenResponse!.accessToken
                     self.setAuthorizationState(withState: authState)
                 }
                 else{
                     // Log Error
                     NSLog("Error \(error)")
                     completion(token: nil,error!)
+                    self.accessToken = nil
                 }
             })
         }
@@ -113,6 +115,7 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
     func requestAccessToken(withCompletion completion:OIDAuthCallback){
         self.authState?.withFreshTokensPerformAction({ (accessToken, idToken, error) in
             completion(token: accessToken,error)
+            self.accessToken = accessToken
         })
     }
     
