@@ -1,6 +1,7 @@
 
 var sql = require("./storage.js");
 var authentication = require("./OAuth2.js");
+var User = require("./User.js");
 var sqlHandle,auth;
 
 function accessresolver () {
@@ -16,7 +17,7 @@ accessresolver.prototype.fetchUser = function fetchUser (email,callback) {
 			if(data.length > 0) {
 				var parsedData = JSON.stringify(data);
 				console.log("roleresolver" + "data parsed is" + parsedData);
-				callback(null,data[0]);
+				callback(null,createUser(data[0]));
 				return;
 			}
 		}
@@ -35,9 +36,11 @@ accessresolver.prototype.determineUser = function determineUserAccess (tokenID,c
 				var userCallback = function (err,user){
 				if(err == null){
 					callback (null,user);
+					return;
 				}
 				else {
 					callback(err,null);
+					return;
 				}
 				
 			 };
@@ -47,11 +50,17 @@ accessresolver.prototype.determineUser = function determineUserAccess (tokenID,c
 			else {
 				console.log (err);
 				callback(err,null);
+				return;
 			}
 			
 		};
 	auth.verifyTokenID (tokenID,tokenCallback);
 };
+
+function createUser (sqlUser) {
+	user = new User (sqlUser.first_name,sqlUser.last_name,sqlUser.email,sqlUser.role_id,sqlUser.emp_id);
+	return user;
+}
 
 module.exports = accessresolver;
 
