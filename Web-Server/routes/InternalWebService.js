@@ -118,7 +118,10 @@ InternalWebService.prototype.login = function (req, response) {
 		console.log("callback triggered");
 		if(err == null ) {
 			console.log("creating user" + user);
-			response.send("user");
+			var userData = {firstName : user.firstName, lastName: user.lastName,email : user.email, empID : user.empID.toString(), role : user.role};
+			console.log("data is " + JSON.stringify(userData));
+			response.setHeader('Content-Type', 'application/json');
+			response.json(userData);
 			
 		}
 		else {
