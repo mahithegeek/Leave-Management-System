@@ -150,6 +150,7 @@ Storage.prototype.fetchUser = function fetchUser(userEmail,callback) {
 
 function runSqlQuery (sqlQueryString,sqlDataObject,callback) {
   pool.getConnection(function(err,connection){
+        //TODO - throw proper error
         if (err) {
           res({"code" : 100, "status" : "Error in database connection "});
           return;
