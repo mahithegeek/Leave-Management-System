@@ -18,7 +18,7 @@ class DashboardViewController: UIViewController {
         self.navigationItem.setHidesBackButton(true, animated: true)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
         // Do any additional setup after loading the view.
-        self.availableLeavesLabel.text = "\(employee!.availableLeaves)"
+//        self.availableLeavesLabel.text = "\(employee!.availableLeaves)"
     }
 
     override func didReceiveMemoryWarning() {

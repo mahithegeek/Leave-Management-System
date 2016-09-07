@@ -1,12 +1,15 @@
 PODS:
+  - Alamofire (3.4.1)
   - AppAuth (0.4.2)
 
 DEPENDENCIES:
+  - Alamofire (~> 3.4)
   - AppAuth
 
 SPEC CHECKSUMS:
+  Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
   AppAuth: 292151ac22065106b0bee6b80e3be29c95bda0fc
 
-PODFILE CHECKSUM: 6edaf61868a1869c9be3ab4ecdb5f4ef14febffa
+PODFILE CHECKSUM: 26ee59e6420dffe8352ad91608ff17f83a26cbeb
 
 COCOAPODS: 1.0.1

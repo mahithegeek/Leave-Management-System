@@ -21,6 +21,8 @@
 		2422BFCCFF441991780B1E14 /* Pods_LexmarkHubTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 374CE452A1EC4C0C6D9046AE /* Pods_LexmarkHubTests.framework */; };
 		41B0A7621D76DD9500577998 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B0A7611D76DD9500577998 /* AppConstants.swift */; };
 		41B0A7641D76DDC900577998 /* OAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B0A7631D76DDC900577998 /* OAuthManager.swift */; };
+		41B0A7791D78427D00577998 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B0A7781D78427D00577998 /* LoginService.swift */; };
+		41B0A77B1D78435300577998 /* BaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B0A77A1D78435300577998 /* BaseService.swift */; };
 		AE923B751D74008D00237D23 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE923B741D74008D00237D23 /* Reachability.swift */; };
 		AE923B771D7400AB00237D23 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE923B761D7400AB00237D23 /* Loader.swift */; };
 		AE955A5A1D75437300DA8849 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A591D75437300DA8849 /* Employee.swift */; };
@@ -79,6 +81,8 @@
 		3CDDACF7080A8B0B729520D4 /* Pods-LexmarkHubUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHubUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHubUITests/Pods-LexmarkHubUITests.release.xcconfig"; sourceTree = "<group>"; };
 		41B0A7611D76DD9500577998 /* AppConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		41B0A7631D76DDC900577998 /* OAuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthManager.swift; sourceTree = "<group>"; };
+		41B0A7781D78427D00577998 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		41B0A77A1D78435300577998 /* BaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseService.swift; sourceTree = "<group>"; };
 		586848E8E6D2FB7A7525C535 /* Pods-LexmarkHubUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHubUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHubUITests/Pods-LexmarkHubUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		70AD746EE54A47FB18C2A87F /* Pods-LexmarkHubTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHubTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHubTests/Pods-LexmarkHubTests.release.xcconfig"; sourceTree = "<group>"; };
 		8A2BBF62A89793EB643AF1E9 /* Pods-LexmarkHub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHub.release.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHub/Pods-LexmarkHub.release.xcconfig"; sourceTree = "<group>"; };
@@ -165,6 +169,7 @@
 		1BE8553D1D6C703500BEAE45 /* LexmarkHub */ = {
 			isa = PBXGroup;
 			children = (
+				41B0A7771D78427D00577998 /* ServiceLayer */,
 				1BE8557E1D6C729A00BEAE45 /* ExternalLibraries */,
 				1BE8557F1D6C729A00BEAE45 /* Managers */,
 				1BE855821D6C729A00BEAE45 /* Models */,
@@ -344,6 +349,15 @@
 			children = (
 			);
 			path = Threading;
+			sourceTree = "<group>";
+		};
+		41B0A7771D78427D00577998 /* ServiceLayer */ = {
+			isa = PBXGroup;
+			children = (
+				41B0A7781D78427D00577998 /* LoginService.swift */,
+				41B0A77A1D78435300577998 /* BaseService.swift */,
+			);
+			path = ServiceLayer;
 			sourceTree = "<group>";
 		};
 		9DC5EAA3A8C3131DB8FFDE6E /* Frameworks */ = {
@@ -640,6 +654,7 @@
 				41B0A7641D76DDC900577998 /* OAuthManager.swift in Sources */,
 				1BE855981D6C729A00BEAE45 /* LHCallBacks.swift in Sources */,
 				AE955A681D7555B900DA8849 /* LeaveHistoryCell.swift in Sources */,
+				41B0A77B1D78435300577998 /* BaseService.swift in Sources */,
 				AE955A5A1D75437300DA8849 /* Employee.swift in Sources */,
 				41B0A7621D76DD9500577998 /* AppConstants.swift in Sources */,
 				AE955A6C1D75615700DA8849 /* PendingRequestDetailsViewController.swift in Sources */,
@@ -653,6 +668,7 @@
 				AE923B771D7400AB00237D23 /* Loader.swift in Sources */,
 				AE955A621D75458F00DA8849 /* LoginViewController.swift in Sources */,
 				AE955A5C1D75450C00DA8849 /* PendingRequestViewController.swift in Sources */,
+				41B0A7791D78427D00577998 /* LoginService.swift in Sources */,
 				AE955A6A1D7555D100DA8849 /* PendingRequestsCell.swift in Sources */,
 				AE923B751D74008D00237D23 /* Reachability.swift in Sources */,
 				AE955A6E1D75617500DA8849 /* LeaveDetailsViewController.swift in Sources */,

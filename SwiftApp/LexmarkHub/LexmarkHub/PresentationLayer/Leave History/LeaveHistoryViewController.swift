@@ -25,21 +25,21 @@ class LeaveHistoryViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
 
-        let employee = Employee(id: 9552, name: "Rambabu Nayudu", role: "Employee", email: "rambabu.nayudu@kofax.com", totalLeaves: 25, availableLeaves: 10)
-
-        let leave = Leave(reason: "Marriage vacation", employee: employee, startDate: NSDate(), endDate: NSDate())
-        let leaveRequest = LeaveRequest(requestId: 1, status: "Pending", leave: leave)
-        leaveHistory = Array()
-        leaveHistory?.append(leaveRequest)
-        leaveHistory?.append(leaveRequest)
-        leaveHistory?.append(leaveRequest)
-        leaveHistory?.append(leaveRequest)
-        leaveHistory?.append(leaveRequest)
-        leaveHistory?.append(leaveRequest)
-        leaveHistory?.append(leaveRequest)
-        leaveHistory?.append(leaveRequest)
-        leaveHistory?.append(leaveRequest)
-        leaveHistory?.append(leaveRequest)
+//        let employee = Employee(id: 9552, name: "Rambabu Nayudu", role: "Employee", email: "rambabu.nayudu@kofax.com", totalLeaves: 25, availableLeaves: 10)
+//
+//        let leave = Leave(reason: "Marriage vacation", employee: employee, startDate: NSDate(), endDate: NSDate())
+//        let leaveRequest = LeaveRequest(requestId: 1, status: "Pending", leave: leave)
+//        leaveHistory = Array()
+//        leaveHistory?.append(leaveRequest)
+//        leaveHistory?.append(leaveRequest)
+//        leaveHistory?.append(leaveRequest)
+//        leaveHistory?.append(leaveRequest)
+//        leaveHistory?.append(leaveRequest)
+//        leaveHistory?.append(leaveRequest)
+//        leaveHistory?.append(leaveRequest)
+//        leaveHistory?.append(leaveRequest)
+//        leaveHistory?.append(leaveRequest)
+//        leaveHistory?.append(leaveRequest)
     }
 
     override func didReceiveMemoryWarning() {
