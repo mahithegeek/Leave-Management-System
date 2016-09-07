@@ -35,6 +35,8 @@
 		AE955A6C1D75615700DA8849 /* PendingRequestDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A6B1D75615700DA8849 /* PendingRequestDetailsViewController.swift */; };
 		AE955A6E1D75617500DA8849 /* LeaveDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A6D1D75617500DA8849 /* LeaveDetailsViewController.swift */; };
 		BB3B2E415F157E4533B8D6AF /* Pods_LexmarkHubUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3535017D056CD00D2D212BF9 /* Pods_LexmarkHubUITests.framework */; };
+		C6F541101D7E9A9600A48776 /* ApplyLeaveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F5410F1D7E9A9600A48776 /* ApplyLeaveCell.swift */; };
+		C6F541141D7E9FC600A48776 /* Calender.png in Resources */ = {isa = PBXBuildFile; fileRef = C6F541131D7E9FC600A48776 /* Calender.png */; };
 		CA314C49B2F7A5210C0FD433 /* Pods_LexmarkHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A13F641B2771F745C24E15C /* Pods_LexmarkHub.framework */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +98,8 @@
 		AE955A6B1D75615700DA8849 /* PendingRequestDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PendingRequestDetailsViewController.swift; path = "LexmarkHub/PresentationLayer/Pending Requests/PendingRequestDetailsViewController.swift"; sourceTree = SOURCE_ROOT; };
 		AE955A6D1D75617500DA8849 /* LeaveDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeaveDetailsViewController.swift; path = "LexmarkHub/PresentationLayer/Leave History/LeaveDetailsViewController.swift"; sourceTree = SOURCE_ROOT; };
 		B27CAE5472134FBA60CCE0D3 /* Pods-LexmarkHub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHub.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHub/Pods-LexmarkHub.debug.xcconfig"; sourceTree = "<group>"; };
+		C6F5410F1D7E9A9600A48776 /* ApplyLeaveCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyLeaveCell.swift; sourceTree = "<group>"; };
+		C6F541131D7E9FC600A48776 /* Calender.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Calender.png; sourceTree = "<group>"; };
 		C8770A988FEF18E3EDD1333C /* Pods-LexmarkHubTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHubTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHubTests/Pods-LexmarkHubTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -165,6 +169,7 @@
 		1BE8553D1D6C703500BEAE45 /* LexmarkHub */ = {
 			isa = PBXGroup;
 			children = (
+				C6F541111D7E9FC600A48776 /* Resources */,
 				1BE8557E1D6C729A00BEAE45 /* ExternalLibraries */,
 				1BE8557F1D6C729A00BEAE45 /* Managers */,
 				1BE855821D6C729A00BEAE45 /* Models */,
@@ -248,6 +253,7 @@
 		1BE855871D6C729A00BEAE45 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				C6F5410F1D7E9A9600A48776 /* ApplyLeaveCell.swift */,
 				AE955A671D7555B900DA8849 /* LeaveHistoryCell.swift */,
 				AE955A691D7555D100DA8849 /* PendingRequestsCell.swift */,
 			);
@@ -374,6 +380,22 @@
 			name = "Pending Requests";
 			sourceTree = "<group>";
 		};
+		C6F541111D7E9FC600A48776 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C6F541121D7E9FC600A48776 /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		C6F541121D7E9FC600A48776 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				C6F541131D7E9FC600A48776 /* Calender.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -487,6 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1BE8554C1D6C703500BEAE45 /* LaunchScreen.storyboard in Resources */,
+				C6F541141D7E9FC600A48776 /* Calender.png in Resources */,
 				1BE855491D6C703500BEAE45 /* Assets.xcassets in Resources */,
 				1BE855441D6C703500BEAE45 /* Main.storyboard in Resources */,
 			);
@@ -654,6 +677,7 @@
 				AE955A621D75458F00DA8849 /* LoginViewController.swift in Sources */,
 				AE955A5C1D75450C00DA8849 /* PendingRequestViewController.swift in Sources */,
 				AE955A6A1D7555D100DA8849 /* PendingRequestsCell.swift in Sources */,
+				C6F541101D7E9A9600A48776 /* ApplyLeaveCell.swift in Sources */,
 				AE923B751D74008D00237D23 /* Reachability.swift in Sources */,
 				AE955A6E1D75617500DA8849 /* LeaveDetailsViewController.swift in Sources */,
 				1BE855971D6C729A00BEAE45 /* LeaveRequest.swift in Sources */,

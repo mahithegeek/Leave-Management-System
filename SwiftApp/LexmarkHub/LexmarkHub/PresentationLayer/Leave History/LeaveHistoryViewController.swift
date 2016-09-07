@@ -27,7 +27,7 @@ class LeaveHistoryViewController: UITableViewController {
 
         let employee = Employee(id: 9552, name: "Rambabu Nayudu", role: "Employee", email: "rambabu.nayudu@kofax.com", totalLeaves: 25, availableLeaves: 10)
 
-        let leave = Leave(reason: "Marriage vacation", employee: employee, startDate: NSDate(), endDate: NSDate())
+        let leave = Leave(reason: "Marriage vacation", employee: employee, startDate: NSDate(), endDate: NSDate(),leaveType: "")
         let leaveRequest = LeaveRequest(requestId: 1, status: "Pending", leave: leave)
         leaveHistory = Array()
         leaveHistory?.append(leaveRequest)
@@ -69,7 +69,7 @@ class LeaveHistoryViewController: UITableViewController {
 
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMMM yyyy"
-        cell?.nameLabel.text = dateFormatter.stringFromDate(leaveRequest.leave.startDate)
+        cell?.nameLabel.text = dateFormatter.stringFromDate(leaveRequest.leave.startDate!)
         cell?.reasonLabel.text = "Reason: \(leaveRequest.leave.reason)"
         cell?.statusLabel.text = leaveRequest.status
         return cell!

@@ -27,7 +27,7 @@ class PendingRequestViewController: UITableViewController {
 
         let employee = Employee(id: 9552, name: "Rambabu Nayudu", role: "Employee", email: "rambabu.nayudu@kofax.com", totalLeaves: 25, availableLeaves: 10)
 
-        let leave = Leave(reason: "Marriage vacation", employee: employee, startDate: NSDate(), endDate: NSDate())
+        let leave = Leave(reason: "Marriage vacation", employee: employee, startDate: NSDate(), endDate: NSDate(),leaveType: "")
         let leaveRequest = LeaveRequest(requestId: 1, status: "Pending", leave: leave)
 
         pendingRequests = Array()
@@ -66,7 +66,7 @@ class PendingRequestViewController: UITableViewController {
 
         // Configure the cell...
         let pendingRequest = pendingRequests![indexPath.row] as LeaveRequest
-        cell?.nameLabel.text = pendingRequest.leave.employee.name
+        cell?.nameLabel.text = pendingRequest.leave.employee!.name
         cell?.reasonLabel.text = "Reason: \(pendingRequest.leave.reason)"
         cell?.statusLabel.text = pendingRequest.status
 

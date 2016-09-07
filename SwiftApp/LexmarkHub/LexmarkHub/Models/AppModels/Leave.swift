@@ -9,13 +9,15 @@
 import Foundation
 
 class Leave: NSObject {
-    var reason:String
-    var employee: Employee
-    var startDate, endDate:NSDate
-    init(reason:String, employee: Employee, startDate: NSDate, endDate: NSDate){
+    var reason:String?
+    var employee: Employee?
+    var startDate, endDate:NSDate?
+    var leaveType:String?
+    init(reason:String, employee: Employee, startDate: NSDate, endDate: NSDate,leaveType:String){
         self.reason = reason
         self.employee = employee
         self.startDate = startDate
         self.endDate = endDate
+        self.leaveType = leaveType
     }
 }
