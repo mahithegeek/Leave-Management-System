@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A28816FFD80D361CF3A1EDA7D725C03F"
+               BlueprintIdentifier = "9075287E71A37E94967A0B17B9F6791B"
                BuildableName = "Pods_LexmarkHub.framework"
                BlueprintName = "Pods-LexmarkHub"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A28816FFD80D361CF3A1EDA7D725C03F"
+            BlueprintIdentifier = "9075287E71A37E94967A0B17B9F6791B"
             BuildableName = "Pods_LexmarkHub.framework"
             BlueprintName = "Pods-LexmarkHub"
             ReferencedContainer = "container:Pods.xcodeproj">

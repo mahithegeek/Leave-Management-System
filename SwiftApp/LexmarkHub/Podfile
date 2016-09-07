@@ -7,7 +7,6 @@ target 'LexmarkHub' do
 
   # Pods for LexmarkHub
   pod 'AppAuth'
-  pod 'Alamofire', '~> 3.4'
 
   target 'LexmarkHubTests' do
     inherit! :search_paths

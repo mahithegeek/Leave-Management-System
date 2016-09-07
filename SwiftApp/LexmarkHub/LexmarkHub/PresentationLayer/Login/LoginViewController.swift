@@ -33,25 +33,12 @@ class LoginViewController: UIViewController {
     */
 
     @IBAction func signInWithGoogle(sender: UIButton){
-        let oAuthManager:OAuthManager = OAuthManager.init(withIssuer: NSURL(string: kIssuer)!, clientID: kClientID, redirecURI: NSURL(string: kRedirectURI)!, viewController: self)
-        oAuthManager.authWithAutoCodeExchange { (token, error) in
-            let parameters = [
-                "tokenID": token!
-            ]
-            let loginService:LoginService = LoginService.init(withURLString: kLoginURL)
-            loginService.fireService(withParams: parameters, completion: { (dictionary, error) in
-                NSLog("Result is \(dictionary)")
-                if(dictionary != nil){
-                    self.employee = Employee.init(withDictionary: dictionary!)
-                    self.performSegueWithIdentifier(kDashboardSegue, sender: sender)
-                }
-                
-            })
-        }
+        
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == kDashboardSegue{
+        if segue.identifier == "loginButton" {
+            self.employee = Employee(id: 9552, name: "Rambabu Nayudu", role: "Employee", email: "rambabu.nayudu@kofax.com", totalLeaves: 25, availableLeaves: 10)
             if let dashboardViewController = segue.destinationViewController as? DashboardViewController {
                 if let employee = self.employee {
                     dashboardViewController.employee = employee
