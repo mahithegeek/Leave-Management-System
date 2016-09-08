@@ -33,5 +33,5 @@ let kClientID:String = "890980614355-irpa0ap8n2phdq3fbop1382n2dufdep7.apps.googl
  */
 let kRedirectURI:String = "com.googleusercontent.apps.890980614355-irpa0ap8n2phdq3fbop1382n2dufdep7:/oauthredirect"
 
-let kLoginURL:String = "http://172.26.34.33:9526/login"
+let kLoginURL:String = "http://172.26.32.163:9526/login"
 
