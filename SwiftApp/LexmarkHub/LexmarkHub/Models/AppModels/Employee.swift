@@ -8,15 +8,28 @@
 
 import Foundation
 
+// JSON Keys for Response
+
+let kEmployeeID:String = "empID"
+let kFirstName:String = "firstName"
+let kLastName:String = "lastName"
+let kRole:String = "role"
+let kEmail:String = "email"
+
 class Employee: NSObject {
-    var id, totalLeaves, availableLeaves: NSNumber
-    var name, role, email: String
-    init(id: NSNumber, name: String, role: String, email: String, totalLeaves: NSNumber, availableLeaves: NSNumber){
-        self.id = id
-        self.name = name
-        self.role = role
-        self.email = email
-        self.totalLeaves = totalLeaves
-        self.availableLeaves = availableLeaves
+    private (set)var id, role: NSNumber
+    private (set)var name,  email: String
+    
+    init(withDictionary dict:NSDictionary){
+        self.id = NSNumber.init(integer: (dict.objectForKey(kEmployeeID)?.integerValue)!)
+        
+        let firstName:String = dict.objectForKey(kFirstName) as! String
+        let lastName:String = dict.objectForKey(kLastName) as! String
+        self.name = firstName.stringByAppendingString(lastName)
+        
+        self.role = NSNumber.init(integer: (dict.objectForKey(kRole)?.integerValue)!)
+        self.email = dict.objectForKey(kEmail) as! String
+        
+        super.init()
     }
 }

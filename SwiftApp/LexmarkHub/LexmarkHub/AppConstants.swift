@@ -8,6 +8,9 @@
 
 import Foundation
 
+// Segues
+let kDashboardSegue:String = "dashboardSegue"
+
 /*! @var kIssuer
  @brief The OIDC issuer from which the configuration will be discovered.
  */
@@ -29,3 +32,6 @@ let kClientID:String = "890980614355-irpa0ap8n2phdq3fbop1382n2dufdep7.apps.googl
  'oauthredirect' here to help disambiguate from any other use of this scheme.
  */
 let kRedirectURI:String = "com.googleusercontent.apps.890980614355-irpa0ap8n2phdq3fbop1382n2dufdep7:/oauthredirect"
+
+let kLoginURL:String = "http://172.26.34.33:9526/login"
+

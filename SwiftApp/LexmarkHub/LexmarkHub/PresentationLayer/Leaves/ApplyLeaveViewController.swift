@@ -40,20 +40,20 @@ class ApplyLeaveViewController: UIViewController {
     
     @IBAction func btnAddLeaveAction(sender: AnyObject) {
         
-        let employee=Employee(id: 1,name: "Srilatha",role: "Software Developer",email: "srilatha.karancheti@kofax.com",totalLeaves: 1,availableLeaves: 2);
-        
-        let strDate = "30/09/2016"
-        let endDate = "10/10/2016"
-        
-//        let strDate = ""
-//        let endDate = ""
-
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        
-        let leave=Leave(reason:"Comp off",employee: employee,startDate:dateFormatter.dateFromString( strDate )!,endDate: dateFormatter.dateFromString( endDate )!,leaveType:"Comp off")
-        
-        leavesArray.append(leave)
+//        let employee=Employee(id: 1,name: "Srilatha",role: "Software Developer",email: "srilatha.karancheti@kofax.com",totalLeaves: 1,availableLeaves: 2);
+//        
+//        let strDate = "30/09/2016"
+//        let endDate = "10/10/2016"
+//        
+////        let strDate = ""
+////        let endDate = ""
+//
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.dateFormat = "dd-MM-yyyy"
+//        
+//        let leave=Leave(reason:"Comp off",employee: employee,startDate:dateFormatter.dateFromString( strDate )!,endDate: dateFormatter.dateFromString( endDate )!,leaveType:"Comp off")
+//        
+//        leavesArray.append(leave)
         
         tblApplyLeave.reloadData()
         
