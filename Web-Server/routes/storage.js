@@ -24,6 +24,7 @@ Storage.prototype.getUserInfo = function getUserInfo (supervisorID,callback) {
   pool.getConnection(function(err,connection){
         if (err) {
           res({"code" : 100, "status" : "Error in database connection "});
+          callback(res,null);
           return;
         }   
         connection.query("SELECT availability.available,user.first_name,user.emp_id,user.email from availability INNER JOIN user ON availability.emp_id = user.emp_id WHERE user.supervisor = ?",supervisorID,function(err,rows){
@@ -42,6 +43,7 @@ Storage.prototype.getUserInfo = function getUserInfo (supervisorID,callback) {
 
         connection.on('error', function(err) {      
               res({"code" : 100, "status" : "Error in connection database"});
+              callback(res,null);
               return;     
         });
   });
@@ -52,6 +54,7 @@ Storage.prototype.getAvailableLeaves = function getAvailableLeaves (EmployeeID,c
     pool.getConnection(function(err,connection){
         if (err) {
           res({"code" : 100, "status" : "Error in database connection "});
+          callback(res,null);
           return;
         }   
         
@@ -69,6 +72,7 @@ Storage.prototype.getAvailableLeaves = function getAvailableLeaves (EmployeeID,c
 
         connection.on('error', function(err) {      
               res({"code" : 100, "status" : "Error in connection database"});
+              callback(res,null);
               return;     
         });
   });
@@ -117,6 +121,7 @@ function runSqlQuery (sqlQueryString,sqlDataObject,callback) {
         //TODO - throw proper error
         if (err) {
           res({"code" : 100, "status" : "Error in database connection "});
+          callback(res,null);
           return;
         }   
 
@@ -137,6 +142,7 @@ function runSqlQuery (sqlQueryString,sqlDataObject,callback) {
 
         connection.on('error', function(err) {      
               res({"code" : 100, "status" : "Error in connection database"});
+              callback(res,null);
               return;     
         });
   });

@@ -21,11 +21,14 @@ InternalWebService.prototype.getUsers = function getUsers (req,response) {
 				internalGetUsers (req,response,user.empID);
 			}
 			else {
-				response.status(500).send ("User has no access to this API");
+				response.status(400).send (new Error("User has no access to this API"));
 			}
 		}
 		else {
-			response.status(500).send(err);
+			console.log(err);
+			response.status(500).send({error:err});
+			//response.status( 500);
+			//response.send ('error', {message : err.message,error: err});
 		}
 	};
 
@@ -53,11 +56,11 @@ InternalWebService.prototype.getAvailableLeaves = function (req,response) {
 				getLeavesForUser (req,response,user.emp_id);
 			}
 			else {
-				response.status(500).send ("User has no access to this API");
+				response.status(400).send (new Error("User has no access to this API"));
 			}
 		}
 		else {
-			response.status(500).send(err);
+			response.status(500).send(new Error(err));
 		}
 	};
 
@@ -70,7 +73,7 @@ function getLeavesForUser (req,response,empID) {
 				response.send(JSON.stringify(data));
 			}
 			else {
-				response.status(500).send(error);
+				response.status(500).send(new Error(error));
 			}
 		}
 		sqlHandle.getAvailableLeaves(empID,callback);
@@ -84,11 +87,11 @@ InternalWebService.prototype.applyLeave = function (req,response) {
 				internalApplyLeave (req,response,req.body.leaveRequest);
 			}
 			else {
-				response.status(500).send ("User has no access to this API");
+				response.status(400).send (new Error("User has no access to this API"));
 			}
 		}
 		else {
-			response.status(500).send(err);
+			response.status(500).send(new Error(err));
 		}
 	};
 	access.determineUser (req.body.tokenID, accessCallback);
@@ -101,14 +104,14 @@ function internalApplyLeave (req,response,leaveRequest) {
 				response.send("Leave Application Successfull");
 			}
 			else {
-				response.send(error);
+				response.send(new Error(error));
 			}
 		}
 		sqlHandle.insertLeaves (leaveRequest,callback);
 		
 	}
 	else {
-		response.send ("Invalid dates");
+		response.status(400).send (new Error("Invalid dates"));
 	}
 }
 
@@ -126,7 +129,7 @@ InternalWebService.prototype.login = function (req, response) {
 		}
 		else {
 			console.log("login user" + err);
-			response.status(500).send(err);
+			response.status(500).send(new Error(err));
 		}
 	};
 
