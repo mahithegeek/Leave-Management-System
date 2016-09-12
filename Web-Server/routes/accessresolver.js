@@ -16,7 +16,7 @@ accessresolver.prototype.fetchUser = function fetchUser (email,callback) {
 		if(err == null && data){
 			if(data.length > 0) {
 				var parsedData = JSON.stringify(data);
-				console.log("roleresolver" + "data parsed is" + parsedData);
+				console.log("roleresolver   " + "data parsed is" + parsedData);
 				callback(null,createUser(data[0]));
 				return;
 			}
@@ -59,7 +59,7 @@ accessresolver.prototype.determineUser = function determineUserAccess (tokenID,c
 };
 
 function createUser (sqlUser) {
-	user = new User (sqlUser.first_name,sqlUser.last_name,sqlUser.email,sqlUser.role_id,sqlUser.emp_id);
+	user = new User (sqlUser.first_name,sqlUser.last_name,sqlUser.email,sqlUser.role,sqlUser.emp_id);
 	return user;
 }
 
