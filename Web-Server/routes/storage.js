@@ -84,42 +84,6 @@ Storage.prototype.insertLeaves = function insertLeaves (leaveRequest,callback) {
         var dataObject = [dbRequestObject.date_from,dbRequestObject.date_to,dbRequestObject.half_Day,dbRequestObject.applied_on,9526,1];
 
         runSqlQuery(queryString,dataObject,callback);
-
-   /*
-   pool.getConnection(function(err,connection){
-        if (err) {
-          res({"code" : 100, "status" : "Error in database connection "});
-          return;
-        }   
-
-
-        //console.log('connected as id ' + connection.threadId);
-        //(SELECT id FROM status WHERE status = 'Applied')
-        //connection.query("INSERT INTO leaves SET date_from = ?,date_to = ?,half_Day = ?,applied_on = ?,status_id = ?,type_id = ?,emp_id = ?",dbRequestObject.date_from,dbRequestObject.date_to,dbRequestObject.half_Day,dbRequestObject.applied_on,1,dbRequestObject.type_id,dbRequestObject.emp_id,function(err,result)
-
-         //frozen query connection.query("INSERT INTO leaves SET date_from = ?, date_to = ?,status_id = ?,emp_id = ?, type_id = ?",[dbRequestObject.date_from,dbRequestObject.date_to,1,9526,1],function(err,result)
-        var date = utils.getFormattedDate (new Date());
-        var dbRequestObject = {date_from : leaveRequest.fromDate,date_to : leaveRequest.toDate, half_Day : 1,applied_on : date, status_id : 0,type_id : leaveRequest.typeid,emp_id : leaveRequest.emp_id};
-        console.log (dbRequestObject);
-        
-        connection.query("INSERT INTO leaves SET date_from = ?, date_to = ?,half_Day = ?,applied_on = ?,status_id = (SELECT id FROM status WHERE status = 'Applied'),emp_id = ?, type_id = ?",[dbRequestObject.date_from,dbRequestObject.date_to,dbRequestObject.half_Day,dbRequestObject.applied_on,9526,1],function(err,result){
-            connection.release();
-            if(!err) {
-                console.log("success");
-                successCallback(result) ;
-                
-            }
-            else{
-              console.log (err);
-              errorCallback (err);
-            }           
-        });
-
-        connection.on('error', function(err) {      
-              res({"code" : 100, "status" : "Error in connection database"});
-              return;     
-        });
-        */
   };
 
 Storage.prototype.verifyUserExists = function verifyUserExists (userEmail,callback) {
@@ -143,7 +107,7 @@ Storage.prototype.verifyUserExists = function verifyUserExists (userEmail,callba
 };
 
 Storage.prototype.fetchUser = function fetchUser(userEmail,callback) {
-    var queryString = "SELECT * FROM user WHERE auth_email = '" + userEmail + "'";
+    var queryString = "SELECT user.* ,role.role FROM user INNER JOIN role ON role.id = user.role_id WHERE user.auth_email = '" + userEmail + "'";
     runSqlQuery (queryString,null,callback);
 };
 
