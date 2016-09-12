@@ -83,8 +83,8 @@ function validateTokenUsingLib (tokenID,callback) {
 			return;
 		}
 		else {
-			console.log ("error is " + error);
-			callback(error,null);
+			console.log ("validateTokenUsingLib error :  " + error.message);
+			callback(error.message,null);
 			return;
 		}
 
