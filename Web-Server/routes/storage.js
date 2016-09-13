@@ -115,6 +115,11 @@ Storage.prototype.fetchUser = function fetchUser(userEmail,callback) {
     runSqlQuery (queryString,null,callback);
 };
 
+Storage.prototype.fetchLeaveRequests = function (empID, callback) {
+  var queryString = "SELECT * FROM leaves WHERE emp_id = '" + empID + "'";
+  runSqlQuery (queryString,null,callback); 
+};
+
 
 function runSqlQuery (sqlQueryString,sqlDataObject,callback) {
   pool.getConnection(function(err,connection){

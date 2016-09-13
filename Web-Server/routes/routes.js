@@ -22,7 +22,6 @@ var appRouter = function(app) {
  	//API to get available leaves
  	app.post("/getAvailableLeaves",function (req, response) {
 
- 		
  		internalServices.getAvailableLeaves(req,response);
  	
 	});
@@ -35,6 +34,10 @@ var appRouter = function(app) {
 	app.post("/login",function (req,response) {
 
 		internalServices.login (req,response);
+	});
+
+	app.post("/getLeaveRequests",function (req,response){
+		internalServices.getLeaveRequests (req,response);
 	});
 
 	function validateDate (date) {
