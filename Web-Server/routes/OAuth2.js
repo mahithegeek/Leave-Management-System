@@ -1,6 +1,7 @@
 var XMLHttpRequest = require ("xmlhttprequest").XMLHttpRequest;
 var tokenVerifier = require ('google-id-token-verifier');
 
+var audience;
 
 //empty constructor
 function OAuth2 (){
@@ -19,13 +20,13 @@ OAuth2.prototype.verifyTokenID = function (tokenID,callback) {
 	}
 
 	//console.log ("token id is"+tokenID);
-	splitToken(tokenID);
+	
 	validateTokenUsingLib(tokenID,callback);
 
 };
 
 //if you want to split a token and look at Aud and other details
-function splitToken (tokenID) {
+function getAudFromToken (tokenID) {
 	var parts = tokenID.split('.');
 	var headerBuf = new Buffer(parts[0],'base64');
 	var bodyBuf = new Buffer(parts[1],'base64');
@@ -33,6 +34,8 @@ function splitToken (tokenID) {
 	var body = JSON.parse (bodyBuf.toString());
 
 	console.log ("body is " + JSON.stringify(body));
+
+	return body.aud;
 }
 
 function validateTokenUsingGoogleAPI (tokenID,sucessCallback,errorCallback) {
@@ -73,8 +76,9 @@ function validateGoogleAuthResponse (response) {
 
 function validateTokenUsingLib (tokenID,callback) {
 	//hardcoded client ID for now - is it good to take this from client??
-	var clientId = '407408718192.apps.googleusercontent.com';
-	//var clientId = '890980614355-irpa0ap8n2phdq3fbop1382n2dufdep7.apps.googleusercontent.com';
+	//var clientId = '407408718192.apps.googleusercontent.com';
+	audience = getAudFromToken(tokenID);
+	var clientId = getMatchingClientAudience (audience);
 
 	tokenVerifier.verify (tokenID,clientId,function (error, tokenInfo){
 		if(!error){
@@ -91,7 +95,18 @@ function validateTokenUsingLib (tokenID,callback) {
 	});
 }
 
+function getMatchingClientAudience (audience) {
+	var iOSClientID = '890980614355-irpa0ap8n2phdq3fbop1382n2dufdep7.apps.googleusercontent.com'; //- iOS client
+	var webClientID = '890980614355-4l2uen2k564afacknt15nigdkst1ta08.apps.googleusercontent.com'; // - web client
 
+	if(audience == iOSClientID){
+		return iOSClientID;
+	}
+	else if(audience == webClientID) {
+		return webClientID;
+	}
+
+}
 
 
 module.exports = OAuth2;
