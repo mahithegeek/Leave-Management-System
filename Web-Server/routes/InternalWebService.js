@@ -39,7 +39,7 @@ InternalWebService.prototype.login = function (req, response) {
 InternalWebService.prototype.getUsers = function getUsers (req,response) {
 	var accessCallback = function (err, user) {
 		if(err == null) {
-			if(user.role == 2 || user.role == 3 || user.role == 0){
+			if(user.role == "supervisor" || user.role == 3 || user.role == 0){
 				internalGetUsers (req,response,user.empID);
 			}
 			else {
