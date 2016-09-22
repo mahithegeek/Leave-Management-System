@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>AppAuth.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,12 +37,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>7E3DFDFBAC70F921FD4DE290C2C49B24</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9075287E71A37E94967A0B17B9F6791B</key>
+		<key>A28816FFD80D361CF3A1EDA7D725C03F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
