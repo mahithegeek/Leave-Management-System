@@ -1,12 +1,13 @@
 
 
-function User (firstName,lastName,email,role,empID) {
+function User (firstName,lastName,email,role,role_id,empID) {
 
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.email = email;
 	this.role = role;
-	this.empID = empID;
+	this.role_id = role_id;
+	this.emp_id = empID;
 
 }
 
