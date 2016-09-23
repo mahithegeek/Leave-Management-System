@@ -58,9 +58,11 @@ Storage.prototype.getAvailableLeaves = function getAvailableLeaves (EmployeeID,c
           return;
         }   
         
+        console.log("emp id is" + EmployeeID);
         connection.query("select * from availability where emp_id = ?",EmployeeID,function(err,rows){
             connection.release();
             if(!err) {
+                console.log (rows);
                 callback(null,rows) ;
                 return;
             }          

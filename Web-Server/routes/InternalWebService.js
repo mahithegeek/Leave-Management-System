@@ -39,7 +39,7 @@ InternalWebService.prototype.login = function (req, response) {
 InternalWebService.prototype.getUsers = function getUsers (req,response) {
 	var accessCallback = function (err, user) {
 		if(err == null) {
-			if(user.role == 2 || user.role == 3 || user.role == 0){
+			if(user.role == "supervisor" || user.role == 3 || user.role == 0){
 				internalGetUsers (req,response,user.empID);
 			}
 			else {
@@ -74,6 +74,7 @@ InternalWebService.prototype.getAvailableLeaves = function (req,response) {
 	//TO-DO check if this is valid
 	var accessCallback = function (err, user) {
 		if(err == null) {
+			console.log("user is    " + user.emp_id);
 			if(user.role_id == 2 || user.role_id == 3 || user.role_id == 0 || user.role_id == 1){
 				getLeavesForUser (req,response,user.emp_id);
 			}
@@ -92,10 +93,12 @@ InternalWebService.prototype.getAvailableLeaves = function (req,response) {
 function getLeavesForUser (req,response,empID) {
 	var callback = function (err,data){
 			if (err == null) {
+				console.log("successfully retrieved leaves");
 				response.send(JSON.stringify(data));
 			}
 			else {
-				response.status(500).send(new Error(error));
+				console.log("error in getting leaves");
+				response.status(500).send(new Error(err));
 			}
 		}
 		sqlHandle.getAvailableLeaves(empID,callback);
