@@ -2,7 +2,8 @@ var accessResolver = require("./accessresolver.js");
 var store = require("./storage.js");
 var utilities = require("./Utilities.js");
 var authentication = require("./OAuth2.js");
-var sqlHandle,utils,auth,access;
+var Error = require("./error.js");
+var sqlHandle,utils,auth,access,error;
 
 //empty constructor
 function InternalWebService (){
@@ -11,6 +12,8 @@ function InternalWebService (){
 	utils = new utilities ();
 	auth = new authentication ();
 	access = new accessResolver();
+	error = new Error();
+
 }
 
 InternalWebService.prototype.login = function (req, response) {
@@ -19,15 +22,13 @@ InternalWebService.prototype.login = function (req, response) {
 		console.log("callback triggered");
 		if(err == null ) {
 			console.log("creating user" + user);
-			var userData = {firstName : user.firstName, lastName: user.lastName,email : user.email, empID : user.empID.toString(), role : user.role};
-			console.log("data is " + JSON.stringify(userData));
+			var userData = {firstName : user.firstName, lastName: user.lastName,email : user.email, empID : user.emp_id.toString(), role : user.role};
 			response.setHeader('Content-Type', 'application/json');
 			response.json(userData);
 			
 		}
 		else {
-			console.log("login user" + err);
-			response.status(500).send(new Error(err));
+			response.status(500).send(error.DatabaseError(err));
 		}
 	};
 
@@ -39,16 +40,16 @@ InternalWebService.prototype.login = function (req, response) {
 InternalWebService.prototype.getUsers = function getUsers (req,response) {
 	var accessCallback = function (err, user) {
 		if(err == null) {
-			if(user.role == "supervisor" || user.role == 3 || user.role == 0){
-				internalGetUsers (req,response,user.empID);
+			if(user.role_id == 2 || user.role_id == 3){
+				internalGetUsers (req,response,user.emp_id);
 			}
 			else {
-				response.status(400).send (new Error("User has no access to this API"));
+				response.status(400).send (error.UserAccessDeniedError());
 			}
 		}
 		else {
 			console.log(err);
-			response.status(500).send({error:err});
+			response.status(500).send(error.DatabaseError(err));
 			//response.status( 500);
 			//response.send ('error', {message : err.message,error: err});
 		}
@@ -64,7 +65,7 @@ function internalGetUsers (req,response,supervisorID) {
 			response.send (JSON.stringify(data));
 		}
 		else {
-			response.status(500).send (err);
+			response.status(500).send (error.DatabaseError(err));
 		}
 	}
 	sqlHandle.getUserInfo(supervisorID,callback);
@@ -79,11 +80,11 @@ InternalWebService.prototype.getAvailableLeaves = function (req,response) {
 				getLeavesForUser (req,response,user.emp_id);
 			}
 			else {
-				response.status(400).send (new Error("User has no access to this API"));
+				response.status(400).send (error.UserAccessDeniedError());
 			}
 		}
 		else {
-			response.status(500).send(new Error(err));
+			response.status(500).send(error.DatabaseError(err));
 		}
 	};
 
@@ -98,7 +99,7 @@ function getLeavesForUser (req,response,empID) {
 			}
 			else {
 				console.log("error in getting leaves");
-				response.status(500).send(new Error(err));
+				response.status(500).send(error.DatabaseError(err));
 			}
 		}
 		sqlHandle.getAvailableLeaves(empID,callback);
@@ -112,11 +113,11 @@ InternalWebService.prototype.applyLeave = function (req,response) {
 				internalApplyLeave (req,response,req.body.leaveRequest);
 			}
 			else {
-				response.status(400).send (new Error("User has no access to this API"));
+				response.status(400).send (error.UserAccessDeniedError());
 			}
 		}
 		else {
-			response.status(500).send(new Error(err));
+			response.status(500).send(error.DatabaseError(err));
 		}
 	};
 	access.determineUser (req.body.tokenID, accessCallback);
@@ -129,7 +130,7 @@ function internalApplyLeave (req,response,leaveRequest) {
 				response.send("Leave Application Successfull");
 			}
 			else {
-				response.send(new Error(error));
+				response.send(error.DatabaseError(err));
 			}
 		}
 		sqlHandle.insertLeaves (leaveRequest,callback);
@@ -145,16 +146,16 @@ InternalWebService.prototype.getLeaveRequests = function (req,response) {
 	console.log("getLeaveRequests");
 	var accessCallback = function (err, user) {
 		if(err == null) {
-			if(user.role == 'supervisor' || user.role == 3 || user.role == 0 || user.role == 1){
+			if(user.role == 2 || user.role == 3){
 				internalGetLeaveRequests (req,response,user.empID);
 			}
 			else {
 				console.log("bad req");
-				response.status(400).send (new Error("User has no access to this API"));
+				response.status(400).send (error.UserAccessDeniedError());
 			}
 		}
 		else {
-			response.status(500).send(new Error(err));
+			response.status(500).send(error.DatabaseError(err));
 		}
 	};
 	access.determineUser (req.body.tokenID, accessCallback);
@@ -167,7 +168,7 @@ function internalGetLeaveRequests (req,response,empID) {
 				response.send(JSON.stringify(data));
 			}
 			else {
-				response.status(500).send(new Error(error));
+				response.status(500).send(error.DatabaseError(err));
 			}
 		}
 		sqlHandle.fetchLeaveRequests(empID,callback);

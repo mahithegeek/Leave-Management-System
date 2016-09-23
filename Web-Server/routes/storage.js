@@ -23,8 +23,7 @@ Storage.prototype.getUserInfo = function getUserInfo (supervisorID,callback) {
 
   pool.getConnection(function(err,connection){
         if (err) {
-          res({"code" : 100, "status" : "Error in database connection "});
-          callback(res,null);
+          callback(getConnectionError(),null);
           return;
         }   
         connection.query("SELECT availability.available,user.first_name,user.emp_id,user.email from availability INNER JOIN user ON availability.emp_id = user.emp_id WHERE user.supervisor = ?",supervisorID,function(err,rows){
@@ -35,15 +34,15 @@ Storage.prototype.getUserInfo = function getUserInfo (supervisorID,callback) {
                 return;
             }  
             else {
-              console.log("error");
-              callback(err,null);
+              console.log(err);
+              callback(getDBRunTimeError(),null);
               return;
             }         
         });
 
         connection.on('error', function(err) {      
-              res({"code" : 100, "status" : "Error in connection database"});
-              callback(res,null);
+              //res({"code" : 100, "status" : "Error in connection database"});
+              callback(getConnectionError(),null);
               return;     
         });
   });
@@ -53,8 +52,7 @@ Storage.prototype.getAvailableLeaves = function getAvailableLeaves (EmployeeID,c
 
     pool.getConnection(function(err,connection){
         if (err) {
-          res({"code" : 100, "status" : "Error in database connection "});
-          callback(res,null);
+          callback(getConnectionError(),null);
           return;
         }   
         
@@ -67,14 +65,13 @@ Storage.prototype.getAvailableLeaves = function getAvailableLeaves (EmployeeID,c
                 return;
             }          
             else {
-              callback(err,null);
+              callback(getDBRunTimeError(),null);
               return;
             } 
         });
 
         connection.on('error', function(err) {      
-              res({"code" : 100, "status" : "Error in connection database"});
-              callback(res,null);
+              callback(getConnectionError(),null);
               return;     
         });
   });
@@ -105,7 +102,7 @@ Storage.prototype.verifyUserExists = function verifyUserExists (userEmail,callba
           }
         }
         else {
-          callback(err,null);
+          callback(getDBRunTimeError(),null);
         }
         
     };
@@ -123,12 +120,20 @@ Storage.prototype.fetchLeaveRequests = function (empID, callback) {
 };
 
 
+function getConnectionError () {
+  var conError = "Error in Database connection";
+  return conError;
+}
+
+function getDBRunTimeError () {
+  return "Error getting data";
+}
+
 function runSqlQuery (sqlQueryString,sqlDataObject,callback) {
   pool.getConnection(function(err,connection){
         //TODO - throw proper error
         if (err) {
-          res({"code" : 100, "status" : "Error in database connection "});
-          callback(res,null);
+          callback(getConnectionError(),null);
           return;
         }   
 
@@ -142,14 +147,13 @@ function runSqlQuery (sqlQueryString,sqlDataObject,callback) {
             }
             else{
               console.log (err);
-              callback (err,null);
+              callback (getDBRunTimeError(),null);
               return;
             }           
         });
 
         connection.on('error', function(err) {      
-              res({"code" : 100, "status" : "Error in connection database"});
-              callback(res,null);
+              callback(getConnectionError(),null);
               return;     
         });
   });
