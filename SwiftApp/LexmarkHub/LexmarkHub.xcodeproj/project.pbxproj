@@ -22,6 +22,13 @@
 		41AFAADF1D813288009EB7CC /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AFAADE1D813288009EB7CC /* LoginService.swift */; };
 		41B0A7621D76DD9500577998 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B0A7611D76DD9500577998 /* AppConstants.swift */; };
 		41B0A7641D76DDC900577998 /* OAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B0A7631D76DDC900577998 /* OAuthManager.swift */; };
+		AE49F79A1D992920000D3AA0 /* Reporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE49F7991D992920000D3AA0 /* Reporter.swift */; };
+		AE49F79C1D992937000D3AA0 /* ReportiesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE49F79B1D992937000D3AA0 /* ReportiesCell.swift */; };
+		AE49F7A01D99297D000D3AA0 /* ReportiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE49F79F1D99297D000D3AA0 /* ReportiesViewController.swift */; };
+		AE49F7A41D992A08000D3AA0 /* Popups.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE49F7A31D992A08000D3AA0 /* Popups.swift */; };
+		AE49F7A71D992A27000D3AA0 /* BaseServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE49F7A51D992A27000D3AA0 /* BaseServiceFactory.swift */; };
+		AE49F7A81D992A27000D3AA0 /* LMSServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE49F7A61D992A27000D3AA0 /* LMSServiceFactory.swift */; };
+		AE49F7AB1D992A56000D3AA0 /* LMSThreading.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE49F7AA1D992A56000D3AA0 /* LMSThreading.swift */; };
 		AE923B751D74008D00237D23 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE923B741D74008D00237D23 /* Reachability.swift */; };
 		AE923B771D7400AB00237D23 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE923B761D7400AB00237D23 /* Loader.swift */; };
 		AE955A5A1D75437300DA8849 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A591D75437300DA8849 /* Employee.swift */; };
@@ -86,6 +93,13 @@
 		586848E8E6D2FB7A7525C535 /* Pods-LexmarkHubUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHubUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHubUITests/Pods-LexmarkHubUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		70AD746EE54A47FB18C2A87F /* Pods-LexmarkHubTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHubTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHubTests/Pods-LexmarkHubTests.release.xcconfig"; sourceTree = "<group>"; };
 		8A2BBF62A89793EB643AF1E9 /* Pods-LexmarkHub.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHub.release.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHub/Pods-LexmarkHub.release.xcconfig"; sourceTree = "<group>"; };
+		AE49F7991D992920000D3AA0 /* Reporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reporter.swift; sourceTree = "<group>"; };
+		AE49F79B1D992937000D3AA0 /* ReportiesCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportiesCell.swift; sourceTree = "<group>"; };
+		AE49F79F1D99297D000D3AA0 /* ReportiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReportiesViewController.swift; path = LexmarkHub/PresentationLayer/Dashboard/ReportiesViewController.swift; sourceTree = SOURCE_ROOT; };
+		AE49F7A31D992A08000D3AA0 /* Popups.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Popups.swift; sourceTree = "<group>"; };
+		AE49F7A51D992A27000D3AA0 /* BaseServiceFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseServiceFactory.swift; sourceTree = "<group>"; };
+		AE49F7A61D992A27000D3AA0 /* LMSServiceFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LMSServiceFactory.swift; sourceTree = "<group>"; };
+		AE49F7AA1D992A56000D3AA0 /* LMSThreading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LMSThreading.swift; sourceTree = "<group>"; };
 		AE923B741D74008D00237D23 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		AE923B761D7400AB00237D23 /* Loader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		AE955A591D75437300DA8849 /* Employee.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
@@ -236,6 +250,7 @@
 		1BE855831D6C729A00BEAE45 /* AppModels */ = {
 			isa = PBXGroup;
 			children = (
+				AE49F7991D992920000D3AA0 /* Reporter.swift */,
 				1BE855841D6C729A00BEAE45 /* Leave.swift */,
 				1BE855851D6C729A00BEAE45 /* LeaveRequest.swift */,
 				AE955A591D75437300DA8849 /* Employee.swift */,
@@ -246,9 +261,9 @@
 		1BE855861D6C729A00BEAE45 /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
+				AE49F7A11D992A08000D3AA0 /* Views */,
 				1BE855871D6C729A00BEAE45 /* CustomCells */,
 				1BE855881D6C729A00BEAE45 /* ViewControllers */,
-				1BE8558C1D6C729A00BEAE45 /* Views */,
 			);
 			path = PresentationLayer;
 			sourceTree = "<group>";
@@ -256,6 +271,7 @@
 		1BE855871D6C729A00BEAE45 /* CustomCells */ = {
 			isa = PBXGroup;
 			children = (
+				AE49F79B1D992937000D3AA0 /* ReportiesCell.swift */,
 				C6F5410F1D7E9A9600A48776 /* ApplyLeaveCell.swift */,
 				AE955A671D7555B900DA8849 /* LeaveHistoryCell.swift */,
 				AE955A691D7555D100DA8849 /* PendingRequestsCell.swift */,
@@ -278,6 +294,7 @@
 		1BE855891D6C729A00BEAE45 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
+				AE49F79F1D99297D000D3AA0 /* ReportiesViewController.swift */,
 				AE955A5F1D75456B00DA8849 /* DashboardViewController.swift */,
 			);
 			path = Dashboard;
@@ -299,21 +316,14 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
-		1BE8558C1D6C729A00BEAE45 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		1BE8558D1D6C729A00BEAE45 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				AE49F7A91D992A56000D3AA0 /* Threading */,
 				1BE8558E1D6C729A00BEAE45 /* AppUtilities */,
 				1BE8558F1D6C729A00BEAE45 /* CallBacks */,
 				1BE855911D6C729A00BEAE45 /* ErrorLog */,
 				1BE855921D6C729A00BEAE45 /* Extensions */,
-				1BE855931D6C729A00BEAE45 /* Threading */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -348,16 +358,11 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		1BE855931D6C729A00BEAE45 /* Threading */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Threading;
-			sourceTree = "<group>";
-		};
 		41AFAADD1D813288009EB7CC /* ServiceLayer */ = {
 			isa = PBXGroup;
 			children = (
+				AE49F7A51D992A27000D3AA0 /* BaseServiceFactory.swift */,
+				AE49F7A61D992A27000D3AA0 /* LMSServiceFactory.swift */,
 				41AFAADE1D813288009EB7CC /* LoginService.swift */,
 			);
 			path = ServiceLayer;
@@ -371,6 +376,30 @@
 				3535017D056CD00D2D212BF9 /* Pods_LexmarkHubUITests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AE49F7A11D992A08000D3AA0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AE49F7A21D992A08000D3AA0 /* AlertView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AE49F7A21D992A08000D3AA0 /* AlertView */ = {
+			isa = PBXGroup;
+			children = (
+				AE49F7A31D992A08000D3AA0 /* Popups.swift */,
+			);
+			path = AlertView;
+			sourceTree = "<group>";
+		};
+		AE49F7A91D992A56000D3AA0 /* Threading */ = {
+			isa = PBXGroup;
+			children = (
+				AE49F7AA1D992A56000D3AA0 /* LMSThreading.swift */,
+			);
+			path = Threading;
 			sourceTree = "<group>";
 		};
 		AE8D42D91D70189200CB9EE2 /* Leave History */ = {
@@ -674,25 +703,32 @@
 				41B0A7641D76DDC900577998 /* OAuthManager.swift in Sources */,
 				1BE855981D6C729A00BEAE45 /* LHCallBacks.swift in Sources */,
 				AE955A681D7555B900DA8849 /* LeaveHistoryCell.swift in Sources */,
+				AE49F79A1D992920000D3AA0 /* Reporter.swift in Sources */,
 				AE955A5A1D75437300DA8849 /* Employee.swift in Sources */,
+				AE49F79C1D992937000D3AA0 /* ReportiesCell.swift in Sources */,
 				41B0A7621D76DD9500577998 /* AppConstants.swift in Sources */,
 				AE955A6C1D75615700DA8849 /* PendingRequestDetailsViewController.swift in Sources */,
 				AE955A5E1D75453800DA8849 /* LeaveHistoryViewController.swift in Sources */,
+				AE49F7A01D99297D000D3AA0 /* ReportiesViewController.swift in Sources */,
 				1BE855961D6C729A00BEAE45 /* Leave.swift in Sources */,
 				1BE855471D6C703500BEAE45 /* LexmarkHub.xcdatamodeld in Sources */,
 				AE955A601D75456B00DA8849 /* DashboardViewController.swift in Sources */,
 				AE955A661D754DB800DA8849 /* AppUtilities.swift in Sources */,
 				1BE855411D6C703500BEAE45 /* ViewController.swift in Sources */,
 				41AFAADF1D813288009EB7CC /* LoginService.swift in Sources */,
+				AE49F7A81D992A27000D3AA0 /* LMSServiceFactory.swift in Sources */,
 				1BE8553F1D6C703500BEAE45 /* AppDelegate.swift in Sources */,
 				AE923B771D7400AB00237D23 /* Loader.swift in Sources */,
 				AE955A621D75458F00DA8849 /* LoginViewController.swift in Sources */,
 				AE955A5C1D75450C00DA8849 /* PendingRequestViewController.swift in Sources */,
 				AE955A6A1D7555D100DA8849 /* PendingRequestsCell.swift in Sources */,
+				AE49F7AB1D992A56000D3AA0 /* LMSThreading.swift in Sources */,
 				C6F541101D7E9A9600A48776 /* ApplyLeaveCell.swift in Sources */,
+				AE49F7A71D992A27000D3AA0 /* BaseServiceFactory.swift in Sources */,
 				AE923B751D74008D00237D23 /* Reachability.swift in Sources */,
 				AE955A6E1D75617500DA8849 /* LeaveDetailsViewController.swift in Sources */,
 				1BE855971D6C729A00BEAE45 /* LeaveRequest.swift in Sources */,
+				AE49F7A41D992A08000D3AA0 /* Popups.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

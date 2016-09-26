@@ -123,7 +123,7 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
     
     func requestAccessToken(withCompletion completion:OIDAuthCallback){
         self.authState?.withFreshTokensPerformAction({ (accessToken, idToken, error) in
-            completion(idToken: accessToken,error)
+            completion(idToken: idToken,error)
             self.idToken = accessToken
         })
     }
