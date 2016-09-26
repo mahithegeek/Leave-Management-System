@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 // Segues
 let kDashboardSegue:String = "dashboardSegue"
@@ -34,4 +35,10 @@ let kClientID:String = "890980614355-irpa0ap8n2phdq3fbop1382n2dufdep7.apps.googl
 let kRedirectURI:String = "com.googleusercontent.apps.890980614355-irpa0ap8n2phdq3fbop1382n2dufdep7:/oauthredirect"
 
 let kLoginURL:String = "http://172.26.32.163:9526/login"
+let kAvailableLeavesURL:String = "http://172.26.32.163:9526/getAvailableLeaves"
+let kgetUsersURL:String = "http://172.26.32.163:9526/getUsers"
+let kAppTitle = "Lexmark Hub"
+
+let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
 

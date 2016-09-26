@@ -17,8 +17,8 @@ let kRole:String = "role"
 let kEmail:String = "email"
 
 class Employee: NSObject {
-    private (set)var id, role: NSNumber
-    private (set)var name,  email: String
+    private (set)var id: NSNumber
+    private (set)var name, role,  email: String
     
     init(withDictionary dict:NSDictionary){
         self.id = NSNumber.init(integer: (dict.objectForKey(kEmployeeID)?.integerValue)!)
@@ -27,7 +27,7 @@ class Employee: NSObject {
         let lastName:String = dict.objectForKey(kLastName) as! String
         self.name = firstName.stringByAppendingString(lastName)
         
-        self.role = NSNumber.init(integer: (dict.objectForKey(kRole)?.integerValue)!)
+        self.role = dict.objectForKey(kRole) as! String
         self.email = dict.objectForKey(kEmail) as! String
         
         super.init()

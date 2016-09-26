@@ -33,17 +33,23 @@ class LoginViewController: UIViewController {
     */
 
     @IBAction func signInWithGoogle(sender: UIButton){
-        let oAuthManager:OAuthManager = OAuthManager.init(withIssuer: NSURL(string: kIssuer)!, clientID: kClientID, redirecURI: NSURL(string: kRedirectURI)!, viewController: self)
-        oAuthManager.authWithAutoCodeExchange { (token, error) in
+        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+
+       appDelegate.oAuthManager  = OAuthManager.init(withIssuer: NSURL(string: kIssuer)!, clientID: kClientID, redirecURI: NSURL(string: kRedirectURI)!, viewController: self)
+        appDelegate.oAuthManager!.authWithAutoCodeExchange { (token, error) in
             let parameters = [
                 "tokenID": token!
             ]
+            Loader.show("Loading", disableUI: true)
             let loginService:LoginService = LoginService.init(withURLString: kLoginURL)
             loginService.fireService(withParams: parameters, completion: { (dictionary, error) in
                 NSLog("Result is \(dictionary)")
+                Loader.hide()
                 if(dictionary != nil){
                     self.employee = Employee.init(withDictionary: dictionary!)
                     self.performSegueWithIdentifier(kDashboardSegue, sender: sender)
+                } else {
+                    Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                 }
                 
             })

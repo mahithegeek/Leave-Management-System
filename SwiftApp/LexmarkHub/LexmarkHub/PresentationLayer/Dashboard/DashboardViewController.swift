@@ -8,17 +8,69 @@
 
 import UIKit
 
+let EID_KEY:String = "emp_id"
+let AVAILABLE_LEAVES_KEY:String = "available"
+let COMPOFF_LEAVES_KEY:String = "comp-off"
+let SPECIAL_LEAVES_KEY:String = "special"
+let CARRYFORWARD_LEAVES_KEY:String = "carry_forward"
+
+enum role: String {
+    case manager
+    case employee
+}
+
 class DashboardViewController: UIViewController {
     @IBOutlet weak var availableLeavesLabel: UILabel!
 
     var employee: Employee?
 
+    @IBOutlet weak var reportiesButton: UIButton!
+    @IBOutlet weak var pendingRequestsButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.availableLeavesLabel.text = ""
+        
         self.navigationItem.setHidesBackButton(true, animated: true)
         self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        // Do any additional setup after loading the view.
-//        self.availableLeavesLabel.text = "\(employee!.availableLeaves)"
+        
+        if self.employee?.role == role.manager.rawValue {
+            self.reportiesButton.hidden = false
+            self.pendingRequestsButton.hidden = false
+        }
+        
+        Loader.show("Loading", disableUI: true)
+        appDelegate.oAuthManager?.requestAccessToken(withCompletion: { (idToken, error) in
+            
+            if idToken?.isEmpty == false {
+                let parameters = [
+                    "tokenID": idToken!
+                ]
+                LMSServiceFactory.sharedInstance().getAvilableLeaves(withURL: kAvailableLeavesURL, withParams: parameters, completion: { (availableLeaves, error) in
+                    Loader.hide();
+                    if availableLeaves != nil {
+                        let availLeaves:Int? = availableLeaves?.objectForKey(AVAILABLE_LEAVES_KEY)?.integerValue
+                        self.availableLeavesLabel.text = "\(availLeaves!)"
+                    }
+                        
+                    else {
+                        if error != nil {
+                            Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                        }
+                    }
+
+                })
+            }
+            else {
+                Loader.hide();
+                if error != nil {
+                    Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                }
+            }
+        })
+        
+       
     }
 
     override func didReceiveMemoryWarning() {
