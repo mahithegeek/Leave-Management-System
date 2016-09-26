@@ -16,6 +16,13 @@ function InternalWebService (){
 
 }
 
+var ROLE = {
+	ADMIN : 0,
+	EMPLOYEE : 1,
+	SUPERVISOR : 2,
+	MANAGER : 3
+};
+
 InternalWebService.prototype.login = function (req, response) {
 
 	var accessCallback = function (err, user) {
@@ -40,7 +47,8 @@ InternalWebService.prototype.login = function (req, response) {
 InternalWebService.prototype.getUsers = function getUsers (req,response) {
 	var accessCallback = function (err, user) {
 		if(err == null) {
-			if(user.role_id == 2 || user.role_id == 3){
+			var userRole = getUserRole (user.role_id);
+			if(userRole == ROLE.SUPERVISOR || userRole == ROLE.MANAGER){
 				internalGetUsers (req,response,user.emp_id);
 			}
 			else {
@@ -50,12 +58,9 @@ InternalWebService.prototype.getUsers = function getUsers (req,response) {
 		else {
 			console.log(err);
 			response.status(500).send(error.DatabaseError(err));
-			//response.status( 500);
-			//response.send ('error', {message : err.message,error: err});
 		}
 	};
 
-	//console.log(req.body.tokenID);
 	access.determineUser (req.body.tokenID, accessCallback);
 };
 
@@ -145,7 +150,7 @@ function internalApplyLeave (req,response,leaveRequestReceived,user) {
 function constructLeaveRequest (leaveRequestReceived,user) {
 	var date = utils.getFormattedDate (new Date());
     var dbRequestObject = {date_from : leaveRequestReceived.fromDate,date_to : leaveRequestReceived.toDate, half_Day : leaveRequestReceived.isHalfDay,applied_on : date, status_id : 0,type_id : leaveRequestReceived.typeid,emp_id : user.emp_id};
-    //console.log(dbRequestObject.date_from);
+    console.log(dbRequestObject.date_from);
     return dbRequestObject;
 }
 
@@ -182,6 +187,23 @@ function internalGetLeaveRequests (req,response,empID) {
 		sqlHandle.fetchLeaveRequests(empID,callback);
 }
 
+
+function getUserRole (roleID) {
+	switch (roleID) {
+		case 0 :
+			return ROLE.ADMIN;
+			break;
+		case 1 :
+			return ROLE.EMPLOYEE;
+			break;
+		case 2 :
+			return ROLE.SUPERVISOR;
+			break;
+		case 3 :
+			return ROLE.MANAGER;
+			break;
+	}
+}
 
 
 module.exports = InternalWebService;
