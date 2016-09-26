@@ -11,7 +11,7 @@ function accessresolver () {
 
 
 accessresolver.prototype.fetchUser = function fetchUser (email,callback) {
-	console.log ("roleresolver : " + email);
+	//console.log ("roleresolver : " + email);
 	var fetchUserCallback = function (err,data){
 		if(err == null && data){
 			if(data.length > 0) {
