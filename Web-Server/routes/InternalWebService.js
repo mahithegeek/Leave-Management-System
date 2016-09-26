@@ -132,7 +132,8 @@ function internalApplyLeave (req,response,leaveRequestReceived,user) {
 	if(utils.validateDate(req.body.fromDate) && utils.validateDate(req.body.toDate)) {
 		var callback = function (err,data) {
 			if(err == null){
-				response.send("Leave Application Successfull");
+				var successResponse = {success : "Successfully applied Leave"};
+				response.send(successResponse);
 			}
 			else {
 				response.send(error.DatabaseError(err));
