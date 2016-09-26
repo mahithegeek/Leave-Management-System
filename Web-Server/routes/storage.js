@@ -80,14 +80,10 @@ Storage.prototype.getAvailableLeaves = function getAvailableLeaves (EmployeeID,c
 Storage.prototype.insertLeaves = function insertLeaves (leaveRequest,callback) {
 
    var queryString = "INSERT INTO leaves SET date_from = ?, date_to = ?,half_Day = ?,applied_on = ?,status_id = (SELECT id FROM status WHERE status = 'Applied'),emp_id = ?, type_id = ?";
-   
-
-        var date = utils.getFormattedDate (new Date());
-        var dbRequestObject = {date_from : leaveRequest.fromDate,date_to : leaveRequest.toDate, half_Day : 1,applied_on : date, status_id : 0,type_id : leaveRequest.typeid,emp_id : leaveRequest.emp_id};
-        var dataObject = [dbRequestObject.date_from,dbRequestObject.date_to,dbRequestObject.half_Day,dbRequestObject.applied_on,9526,1];
-
-        runSqlQuery(queryString,dataObject,callback);
-  };
+  
+   var dataObject = [leaveRequest.date_from,leaveRequest.date_to,leaveRequest.half_Day,leaveRequest.applied_on,leaveRequest.emp_id,1];
+   runSqlQuery(queryString,dataObject,callback);
+};
 
 Storage.prototype.verifyUserExists = function verifyUserExists (userEmail,callback) {
     var queryString = "SELECT 1 FROM user WHERE auth_email = '"+userEmail+"' ORDER BY auth_email LIMIT 1";

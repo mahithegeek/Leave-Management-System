@@ -30,7 +30,7 @@ accessresolver.prototype.fetchUser = function fetchUser (email,callback) {
 };
 
 accessresolver.prototype.determineUser = function determineUserAccess (tokenID,callback) {
-	console.log("token ID is " + tokenID);
+	//console.log("token ID is " + tokenID);
 	var tempContext = this;
 	var tokenCallback = function (err,email){
 			if(err == null){
