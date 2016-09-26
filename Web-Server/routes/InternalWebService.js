@@ -109,8 +109,8 @@ InternalWebService.prototype.applyLeave = function (req,response) {
 
 	var accessCallback = function (err, user) {
 		if(err == null) {
-			if(user.role == 2 || user.role == 3 || user.role == 0 || user.role == 1){
-				internalApplyLeave (req,response,req.body.leaveRequest);
+			if(user.role_id == 2 || user.role_id == 3 || user.role_id == 0 || user.role_id == 1){
+				internalApplyLeave (req,response,req.body.leave,user);
 			}
 			else {
 				response.status(400).send (error.UserAccessDeniedError());
@@ -123,7 +123,7 @@ InternalWebService.prototype.applyLeave = function (req,response) {
 	access.determineUser (req.body.tokenID, accessCallback);
 };
 
-function internalApplyLeave (req,response,leaveRequest) {
+function internalApplyLeave (req,response,leaveRequestReceived,user) {
 	if(utils.validateDate(req.body.fromDate) && utils.validateDate(req.body.toDate)) {
 		var callback = function (err,data) {
 			if(err == null){
@@ -133,12 +133,20 @@ function internalApplyLeave (req,response,leaveRequest) {
 				response.send(error.DatabaseError(err));
 			}
 		}
-		sqlHandle.insertLeaves (leaveRequest,callback);
+		var leave = constructLeaveRequest(leaveRequestReceived,user);
+		sqlHandle.insertLeaves (leave,callback);
 		
 	}
 	else {
 		response.status(400).send (new Error("Invalid dates"));
 	}
+}
+
+function constructLeaveRequest (leaveRequestReceived,user) {
+	var date = utils.getFormattedDate (new Date());
+    var dbRequestObject = {date_from : leaveRequestReceived.fromDate,date_to : leaveRequestReceived.toDate, half_Day : leaveRequestReceived.isHalfDay,applied_on : date, status_id : 0,type_id : leaveRequestReceived.typeid,emp_id : user.emp_id};
+    //console.log(dbRequestObject.date_from);
+    return dbRequestObject;
 }
 
 
