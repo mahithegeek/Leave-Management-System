@@ -40,7 +40,9 @@ class ReportiesViewController: UIViewController {
                         
                     }
                     else {
-                        Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                        if error != nil {
+                            Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                        }
                     }
                 })
             }

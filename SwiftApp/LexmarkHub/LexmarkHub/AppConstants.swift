@@ -37,6 +37,8 @@ let kRedirectURI:String = "com.googleusercontent.apps.890980614355-irpa0ap8n2phd
 let kLoginURL:String = "http://172.26.32.163:9526/login"
 let kAvailableLeavesURL:String = "http://172.26.32.163:9526/getAvailableLeaves"
 let kgetUsersURL:String = "http://172.26.32.163:9526/getUsers"
+let kApplyLeaveURL:String = "http://172.26.32.163:9526/applyLeave"
+
 let kAppTitle = "Lexmark Hub"
 
 let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate

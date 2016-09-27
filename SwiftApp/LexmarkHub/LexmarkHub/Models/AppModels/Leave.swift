@@ -13,7 +13,7 @@ class Leave: NSObject {
     var employee: Employee?
     var startDate, endDate:NSDate?
     var leaveType:String?
-    init(reason:String, employee: Employee, startDate: NSDate, endDate: NSDate,leaveType:String){
+    init(reason:String, employee: Employee?, startDate: NSDate?, endDate: NSDate?,leaveType:String){
         self.reason = reason
         self.employee = employee
         self.startDate = startDate

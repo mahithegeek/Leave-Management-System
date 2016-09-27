@@ -8,14 +8,30 @@
 
 import UIKit
 
-class ApplyLeaveViewController: UIViewController {
+class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
     
     @IBOutlet weak var tblApplyLeave: UITableView!
-    
+    @IBOutlet weak var reasonTextView: UITextView!
+    @IBOutlet weak var addLeaveButton: UIBarButtonItem!
+
     var leavesArray = [AnyObject]()
+    let leaveTypes = ["Vacation", "Comp-of", "Special", "carry-forward"]
+    var pickerView = UIPickerView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        pickerView.delegate = self
+        
+        
+        //Adding empty leave,user has to fill dates
+        self.addLeaveButton.enabled = false
+        let leave=Leave(reason:"Vacation",employee:nil ,startDate:nil,endDate: nil,leaveType:"Vacation")
+        leavesArray.append(leave)
+        tblApplyLeave.reloadData()
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ApplyLeaveViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ApplyLeaveViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         // Do any additional setup after loading the view.
     }
@@ -36,30 +52,165 @@ class ApplyLeaveViewController: UIViewController {
      }
      */
     
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+    func keyboardWillShow(notification:NSNotification) {
+        
+        if reasonTextView.isFirstResponder() {
+            let userInfo:NSDictionary = notification.userInfo!
+            let keyboardFrame:NSValue = userInfo.valueForKey(UIKeyboardFrameEndUserInfoKey) as! NSValue
+            let keyboardRectangle = keyboardFrame.CGRectValue()
+            let keyboardHeight = keyboardRectangle.height
+            var viewRect:CGRect = self.view.frame
+            viewRect.size.height = UIScreen.mainScreen().bounds.size.height - keyboardHeight
+            self.view.frame = viewRect
+        }
+    }
+
+    func keyboardWillHide(notification:NSNotification) {
+        var viewRect:CGRect = self.view.frame
+        viewRect.size.height = UIScreen.mainScreen().bounds.size.height
+        self.view.frame = viewRect
+    }
+
+    func textFieldDidBeginEditing(textField: UITextField) {
+        textField.inputView = pickerView
+    }
+    
     // MARK: - Button actions
     
     @IBAction func btnAddLeaveAction(sender: AnyObject) {
         
-//        let employee=Employee(id: 1,name: "Srilatha",role: "Software Developer",email: "srilatha.karancheti@kofax.com",totalLeaves: 1,availableLeaves: 2);
-//        
-//        let strDate = "30/09/2016"
-//        let endDate = "10/10/2016"
-//        
-////        let strDate = ""
-////        let endDate = ""
-//
-//        let dateFormatter = NSDateFormatter()
-//        dateFormatter.dateFormat = "dd-MM-yyyy"
-//        
-//        let leave=Leave(reason:"Comp off",employee: employee,startDate:dateFormatter.dateFromString( strDate )!,endDate: dateFormatter.dateFromString( endDate )!,leaveType:"Comp off")
-//        
-//        leavesArray.append(leave)
+        self.addLeaveButton.enabled = false
         
+        let leave=Leave(reason:"Vacation",employee:nil ,startDate:nil,endDate: nil,leaveType:"Vacation")
+        
+        leavesArray.append(leave)
         tblApplyLeave.reloadData()
         
         
     }
     
+    @IBAction func startDateButtonAction(sender: AnyObject) {
+    
+        
+        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .Date) {
+            (date) -> Void in
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd" //format style. you can change according to yours
+            let dateString = dateFormatter.stringFromDate(date)
+            print(dateString)
+            
+            let leave = self.leavesArray.first as? Leave
+            leave!.startDate = date
+            
+            self.tblApplyLeave.reloadData()
+
+        }
+    }
+    
+    @IBAction func endDateButtonAction(sender: AnyObject) {
+        print("I am in end");
+        
+        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .Date) {
+            (date) -> Void in
+            
+            let leave = self.leavesArray.first as? Leave
+            leave!.endDate = date
+            
+            self.tblApplyLeave.reloadData()
+            
+        }
+    }
+    
+    
+    @IBAction func submitButtonAction(sender: AnyObject) {
+        
+        if leavesArray.count == 0 {
+            Popups.SharedInstance.ShowPopup(kAppTitle, message: "Please Select start and end dates by tapping on '+' symbol")
+            return
+        }
+        
+        let leave = leavesArray.first as! Leave
+        
+        if leave.startDate == nil || leave.endDate == nil {
+            Popups.SharedInstance.ShowPopup(kAppTitle, message: "Please Select start/end date.")
+            return
+        }
+        
+        Loader.show("Loading", disableUI: true)
+        appDelegate.oAuthManager?.requestAccessToken(withCompletion: { (idToken, error) in
+            
+            if idToken?.isEmpty == false {
+                let parameters = [
+                    "tokenID": idToken!,
+                    "leave": [
+                        "fromDate": self.dateStringFromDate(leave.startDate!),
+                        "toDate" : self.dateStringFromDate(leave.endDate!),
+                        "isHalfDay" : true,
+                        "type" : "Vacation"
+                        ]
+                ]
+                
+                print(parameters)
+                LMSServiceFactory.sharedInstance().applyLeave(withURL: kApplyLeaveURL, withParams: parameters as! [String : AnyObject], completion: { (responseDict, error) in
+                    
+                    print(responseDict)
+                    Loader.hide();
+                    
+                    if responseDict != nil {
+                        Popups.SharedInstance.ShowAlert(self, title: kAppTitle, message: "Applied leave successfully.", buttons: ["OK"], completion: { (buttonPressed) in
+                            self.navigationController?.popViewControllerAnimated(true)
+                        })
+                    } else {
+                        Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                    }
+
+                })
+                
+            }
+            else {
+                Loader.hide();
+                if error != nil {
+                    Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                }
+            }
+        })
+        
+    }
+    
+    
+    // returns the number of 'columns' to display.
+    func numberOfComponentsInPickerView(pickerView: UIPickerView!) -> Int{
+        return 1
+    }
+    
+    // returns the # of rows in each component..
+    func pickerView(pickerView: UIPickerView!, numberOfRowsInComponent component: Int) -> Int{
+        return leaveTypes.count
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return leaveTypes[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    {
+        print("selected")
+        //genderTextField.text = "\(gender[row])"
+        
+        
+        let leave = self.leavesArray.first as? Leave
+        leave!.leaveType = leaveTypes[row]
+        self.tblApplyLeave.reloadData()
+        
+    }
 }
 
 
@@ -76,32 +227,43 @@ extension ApplyLeaveViewController :UITableViewDataSource {
         let cellIdentifier = "ApplyLeaveCell"
         let  cell : ApplyLeaveCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)!
             as! ApplyLeaveCell
-        
+       
         let leave:Leave=leavesArray[indexPath.row] as! Leave
         
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        
-        let stringFromDate = dateFormatter.stringFromDate(leave.startDate!)
+       
+        var stringFromDate = ""
+        if let startDate = leave.startDate {
+            stringFromDate = dateStringFromDate(startDate)
+        }
         
         if(stringFromDate.isEmpty){
             cell.startdateButton.hidden=false
         }else{
-            cell.fromDate.text=stringFromDate
-            cell.startdateButton.hidden=true
+            cell.startdateButton.setImage(nil, forState: .Normal)
+            cell.startdateButton.setTitle(stringFromDate, forState: .Normal)
         }
         
-        let stringEndDate = dateFormatter.stringFromDate(leave.endDate!)
-        
-        if(stringFromDate.isEmpty){
+        var stringEndDate = ""
+        if let endDate = leave.endDate {
+            stringEndDate = dateStringFromDate(endDate)
+        }        
+        if(stringEndDate.isEmpty){
             cell.endDateButton.hidden=false
         }else{
-            cell.toDate.text=stringEndDate
-            cell.endDateButton.hidden=true
+            cell.endDateButton.setImage(nil, forState: .Normal)
+            cell.endDateButton.setTitle(stringEndDate, forState: .Normal)
         }
         cell.leaveType.text=leave.leaveType
         
         return cell
+    }
+    
+    func dateStringFromDate(date:NSDate) -> String {
+    
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" //format style. you can change according to yours
+        let dateString = dateFormatter.stringFromDate(date)
+        return dateString
     }
 }
 
