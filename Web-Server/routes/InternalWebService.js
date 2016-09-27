@@ -129,7 +129,7 @@ InternalWebService.prototype.applyLeave = function (req,response) {
 };
 
 function internalApplyLeave (req,response,leaveRequestReceived,user) {
-	if(utils.validateDate(req.body.fromDate) && utils.validateDate(req.body.toDate)) {
+	if(utils.validateDate(leaveRequestReceived.fromDate) && utils.validateDate(leaveRequestReceived.toDate)) {
 		var callback = function (err,data) {
 			if(err == null){
 				var successResponse = {success : "Successfully applied Leave"};
@@ -144,7 +144,7 @@ function internalApplyLeave (req,response,leaveRequestReceived,user) {
 		
 	}
 	else {
-		response.status(400).send (new Error("Invalid dates"));
+		response.status(400).send (error.InputError("Invalid Dates"));
 	}
 }
 

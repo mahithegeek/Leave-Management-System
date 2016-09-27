@@ -12,6 +12,12 @@ ServerError.prototype.UserAccessDeniedError = function () {
 
 ServerError.prototype.DatabaseError = function (message) {
 	var error = {code:4100,description:message};
+	return error;
+}
+
+ServerError.prototype.InputError = function (message) {
+	var error = {code : 4200,description:message};
+	return error;
 }
 
 module.exports = ServerError;
