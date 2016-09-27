@@ -10,8 +10,6 @@ import UIKit
 
 class ApplyLeaveCell: UITableViewCell {
     
-    @IBOutlet weak var fromDate: UITextField!
-    @IBOutlet weak var toDate: UITextField!
     @IBOutlet weak var leaveType: UITextField!
     @IBOutlet weak var startdateButton: UIButton!
     @IBOutlet weak var endDateButton: UIButton!
