@@ -7,8 +7,11 @@ Utilities.prototype.validateDate = function validateDate (date) {
 
 //console.log("received date" + date);
 	var tempDate = new Date (date);
+	tempDate.setHours(0,0,0,0);
+	var currentDate = new Date();
+	currentDate.setHours(0,0,0,0);
 	//console.log(tempDate);
-	if(tempDate < new Date()) {
+	if(tempDate < currentDate) {
 		return 0;
 	}
 

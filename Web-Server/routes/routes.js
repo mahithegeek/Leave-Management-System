@@ -14,19 +14,19 @@ var appRouter = function(app) {
 	});
 
 	//API to get users 
- 	app.post("/getUsers",function (req, response) {
+ 	app.post("/users",function (req, response) {
  		internalServices.getUsers(req,response);
  	
 	});
 
  	//API to get available leaves
- 	app.post("/getAvailableLeaves",function (req, response) {
+ 	app.post("/availableLeaves",function (req, response) {
 
  		internalServices.getAvailableLeaves(req,response);
  	
 	});
 
-	app.post("/applyLeave",function (req,response){
+	app.post("/leave",function (req,response){
 
 		internalServices.applyLeave (req,response);
 	});
@@ -36,7 +36,7 @@ var appRouter = function(app) {
 		internalServices.login (req,response);
 	});
 
-	app.post("/getLeaveRequests",function (req,response){
+	app.post("/leaveRequests",function (req,response){
 		internalServices.getLeaveRequests (req,response);
 	});
 
