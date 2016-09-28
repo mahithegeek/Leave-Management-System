@@ -8,6 +8,8 @@
 
 import UIKit
 
+let kMaxLeaves = 7
+
 class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
     
     @IBOutlet weak var tblApplyLeave: UITableView!
@@ -100,7 +102,7 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
     @IBAction func startDateButtonAction(sender: AnyObject) {
     
         
-        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .Date) {
+        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .Date, minDate:NSDate(), maxDate:nil) {
             (date) -> Void in
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd" //format style. you can change according to yours
@@ -116,9 +118,8 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
     }
     
     @IBAction func endDateButtonAction(sender: AnyObject) {
-        print("I am in end");
         
-        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .Date) {
+        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .Date, minDate:NSDate(), maxDate:nil) {
             (date) -> Void in
             
             let leave = self.leavesArray.first as? Leave
@@ -129,21 +130,67 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         }
     }
     
-    
-    @IBAction func submitButtonAction(sender: AnyObject) {
-        
+    func checkValidation() ->(Bool,String)
+    {
         if leavesArray.count == 0 {
-            Popups.SharedInstance.ShowPopup(kAppTitle, message: "Please Select start and end dates by tapping on '+' symbol")
-            return
+            return(false, "Please Select start and end dates by tapping on '+' symbol")
         }
         
         let leave = leavesArray.first as! Leave
-        
         if leave.startDate == nil || leave.endDate == nil {
-            Popups.SharedInstance.ShowPopup(kAppTitle, message: "Please Select start/end date.")
+            return(false, "Please Select start/end date.")
+        }
+        if compareDate(NSDate(), toDate: leave.startDate!) == .OrderedDescending || compareDate(NSDate(), toDate: leave.endDate!) == .OrderedDescending {
+            return(false, "Please select valid dates")
+        }
+        if compareDate(leave.startDate!, toDate: leave.endDate!) == .OrderedDescending  {
+            return(false, "Start date should be greater than(equal to)  end date")
+        }
+        if daysBetweenDates(leave.startDate!, endDate: leave.endDate!) > kMaxLeaves - 1 {
+            return(false, "You can only apply \(kMaxLeaves) days continuously")
+        }
+        print(numberOfWeekendsBeetweenDates(startDate:leave.startDate!, endDate: leave.endDate!))
+
+        return(true, "Success")
+    }
+    
+    func daysBetweenDates(startDate: NSDate, endDate: NSDate) -> Int
+    {
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Day], fromDate: startDate, toDate: endDate, options: [])
+        return components.day
+    }
+    
+    func numberOfWeekendsBeetweenDates(startDate startDate:NSDate,endDate:NSDate)->Int{
+        var count = 0
+        let oneDay = NSDateComponents()
+        oneDay.day = 1;
+        // Using a Gregorian calendar.
+        let calendar = NSCalendar.currentCalendar()
+        var currentDate = startDate;
+        // Iterate from fromDate until toDate
+        while (currentDate.compare(endDate) != .OrderedDescending) {
+            let dateComponents = calendar.components(.Weekday, fromDate: currentDate)
+            if (dateComponents.weekday == 1 || dateComponents.weekday == 7 ) {
+                count += 1;
+            }
+            // "Increment" currentDate by one day.
+            currentDate = calendar.dateByAddingComponents(oneDay, toDate: currentDate, options: [])!
+        }
+        return count
+    }
+
+    @IBAction func submitButtonAction(sender: AnyObject) {
+        
+        
+        let validationResult:(Bool, String) = checkValidation()
+        
+        if validationResult.0 == false {
+            Popups.SharedInstance.ShowPopup(kAppTitle, message: validationResult.1)
             return
         }
-        
+        let leave = leavesArray.first as! Leave
+
         Loader.show("Loading", disableUI: true)
         appDelegate.oAuthManager?.requestAccessToken(withCompletion: { (idToken, error) in
             
@@ -185,6 +232,12 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         
     }
     
+    func compareDate(fromDate:NSDate, toDate:NSDate) -> NSComparisonResult{
+        
+        let order = NSCalendar.currentCalendar().compareDate(fromDate, toDate: toDate,
+                                                         toUnitGranularity: .Day)
+        return order
+    }
     
     // returns the number of 'columns' to display.
     func numberOfComponentsInPickerView(pickerView: UIPickerView!) -> Int{

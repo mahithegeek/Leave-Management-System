@@ -71,13 +71,9 @@ class DatePickerDialog: UIView {
     func deviceOrientationDidChange(notification: NSNotification) {
         /* TODO */
     }
+
     
-    /* Create the dialog view, and animate opening the dialog */
-    func show(title: String, datePickerMode: UIDatePickerMode = .Date, callback: DatePickerCallback) {
-        show(title, doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: datePickerMode, callback: callback)
-    }
-    
-    func show(title: String, doneButtonTitle: String, cancelButtonTitle: String, defaultDate: NSDate = NSDate(), datePickerMode: UIDatePickerMode = .Date, callback: DatePickerCallback) {
+    func show(title: String, doneButtonTitle: String, cancelButtonTitle: String, defaultDate: NSDate = NSDate(), datePickerMode: UIDatePickerMode = .Date, minDate:NSDate?, maxDate:NSDate?, callback: DatePickerCallback) {
         self.titleLabel.text = title
         self.doneButton.setTitle(doneButtonTitle, forState: .Normal)
         self.cancelButton.setTitle(cancelButtonTitle, forState: .Normal)
@@ -85,6 +81,8 @@ class DatePickerDialog: UIView {
         self.callback = callback
         self.defaultDate = defaultDate
         self.datePicker.datePickerMode = self.datePickerMode ?? .Date
+        self.datePicker.minimumDate = minDate
+        self.datePicker.maximumDate = maxDate
         self.datePicker.date = self.defaultDate ?? NSDate()
         
         /* Anim */
