@@ -45,6 +45,7 @@ InternalWebService.prototype.login = function (req, response) {
 
 //To DO just check the credentials and see if this is a legitimate request
 InternalWebService.prototype.getUsers = function getUsers (req,response) {
+	console.log("API getUsers");
 	var accessCallback = function (err, user) {
 		if(err == null) {
 			var userRole = getUserRole (user.role_id);
@@ -77,11 +78,12 @@ function internalGetUsers (req,response,supervisorID) {
 }
 
 InternalWebService.prototype.getAvailableLeaves = function (req,response) {
+	console.log("API getAvailableLeaves");
 	//TO-DO check if this is valid
 	var accessCallback = function (err, user) {
 		if(err == null) {
 			console.log("user is    " + user.emp_id);
-			if(user.role_id == 2 || user.role_id == 3 || user.role_id == 0 || user.role_id == 1){
+			if(userRole == ROLE.SUPERVISOR || userRole == ROLE.MANAGER || userRole == ROLE.EMPLOYEE){
 				getLeavesForUser (req,response,user.emp_id);
 			}
 			else {
@@ -114,7 +116,7 @@ InternalWebService.prototype.applyLeave = function (req,response) {
 
 	var accessCallback = function (err, user) {
 		if(err == null) {
-			if(user.role_id == 2 || user.role_id == 3 || user.role_id == 0 || user.role_id == 1){
+			if(userRole == ROLE.SUPERVISOR || userRole == ROLE.MANAGER || userRole == ROLE.EMPLOYEE){
 				internalApplyLeave (req,response,req.body.leave,user);
 			}
 			else {
@@ -160,11 +162,11 @@ InternalWebService.prototype.getLeaveRequests = function (req,response) {
 	console.log("getLeaveRequests");
 	var accessCallback = function (err, user) {
 		if(err == null) {
-			if(user.role == 2 || user.role == 3){
-				internalGetLeaveRequests (req,response,user.empID);
+			var userRole = getUserRole (user.role_id);
+			if(userRole == ROLE.SUPERVISOR || userRole == ROLE.MANAGER){
+				internalGetLeaveRequests (req,response,user.emp_id);
 			}
 			else {
-				console.log("bad req");
 				response.status(400).send (error.UserAccessDeniedError());
 			}
 		}
@@ -176,7 +178,7 @@ InternalWebService.prototype.getLeaveRequests = function (req,response) {
 };
 
 function internalGetLeaveRequests (req,response,empID) {
-	console.log("internalGetLeaveRequests");
+	console.log("internalGetLeaveRequests and emp id is  "+empID);
 	var callback = function (err,data){
 			if (err == null) {
 				response.send(JSON.stringify(data));
@@ -188,6 +190,9 @@ function internalGetLeaveRequests (req,response,empID) {
 		sqlHandle.fetchLeaveRequests(empID,callback);
 }
 
+function formLeaveRequestResponse (dbResult) {
+	var leaveRequest = {fromDate:dbResult.date_from,toDate:dbResult.date_to,half_Day:dbResult.half_Day,appliedOn:dbResult.applied_on,status_id:dbResult.status_id};
+}
 
 function getUserRole (roleID) {
 	switch (roleID) {
