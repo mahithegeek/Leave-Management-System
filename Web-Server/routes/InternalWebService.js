@@ -181,7 +181,9 @@ function internalGetLeaveRequests (req,response,empID) {
 	console.log("internalGetLeaveRequests and emp id is  "+empID);
 	var callback = function (err,data){
 			if (err == null) {
-				response.send(JSON.stringify(data));
+				//response.send(JSON.stringify(data));
+				var requests = formLeaveRequestResponse(data);
+				response.send({leaverequests:requests});
 			}
 			else {
 				response.status(500).send(error.DatabaseError(err));
@@ -191,7 +193,17 @@ function internalGetLeaveRequests (req,response,empID) {
 }
 
 function formLeaveRequestResponse (dbResult) {
-	var leaveRequest = {fromDate:dbResult.date_from,toDate:dbResult.date_to,half_Day:dbResult.half_Day,appliedOn:dbResult.applied_on,status_id:dbResult.status_id};
+	
+	var leaveRequestResponse = [];
+	for(var i=0;i< dbResult.length;i++){
+		console.log("dbresult is  "+dbResult[i]);
+		var leaveRequest = {id:dbResult[i].id,firstName:dbResult[i].first_name,lastName:dbResult[i].last_name,email:dbResult[i].email,fromDate:dbResult[i].date_from,toDate:dbResult[i].date_to,half_Day:dbResult[i].half_Day,appliedOn:dbResult[i].applied_on,status:dbResult[i].status};
+		console.log("leave request is   "+ leaveRequest);
+		leaveRequestResponse.push(leaveRequest);
+
+	}
+	
+	return leaveRequestResponse;
 }
 
 function getUserRole (roleID) {
