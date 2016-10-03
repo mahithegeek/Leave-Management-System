@@ -38,6 +38,7 @@ let kLoginURL:String = "http://172.26.32.163:9526/login"
 let kAvailableLeavesURL:String = "http://172.26.32.163:9526/availableLeaves"
 let kgetUsersURL:String = "http://172.26.32.163:9526/users"
 let kApplyLeaveURL:String = "http://172.26.32.163:9526/leave"
+let kLeaveRequestsURL:String = "http://172.26.32.163:9526/leaveRequests"
 
 let kAppTitle = "Lexmark Hub"
 

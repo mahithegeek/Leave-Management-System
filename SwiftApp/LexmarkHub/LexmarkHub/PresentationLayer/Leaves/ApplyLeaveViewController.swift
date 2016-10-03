@@ -198,8 +198,8 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
                 let parameters = [
                     "tokenID": idToken!,
                     "leave": [
-                        "fromDate": self.dateStringFromDate(leave.startDate!),
-                        "toDate" : self.dateStringFromDate(leave.endDate!),
+                        "fromDate": AppUtilities().dateStringFromDate(leave.startDate!),
+                        "toDate" : AppUtilities().dateStringFromDate(leave.endDate!),
                         "isHalfDay" : true,
                         "type" : "Vacation"
                         ]
@@ -286,7 +286,7 @@ extension ApplyLeaveViewController :UITableViewDataSource {
        
         var stringFromDate = ""
         if let startDate = leave.startDate {
-            stringFromDate = dateStringFromDate(startDate)
+            stringFromDate = AppUtilities().dateStringFromDate(startDate)
         }
         
         if(stringFromDate.isEmpty){
@@ -298,7 +298,7 @@ extension ApplyLeaveViewController :UITableViewDataSource {
         
         var stringEndDate = ""
         if let endDate = leave.endDate {
-            stringEndDate = dateStringFromDate(endDate)
+            stringEndDate = AppUtilities().dateStringFromDate(endDate)
         }        
         if(stringEndDate.isEmpty){
             cell.endDateButton.hidden=false
@@ -311,13 +311,7 @@ extension ApplyLeaveViewController :UITableViewDataSource {
         return cell
     }
     
-    func dateStringFromDate(date:NSDate) -> String {
     
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd" //format style. you can change according to yours
-        let dateString = dateFormatter.stringFromDate(date)
-        return dateString
-    }
 }
 
 
