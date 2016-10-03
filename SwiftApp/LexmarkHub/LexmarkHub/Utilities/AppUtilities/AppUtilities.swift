@@ -32,4 +32,18 @@ class AppUtilities: NSObject {
             print("\(function): \(message)")
         }
     }
+    func dateStringFromDate(date:NSDate) -> String {
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" //format style. you can change according to yours
+        let dateString = dateFormatter.stringFromDate(date)
+        return dateString
+    }
+    func dateFromString(dateString:String) -> NSDate {
+        
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd" //format style. you can change according to yours
+        let date = dateFormatter.dateFromString(dateString)
+        return date!
+    }
 }

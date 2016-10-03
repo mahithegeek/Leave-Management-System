@@ -10,8 +10,9 @@ import UIKit
 
 class PendingRequestViewController: UITableViewController {
 
-    var pendingRequests: [LeaveRequest]?
+    var pendingRequests = [LeaveRequest]()
 
+    @IBOutlet var pendingRequestsTableView: UITableView!
     @IBAction func pendingRequestBack (segue: UIStoryboardSegue){
         self.navigationController?.popViewControllerAnimated(true)
     }
@@ -24,25 +25,62 @@ class PendingRequestViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-
-//        let employee = Employee(id: 9552, name: "Rambabu Nayudu", role: "Employee", email: "rambabu.nayudu@kofax.com", totalLeaves: 25, availableLeaves: 10)
-//
-//        let leave = Leave(reason: "Marriage vacation", employee: employee, startDate: NSDate(), endDate: NSDate(),leaveType: "")
-//        let leaveRequest = LeaveRequest(requestId: 1, status: "Pending", leave: leave)
-//
-//        pendingRequests = Array()
-//        pendingRequests?.append(leaveRequest)
-//        pendingRequests?.append(leaveRequest)
-//        pendingRequests?.append(leaveRequest)
-//        pendingRequests?.append(leaveRequest)
-//        pendingRequests?.append(leaveRequest)
-//        pendingRequests?.append(leaveRequest)
-//        pendingRequests?.append(leaveRequest)
-//        pendingRequests?.append(leaveRequest)
-//        pendingRequests?.append(leaveRequest)
-//        pendingRequests?.append(leaveRequest)
+        refreshPendingRequests()
+        
     }
 
+
+    func refreshPendingRequests() {
+       
+        Loader.show("Loading", disableUI: true)
+        appDelegate.oAuthManager?.requestAccessToken(withCompletion: { (idToken, error) in
+            
+            if idToken?.isEmpty == false {
+                let parameters = [
+                    "tokenID": idToken!
+                ]
+                LMSServiceFactory.sharedInstance().getLeaveRequests(withURL: kLeaveRequestsURL, withParams: parameters, completion: { (leaveRequests, error) in
+                    Loader.hide();
+                    self.pendingRequests.removeAll()
+                    
+                    if leaveRequests != nil {
+                        
+                        for leaveRequest in leaveRequests! {
+                            
+                            let firstName = leaveRequest["firstName"] as! String
+                            let lastName = leaveRequest["lastName"] as! String
+
+                            let employee=Employee.init(withDictionary: [
+                                kFirstName:firstName,
+                                kLastName:lastName
+                                ])
+                            let leave = Leave(reason: "Vocation", employee: employee, startDate: AppUtilities().dateFromString(leaveRequest["fromDate"] as! String), endDate: AppUtilities().dateFromString(leaveRequest["toDate"] as! String),leaveType: "")
+                            let leaveRequest = LeaveRequest(requestId: leaveRequest["id"] as! NSInteger
+                                , status: "Pending", leave: leave)
+                            self.pendingRequests.append(leaveRequest)
+                        }
+                        
+                        self.pendingRequestsTableView.reloadData()
+                        
+                        print("leaveRequests:\(leaveRequests)")
+                    }
+                    else {
+                        if error != nil {
+                            Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                        }
+                    }
+                })
+            }
+            else {
+                Loader.hide();
+                if error != nil {
+                    Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                }
+            }
+        })
+
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -57,7 +95,7 @@ class PendingRequestViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return pendingRequests.count
     }
 
 
@@ -65,9 +103,9 @@ class PendingRequestViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("pendingRequests", forIndexPath: indexPath) as? PendingRequestsCell
 
         // Configure the cell...
-        let pendingRequest = pendingRequests![indexPath.row] as LeaveRequest
+        let pendingRequest = pendingRequests[indexPath.row] as LeaveRequest
         cell?.nameLabel.text = pendingRequest.leave.employee!.name
-        cell?.reasonLabel.text = "Reason: \(pendingRequest.leave.reason)"
+        cell?.reasonLabel.text = "Reason: \(pendingRequest.leave.reason! )"
         cell?.statusLabel.text = pendingRequest.status
 
         return cell!
