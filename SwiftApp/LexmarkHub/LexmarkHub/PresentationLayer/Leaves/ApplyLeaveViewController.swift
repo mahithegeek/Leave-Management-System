@@ -10,28 +10,30 @@ import UIKit
 
 let kMaxLeaves = 7
 
+let padding:CGFloat = 20.0
+let gapBetweenDates:CGFloat = 15.0
+
 class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
     
-    @IBOutlet weak var tblApplyLeave: UITableView!
     @IBOutlet weak var reasonTextView: UITextView!
-    @IBOutlet weak var addLeaveButton: UIBarButtonItem!
+    @IBOutlet weak var startDateWidthConstraint: NSLayoutConstraint!
 
-    var leavesArray = [AnyObject]()
+    @IBOutlet weak var endDateLabel: UILabel!
+    @IBOutlet weak var startDateLabel: UILabel!
+    @IBOutlet weak var reportToLabel: UILabel!
+    @IBOutlet weak var leaveTypeLabel: UILabel!
+
     let leaveTypes = ["Vacation", "Comp-of", "Special", "carry-forward"]
     var pickerView = UIPickerView()
+    let leave=Leave(reason:"Vacation",employee:nil ,startDate:NSDate(),endDate: NSDate(),leaveType:"Vacation")
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         pickerView.delegate = self
-        
-        
-        //Adding empty leave,user has to fill dates
-        self.addLeaveButton.enabled = false
-        let leave=Leave(reason:"Vacation",employee:nil ,startDate:nil,endDate: nil,leaveType:"Vacation")
-        leavesArray.append(leave)
-        tblApplyLeave.reloadData()
-        
-        
+        startDateWidthConstraint.constant = (UIScreen.mainScreen().bounds.size.width - 2 * padding - gapBetweenDates) / 2
+        self.startDateLabel.text = AppUtilities().dateStringFromDate(NSDate())
+        self.endDateLabel.text = AppUtilities().dateStringFromDate(NSDate())
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ApplyLeaveViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ApplyLeaveViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
@@ -70,14 +72,16 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
             let keyboardRectangle = keyboardFrame.CGRectValue()
             let keyboardHeight = keyboardRectangle.height
             var viewRect:CGRect = self.view.frame
-            viewRect.size.height = UIScreen.mainScreen().bounds.size.height - keyboardHeight
+            viewRect.origin.y =  -keyboardHeight
             self.view.frame = viewRect
+            print(viewRect)
+
         }
     }
 
     func keyboardWillHide(notification:NSNotification) {
         var viewRect:CGRect = self.view.frame
-        viewRect.size.height = UIScreen.mainScreen().bounds.size.height
+        viewRect.origin.y = 0
         self.view.frame = viewRect
     }
 
@@ -85,18 +89,34 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         textField.inputView = pickerView
     }
     
-    // MARK: - Button actions
     
-    @IBAction func btnAddLeaveAction(sender: AnyObject) {
+    @IBAction func backButtonAction(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func leaveTypesButtonAction(sender: AnyObject) {
         
-        self.addLeaveButton.enabled = false
+        let alertController = UIAlertController(title: kAppTitle, message: "Please select leave type.", preferredStyle: .ActionSheet)
         
-        let leave=Leave(reason:"Vacation",employee:nil ,startDate:nil,endDate: nil,leaveType:"Vacation")
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        }
+        alertController.addAction(cancelAction)
         
-        leavesArray.append(leave)
-        tblApplyLeave.reloadData()
+        for leaveType in leaveTypes {
+            
+            let OKAction = UIAlertAction(title: leaveType, style: .Default) { (action) in
+                print(action.title!)
+                self.leaveTypeLabel.text = "Reason: " + action.title!
+                self.leave.leaveType = action.title!
+            }
+            alertController.addAction(OKAction)
+        }
         
         
+        
+        self.presentViewController(alertController, animated: true) {
+        }
+
     }
     
     @IBAction func startDateButtonAction(sender: AnyObject) {
@@ -104,16 +124,8 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         
         DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .Date, minDate:NSDate(), maxDate:nil) {
             (date) -> Void in
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd" //format style. you can change according to yours
-            let dateString = dateFormatter.stringFromDate(date)
-            print(dateString)
-            
-            let leave = self.leavesArray.first as? Leave
-            leave!.startDate = date
-            
-            self.tblApplyLeave.reloadData()
-
+            self.leave.startDate = date
+            self.startDateLabel.text = AppUtilities().dateStringFromDate(date)
         }
     }
     
@@ -121,22 +133,14 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         
         DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .Date, minDate:NSDate(), maxDate:nil) {
             (date) -> Void in
-            
-            let leave = self.leavesArray.first as? Leave
-            leave!.endDate = date
-            
-            self.tblApplyLeave.reloadData()
-            
+            self.leave.endDate = date
+            self.endDateLabel.text = AppUtilities().dateStringFromDate(date)
         }
     }
     
     func checkValidation() ->(Bool,String)
     {
-        if leavesArray.count == 0 {
-            return(false, "Please Select start and end dates by tapping on '+' symbol")
-        }
         
-        let leave = leavesArray.first as! Leave
         if leave.startDate == nil || leave.endDate == nil {
             return(false, "Please Select start/end date.")
         }
@@ -189,7 +193,6 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
             Popups.SharedInstance.ShowPopup(kAppTitle, message: validationResult.1)
             return
         }
-        let leave = leavesArray.first as! Leave
 
         Loader.show("Loading", disableUI: true)
         appDelegate.oAuthManager?.requestAccessToken(withCompletion: { (idToken, error) in
@@ -198,10 +201,10 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
                 let parameters = [
                     "tokenID": idToken!,
                     "leave": [
-                        "fromDate": AppUtilities().dateStringFromDate(leave.startDate!),
-                        "toDate" : AppUtilities().dateStringFromDate(leave.endDate!),
-                        "isHalfDay" : true,
-                        "type" : "Vacation"
+                        "fromDate": AppUtilities().dateStringFromDate(self.leave.startDate!),
+                        "toDate" : AppUtilities().dateStringFromDate(self.leave.endDate!),
+                        "isHalfDay" : false,
+                        "type" : self.leave.leaveType!
                         ]
                 ]
                 
@@ -239,86 +242,6 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         return order
     }
     
-    // returns the number of 'columns' to display.
-    func numberOfComponentsInPickerView(pickerView: UIPickerView!) -> Int{
-        return 1
-    }
-    
-    // returns the # of rows in each component..
-    func pickerView(pickerView: UIPickerView!, numberOfRowsInComponent component: Int) -> Int{
-        return leaveTypes.count
-    }
-    
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return leaveTypes[row]
-    }
-    
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
-    {
-        print("selected")
-        //genderTextField.text = "\(gender[row])"
-        
-        
-        let leave = self.leavesArray.first as? Leave
-        leave!.leaveType = leaveTypes[row]
-        self.tblApplyLeave.reloadData()
-        
-    }
 }
 
 
-//MARK: - UITableViewDataSource methods
-extension ApplyLeaveViewController :UITableViewDataSource {
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return (leavesArray.count)
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        let cellIdentifier = "ApplyLeaveCell"
-        let  cell : ApplyLeaveCell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier)!
-            as! ApplyLeaveCell
-       
-        let leave:Leave=leavesArray[indexPath.row] as! Leave
-        
-       
-        var stringFromDate = ""
-        if let startDate = leave.startDate {
-            stringFromDate = AppUtilities().dateStringFromDate(startDate)
-        }
-        
-        if(stringFromDate.isEmpty){
-            cell.startdateButton.hidden=false
-        }else{
-            cell.startdateButton.setImage(nil, forState: .Normal)
-            cell.startdateButton.setTitle(stringFromDate, forState: .Normal)
-        }
-        
-        var stringEndDate = ""
-        if let endDate = leave.endDate {
-            stringEndDate = AppUtilities().dateStringFromDate(endDate)
-        }        
-        if(stringEndDate.isEmpty){
-            cell.endDateButton.hidden=false
-        }else{
-            cell.endDateButton.setImage(nil, forState: .Normal)
-            cell.endDateButton.setTitle(stringEndDate, forState: .Normal)
-        }
-        cell.leaveType.text=leave.leaveType
-        
-        return cell
-    }
-    
-    
-}
-
-
-// MARK: - UITableViewDelegate methods
-extension ApplyLeaveViewController : UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
-    }
-}

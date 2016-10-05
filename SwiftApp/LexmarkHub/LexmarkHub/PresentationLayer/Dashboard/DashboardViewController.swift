@@ -30,15 +30,11 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.fetchAvailableLeaves()
+    }
+
+    func fetchAvailableLeaves() {
         self.availableLeavesLabel.text = ""
-        
-        self.navigationItem.setHidesBackButton(true, animated: true)
-        self.navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        
-        if self.employee?.role == role.manager.rawValue {
-            self.reportiesButton.hidden = false
-            self.pendingRequestsButton.hidden = false
-        }
         
         Loader.show("Loading", disableUI: true)
         appDelegate.oAuthManager?.requestAccessToken(withCompletion: { (idToken, error) in
@@ -59,7 +55,7 @@ class DashboardViewController: UIViewController {
                             Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                         }
                     }
-
+                    
                 })
             }
             else {
@@ -69,10 +65,9 @@ class DashboardViewController: UIViewController {
                 }
             }
         })
-        
-       
-    }
 
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -89,12 +84,9 @@ class DashboardViewController: UIViewController {
     }
     */
 
-    @IBAction func backButtonAction(segue: UIStoryboardSegue){
+    @IBAction func logoutButtonAction(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }
-
-    @IBAction func cancelButtonAction(segue: UIStoryboardSegue){
-        self.navigationController?.popViewControllerAnimated(true)
-    }
+   
 
 }
