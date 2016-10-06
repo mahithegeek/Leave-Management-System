@@ -9,6 +9,7 @@
 import UIKit
 
 class PendingRequestsCell: UITableViewCell {
+    @IBOutlet weak var leaveDatesLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var reasonLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
