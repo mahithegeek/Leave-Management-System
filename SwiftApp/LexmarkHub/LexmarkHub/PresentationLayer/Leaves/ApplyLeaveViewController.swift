@@ -18,25 +18,46 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
     @IBOutlet weak var reasonTextView: UITextView!
     @IBOutlet weak var startDateWidthConstraint: NSLayoutConstraint!
 
+    @IBOutlet weak var applyButtonWidthConstraint: NSLayoutConstraint!
     @IBOutlet weak var endDateLabel: UILabel!
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var reportToLabel: UILabel!
     @IBOutlet weak var leaveTypeLabel: UILabel!
 
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var leaveTypeButton: UIButton!
+    @IBOutlet weak var endDateButton: UIButton!
+    @IBOutlet weak var startDateButton: UIButton!
+    @IBOutlet weak var rejectButton: UIButton!
+    @IBOutlet weak var submitButton: UIButton!
+    @IBOutlet weak var approveButton: UIButton!
     let leaveTypes = ["Vacation", "Comp-of", "Special", "carry-forward"]
     var pickerView = UIPickerView()
-    let leave=Leave(reason:"Vacation",employee:nil ,startDate:NSDate(),endDate: NSDate(),leaveType:"Vacation")
-
+    var leave=Leave(reason:"Vacation",employee:nil ,startDate:NSDate(),endDate: NSDate(),leaveType:"Vacation")
+    var isFromPending:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         pickerView.delegate = self
+        
         startDateWidthConstraint.constant = (UIScreen.mainScreen().bounds.size.width - 2 * padding - gapBetweenDates) / 2
-        self.startDateLabel.text = AppUtilities().dateStringFromDate(NSDate())
-        self.endDateLabel.text = AppUtilities().dateStringFromDate(NSDate())
+        self.startDateLabel.text = AppUtilities().dateStringFromDate(leave.startDate!)
+        self.endDateLabel.text = AppUtilities().dateStringFromDate(leave.endDate!)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ApplyLeaveViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ApplyLeaveViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
+        if isFromPending == true {
+            applyButtonWidthConstraint.constant = (UIScreen.mainScreen().bounds.size.width - 2 * padding - gapBetweenDates) / 2
+            self.reportToLabel.text = "From: " + (leave.employee?.name)!
+            self.titleLabel.text = "Pending Request"
+            approveButton.hidden = false
+            rejectButton.hidden = false
+            startDateButton.userInteractionEnabled = false
+            endDateButton.userInteractionEnabled = false
+            reasonTextView.editable = false
+            submitButton.hidden = true
+            leaveTypeButton.userInteractionEnabled = false
+        }
         // Do any additional setup after loading the view.
     }
     
@@ -216,7 +237,9 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
                     
                     if responseDict != nil {
                         Popups.SharedInstance.ShowAlert(self, title: kAppTitle, message: "Applied leave successfully.", buttons: ["OK"], completion: { (buttonPressed) in
-                            self.navigationController?.popViewControllerAnimated(true)
+                            LMSThreading.dispatchOnMain(withBlock: { (Void) in
+                                self.navigationController?.popViewControllerAnimated(true)
+                            })
                         })
                     } else {
                         Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)

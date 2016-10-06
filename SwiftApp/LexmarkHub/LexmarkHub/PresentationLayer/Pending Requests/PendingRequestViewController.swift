@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PendingRequestViewController: UITableViewController {
+class PendingRequestViewController: UIViewController {
 
     var pendingRequests = [LeaveRequest]()
 
@@ -19,14 +19,7 @@ class PendingRequestViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         refreshPendingRequests()
-        
     }
 
 
@@ -46,7 +39,7 @@ class PendingRequestViewController: UITableViewController {
                     if leaveRequests != nil {
                         
                         for leaveRequest in leaveRequests! {
-                            
+                            print(leaveRequest)
                             let firstName = leaveRequest["firstName"] as! String
                             let lastName = leaveRequest["lastName"] as! String
 
@@ -54,13 +47,16 @@ class PendingRequestViewController: UITableViewController {
                                 kFirstName:firstName,
                                 kLastName:lastName
                                 ])
-                            let leave = Leave(reason: "Vocation", employee: employee, startDate: AppUtilities().dateFromString(leaveRequest["fromDate"] as! String), endDate: AppUtilities().dateFromString(leaveRequest["toDate"] as! String),leaveType: "")
+                            let leave = Leave(reason: "Vocation", employee: employee, startDate: AppUtilities().dateFromString(leaveRequest["fromDate"] as! String), endDate: AppUtilities().dateFromString(leaveRequest["toDate"] as! String),leaveType: "Vocation")
                             let leaveRequest = LeaveRequest(requestId: leaveRequest["id"] as! NSInteger
-                                , status: "Pending", leave: leave)
+                                , status: leaveRequest["status"] as! String, leave: leave)
                             self.pendingRequests.append(leaveRequest)
                         }
                         
-                        self.pendingRequestsTableView.reloadData()
+                        LMSThreading.dispatchOnMain(withBlock: { (Void) in
+                            self.pendingRequestsTableView.reloadData()
+
+                        })
                         
                         print("leaveRequests:\(leaveRequests)")
                     }
@@ -88,77 +84,46 @@ class PendingRequestViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return pendingRequests.count
     }
 
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("pendingRequests", forIndexPath: indexPath) as? PendingRequestsCell
-
-        // Configure the cell...
+        cell?.selectionStyle = .None
         let pendingRequest = pendingRequests[indexPath.row] as LeaveRequest
-        cell?.nameLabel.text = pendingRequest.leave.employee!.name
-        cell?.reasonLabel.text = "Reason: \(pendingRequest.leave.reason! )"
+        cell?.nameLabel.text = pendingRequest.leave.employee!.name!
+        cell?.leaveDatesLabel.text = AppUtilities().dateStringFromDate(pendingRequest.leave.startDate!) + " to " + AppUtilities().dateStringFromDate(pendingRequest.leave.endDate!)
+        cell?.reasonLabel.text = "\(pendingRequest.leave.leaveType! )"
         cell?.statusLabel.text = pendingRequest.status
-
+        
+        
         return cell!
     }
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
+     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 120
+    }
+   
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+       
+        let pendingRequest = pendingRequests[indexPath.row] as LeaveRequest
+        let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("ApplyLeaveViewControllerIdentifier") as? ApplyLeaveViewController
+        viewController?.leave = Leave(reason:"Vacation",employee:pendingRequest.leave.employee ,startDate:pendingRequest.leave.startDate,endDate: pendingRequest.leave.endDate,leaveType:"Vacation")
+        viewController?.isFromPending = true
+        self.navigationController?.pushViewController(viewController!, animated: true)
+
     }
 
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    @IBAction func backButtonAction(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }

@@ -26,10 +26,15 @@ class DashboardViewController: UIViewController {
 
     @IBOutlet weak var reportiesButton: UIButton!
     @IBOutlet weak var pendingRequestsButton: UIButton!
+    @IBOutlet weak var pendingRequestsLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if employee?.role != role.manager.rawValue {
+            self.pendingRequestsButton.hidden = true
+            pendingRequestsLabel.hidden = true
+        }
         self.fetchAvailableLeaves()
     }
 
