@@ -82,7 +82,7 @@ InternalWebService.prototype.getAvailableLeaves = function (req,response) {
 	//TO-DO check if this is valid
 	var accessCallback = function (err, user) {
 		if(err == null) {
-			console.log("user is    " + user.emp_id);
+			var userRole = getUserRole (user.role_id);
 			if(userRole == ROLE.SUPERVISOR || userRole == ROLE.MANAGER || userRole == ROLE.EMPLOYEE){
 				getLeavesForUser (req,response,user.emp_id);
 			}
@@ -116,6 +116,7 @@ InternalWebService.prototype.applyLeave = function (req,response) {
 
 	var accessCallback = function (err, user) {
 		if(err == null) {
+			var userRole = getUserRole (user.role_id);
 			if(userRole == ROLE.SUPERVISOR || userRole == ROLE.MANAGER || userRole == ROLE.EMPLOYEE){
 				internalApplyLeave (req,response,req.body.leave,user);
 			}
