@@ -79,9 +79,9 @@ Storage.prototype.getAvailableLeaves = function getAvailableLeaves (EmployeeID,c
 
 Storage.prototype.insertLeaves = function insertLeaves (leaveRequest,callback) {
 
-   var queryString = "INSERT INTO leaves SET date_from = ?, date_to = ?,half_Day = ?,applied_on = ?,status_id = (SELECT id FROM status WHERE status = 'Applied'),emp_id = ?, type_id = ?";
+   var queryString = "INSERT INTO leaves SET date_from = ?, date_to = ?,half_Day = ?,applied_on = ?,status_id = (SELECT id FROM status WHERE status = 'Applied'),emp_id = ?, type_id = ?,days = ?";
   
-   var dataObject = [leaveRequest.date_from,leaveRequest.date_to,leaveRequest.half_Day,leaveRequest.applied_on,leaveRequest.emp_id,1];
+   var dataObject = [leaveRequest.date_from,leaveRequest.date_to,leaveRequest.half_Day,leaveRequest.applied_on,leaveRequest.emp_id,1,leaveRequest.days];
    runSqlQuery(queryString,dataObject,callback);
 };
 
@@ -112,6 +112,12 @@ Storage.prototype.fetchUser = function fetchUser(userEmail,callback) {
 
 Storage.prototype.fetchLeaveRequests = function (empID, callback) {
   var queryString = "SELECT user.*,leaves.*,DATE_FORMAT(leaves.date_from,'%Y-%m-%d') as date_from,DATE_FORMAT(leaves.date_to,'%Y-%m-%d') as date_to,DATE_FORMAT(leaves.applied_on,'%Y-%m-%d') as applied_on ,status.status FROM user INNER JOIN leaves ON leaves.emp_id = user.emp_id INNER JOIN status ON status.id = leaves.status_id WHERE user.supervisor = '"+  empID + "'";
+  runSqlQuery (queryString,null,callback); 
+};
+
+Storage.prototype.approveLeaveRequest = function (requestID,callback){
+  console.log("request id is  "+ requestID);
+  var queryString = "UPDATE leaves SET status_id = 2 WHERE id = '" + requestID + "'";
   runSqlQuery (queryString,null,callback); 
 };
 

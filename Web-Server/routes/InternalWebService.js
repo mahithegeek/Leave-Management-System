@@ -153,8 +153,11 @@ function internalApplyLeave (req,response,leaveRequestReceived,user) {
 
 function constructLeaveRequest (leaveRequestReceived,user) {
 	var date = utils.getFormattedDate (new Date());
-    var dbRequestObject = {date_from : leaveRequestReceived.fromDate,date_to : leaveRequestReceived.toDate, half_Day : leaveRequestReceived.isHalfDay,applied_on : date, status_id : 0,type_id : leaveRequestReceived.typeid,emp_id : user.emp_id};
-    console.log(dbRequestObject.date_from);
+	var numberOfDays = utils.getWorkingDays(leaveRequestReceived.fromDate,leaveRequestReceived.toDate);
+	console.log("number of days "+ numberOfDays);
+
+    var dbRequestObject = {date_from : leaveRequestReceived.fromDate,date_to : leaveRequestReceived.toDate, half_Day : leaveRequestReceived.isHalfDay,applied_on : date, status_id : 0,type_id : leaveRequestReceived.typeid,emp_id : user.emp_id,days : numberOfDays};
+    console.log(numberOfDays);
     return dbRequestObject;
 }
 
@@ -189,7 +192,7 @@ function internalGetLeaveRequests (req,response,empID) {
 			else {
 				response.status(500).send(error.DatabaseError(err));
 			}
-		}
+	}
 		sqlHandle.fetchLeaveRequests(empID,callback);
 }
 
@@ -205,6 +208,41 @@ function formLeaveRequestResponse (dbResult) {
 	}
 	
 	return leaveRequestResponse;
+}
+
+
+InternalWebService.prototype.approveLeaveRequest = function approveLeaveRequest(req,response){
+
+	var accessCallback = function (err, user) {
+		if(err == null) {
+			var userRole = getUserRole (user.role_id);
+			if(userRole == ROLE.SUPERVISOR || userRole == ROLE.MANAGER){
+				internalApproveLeave (req,response,req.body.requestID);
+			}
+			else {
+				response.status(400).send (error.UserAccessDeniedError());
+			}
+		}
+		else {
+			response.status(500).send(error.DatabaseError(err));
+		}
+	};
+	access.determineUser (req.body.tokenID, accessCallback);
+};
+
+function internalApproveLeave (req,response,requestID){
+	var callback = function (err,data){
+			if (err == null) {
+				//response.send(JSON.stringify(data));
+				var successResponse = {success : "Successfully approved leave request"};
+				response.send(successResponse);
+			}
+			else {
+				response.status(500).send(error.DatabaseError(err));
+			}
+	}
+
+	sqlHandle.approveLeaveRequest(requestID,callback);
 }
 
 function getUserRole (roleID) {

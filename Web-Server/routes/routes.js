@@ -40,16 +40,13 @@ var appRouter = function(app) {
 		internalServices.getLeaveRequests (req,response);
 	});
 
-	function validateDate (date) {
-		//console.log("received date" + date);
-		var tempDate = new Date (date);
-		//console.log(tempDate);
-		if(tempDate < new Date()) {
-			return 0;
-		}
 
-		return 1;
-	} 
+	app.post("/approveLeave",function (req,response){
+		internalServices.approveLeaveRequest (req, response);
+
+	});
+
+	
  
 }
  

@@ -26,4 +26,21 @@ Utilities.prototype.getFormattedDate = function getFormattedDate(date) {
 
 };
 
+Utilities.prototype.getWorkingDays = function getWorkingDays(startDate, toDate) {
+	var result = 0;
+
+	var currentDate = new Date(startDate);
+	var endDate = new Date (toDate);
+	while (currentDate <= endDate) {
+		var weekDay = currentDate.getDay();
+		if(weekDay != 0 && weekDay != 6) {
+			result++;
+		}
+
+		currentDate.setDate (currentDate.getDate() + 1);
+	}
+
+	return result;
+};
+
 module.exports = Utilities;
