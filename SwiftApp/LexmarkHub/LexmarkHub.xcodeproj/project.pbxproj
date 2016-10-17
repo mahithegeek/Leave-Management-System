@@ -43,6 +43,8 @@
 		AE955A6C1D75615700DA8849 /* PendingRequestDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A6B1D75615700DA8849 /* PendingRequestDetailsViewController.swift */; };
 		AE955A6E1D75617500DA8849 /* LeaveDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE955A6D1D75617500DA8849 /* LeaveDetailsViewController.swift */; };
 		AEE9F0DB1D9975C800DD1752 /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE9F0DA1D9975C800DD1752 /* DatePickerDialog.swift */; };
+		AEF3A3661DAF7F92003EFC5F /* UserRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF3A3651DAF7F92003EFC5F /* UserRequestsViewController.swift */; };
+		AEF3A3681DAF7FEF003EFC5F /* UserRequestsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF3A3671DAF7FEF003EFC5F /* UserRequestsCell.swift */; };
 		BB3B2E415F157E4533B8D6AF /* Pods_LexmarkHubUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3535017D056CD00D2D212BF9 /* Pods_LexmarkHubUITests.framework */; };
 		C6F541101D7E9A9600A48776 /* ApplyLeaveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F5410F1D7E9A9600A48776 /* ApplyLeaveCell.swift */; };
 		C6F541141D7E9FC600A48776 /* Calender.png in Resources */ = {isa = PBXBuildFile; fileRef = C6F541131D7E9FC600A48776 /* Calender.png */; };
@@ -115,6 +117,8 @@
 		AE955A6B1D75615700DA8849 /* PendingRequestDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PendingRequestDetailsViewController.swift; path = "LexmarkHub/PresentationLayer/Pending Requests/PendingRequestDetailsViewController.swift"; sourceTree = SOURCE_ROOT; };
 		AE955A6D1D75617500DA8849 /* LeaveDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeaveDetailsViewController.swift; path = "LexmarkHub/PresentationLayer/Leave History/LeaveDetailsViewController.swift"; sourceTree = SOURCE_ROOT; };
 		AEE9F0DA1D9975C800DD1752 /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
+		AEF3A3651DAF7F92003EFC5F /* UserRequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserRequestsViewController.swift; path = "LexmarkHub/PresentationLayer/Pending Requests/UserRequestsViewController.swift"; sourceTree = SOURCE_ROOT; };
+		AEF3A3671DAF7FEF003EFC5F /* UserRequestsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserRequestsCell.swift; sourceTree = "<group>"; };
 		B27CAE5472134FBA60CCE0D3 /* Pods-LexmarkHub.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LexmarkHub.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LexmarkHub/Pods-LexmarkHub.debug.xcconfig"; sourceTree = "<group>"; };
 		C6F5410F1D7E9A9600A48776 /* ApplyLeaveCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplyLeaveCell.swift; sourceTree = "<group>"; };
 		C6F541131D7E9FC600A48776 /* Calender.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Calender.png; sourceTree = "<group>"; };
@@ -278,6 +282,7 @@
 				C6F5410F1D7E9A9600A48776 /* ApplyLeaveCell.swift */,
 				AE955A671D7555B900DA8849 /* LeaveHistoryCell.swift */,
 				AE955A691D7555D100DA8849 /* PendingRequestsCell.swift */,
+				AEF3A3671DAF7FEF003EFC5F /* UserRequestsCell.swift */,
 			);
 			path = CustomCells;
 			sourceTree = "<group>";
@@ -418,6 +423,7 @@
 			isa = PBXGroup;
 			children = (
 				AE955A5B1D75450C00DA8849 /* PendingRequestViewController.swift */,
+				AEF3A3651DAF7F92003EFC5F /* UserRequestsViewController.swift */,
 				AE955A6B1D75615700DA8849 /* PendingRequestDetailsViewController.swift */,
 			);
 			name = "Pending Requests";
@@ -712,6 +718,7 @@
 				41B0A7621D76DD9500577998 /* AppConstants.swift in Sources */,
 				AE955A6C1D75615700DA8849 /* PendingRequestDetailsViewController.swift in Sources */,
 				AEE9F0DB1D9975C800DD1752 /* DatePickerDialog.swift in Sources */,
+				AEF3A3661DAF7F92003EFC5F /* UserRequestsViewController.swift in Sources */,
 				AE955A5E1D75453800DA8849 /* LeaveHistoryViewController.swift in Sources */,
 				AE49F7A01D99297D000D3AA0 /* ReportiesViewController.swift in Sources */,
 				1BE855961D6C729A00BEAE45 /* Leave.swift in Sources */,
@@ -733,6 +740,7 @@
 				AE955A6E1D75617500DA8849 /* LeaveDetailsViewController.swift in Sources */,
 				1BE855971D6C729A00BEAE45 /* LeaveRequest.swift in Sources */,
 				AE49F7A41D992A08000D3AA0 /* Popups.swift in Sources */,
+				AEF3A3681DAF7FEF003EFC5F /* UserRequestsCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
