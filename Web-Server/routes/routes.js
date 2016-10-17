@@ -46,6 +46,10 @@ var appRouter = function(app) {
 
 	});
 
+	app.post("/leaveHistory",function (req,response){
+		internalServices.getLeaveHistory (req,response);
+	});
+
 	
  
 }

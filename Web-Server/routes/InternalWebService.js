@@ -210,6 +210,37 @@ function formLeaveRequestResponse (dbResult) {
 	return leaveRequestResponse;
 }
 
+InternalWebService.prototype.getLeaveHistory = function getLeaveHistory (req,response) {
+	var accessCallback = function (err, user) {
+		if(err == null) {
+			var userRole = getUserRole (user.role_id);
+			if(userRole == ROLE.SUPERVISOR || userRole == ROLE.MANAGER){
+				internalGetLeaveHistory (req,response,user.emp_id);
+			}
+			else {
+				response.status(400).send (error.UserAccessDeniedError());
+			}
+		}
+		else {
+			response.status(500).send(error.DatabaseError(err));
+		}
+	};
+	access.determineUser (req.body.tokenID, accessCallback);
+
+}
+
+function internalGetLeaveHistory (req,response,empID){
+	var callback = function (err,data){
+		if (err == null) {
+			response.send(JSON.stringify(data));
+		}
+		else {
+			response.status(500).send(error.DatabaseError(err));
+		}
+	}
+	sqlHandle.fetchLeaveHistory(empID,callback);
+}
+
 
 InternalWebService.prototype.approveLeaveRequest = function approveLeaveRequest(req,response){
 
