@@ -121,6 +121,12 @@ Storage.prototype.approveLeaveRequest = function (requestID,callback){
   runSqlQuery (queryString,null,callback); 
 };
 
+Storage.prototype.fetchLeaveHistory = function (empID,callback) {
+  console.log("emp id is  "+ empID);
+  var queryString = "SELECT * from leaves WHERE emp_id = '" + empID + "'";
+  runSqlQuery (queryString,null,callback);
+};
+
 
 function getConnectionError () {
   var conError = "Error in Database connection";
