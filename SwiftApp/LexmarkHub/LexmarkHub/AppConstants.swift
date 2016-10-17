@@ -11,6 +11,7 @@ import UIKit
 
 // Segues
 let kDashboardSegue:String = "dashboardSegue"
+let kUserLeaveRequestsSegue:String = "userLeaveRequestsSegue"
 
 /*! @var kIssuer
  @brief The OIDC issuer from which the configuration will be discovered.
@@ -38,7 +39,9 @@ let kLoginURL:String = "http://172.26.32.163:9526/login"
 let kAvailableLeavesURL:String = "http://172.26.32.163:9526/availableLeaves"
 let kgetUsersURL:String = "http://172.26.32.163:9526/users"
 let kApplyLeaveURL:String = "http://172.26.32.163:9526/leave"
+let kApproveLeaveURL:String = "http://172.26.32.163:9526/approveLeave"
 let kLeaveRequestsURL:String = "http://172.26.32.163:9526/leaveRequests"
+let kUserRequestsURL:String = "http://172.26.32.163:9526/leaveHistory"
 
 let kAppTitle = "Lexmark Hub"
 

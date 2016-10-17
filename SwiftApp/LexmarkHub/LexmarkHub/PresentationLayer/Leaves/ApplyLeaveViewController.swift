@@ -33,6 +33,7 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
     @IBOutlet weak var approveButton: UIButton!
     let leaveTypes = ["Vacation", "Comp-of", "Special", "carry-forward"]
     var pickerView = UIPickerView()
+    var leaveRequest:LeaveRequest?
     var leave=Leave(reason:"Vacation",employee:nil ,startDate:NSDate(),endDate: NSDate(),leaveType:"Vacation")
     var isFromPending:Bool = false
     
@@ -256,6 +257,49 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
             }
         })
         
+    }
+    
+    @IBAction func approveLeaveButtonAction(sender: AnyObject) {
+        
+        Loader.show("Loading", disableUI: true)
+        appDelegate.oAuthManager?.requestAccessToken(withCompletion: { (idToken, error) in
+            
+            if idToken?.isEmpty == false {
+                let parameters = [
+                    "tokenID": idToken!,
+                    " requestID": self.leaveRequest!.requestId
+                ]
+                
+                print(parameters)
+                LMSServiceFactory.sharedInstance().approveLeave(withURL: kApproveLeaveURL, withParams: parameters, completion: { (responseDict, error) in
+                    
+                    print(responseDict)
+                    Loader.hide();
+                    
+                    if responseDict != nil {
+                        Popups.SharedInstance.ShowAlert(self, title: kAppTitle, message: "Approved leave successfully.", buttons: ["OK"], completion: { (buttonPressed) in
+                            LMSThreading.dispatchOnMain(withBlock: { (Void) in
+                                self.navigationController?.popViewControllerAnimated(true)
+                            })
+                        })
+                    } else {
+                        Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                    }
+                    
+                })
+                
+            }
+            else {
+                Loader.hide();
+                if error != nil {
+                    Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                }
+            }
+        })
+
+    }
+    
+    @IBAction func rejectLeaveButtonAction(sender: AnyObject) {
     }
     
     func compareDate(fromDate:NSDate, toDate:NSDate) -> NSComparisonResult{
