@@ -214,7 +214,7 @@ InternalWebService.prototype.getLeaveHistory = function getLeaveHistory (req,res
 	var accessCallback = function (err, user) {
 		if(err == null) {
 			var userRole = getUserRole (user.role_id);
-			if(userRole == ROLE.SUPERVISOR || userRole == ROLE.MANAGER){
+			if(userRole == ROLE.SUPERVISOR || userRole == ROLE.MANAGER || userRole == ROLE.EMPLOYEE){
 				internalGetLeaveHistory (req,response,user.emp_id);
 			}
 			else {
@@ -248,7 +248,12 @@ InternalWebService.prototype.approveLeaveRequest = function approveLeaveRequest(
 		if(err == null) {
 			var userRole = getUserRole (user.role_id);
 			if(userRole == ROLE.SUPERVISOR || userRole == ROLE.MANAGER){
-				internalApproveLeave (req,response,req.body.requestID);
+				if(req.body.leaveStatus = "Approve"){
+					internalApproveLeave (req,response,req.body.requestID);
+				}
+				else {
+					internalCancelLeave (req,response,req.body.requestID);
+				}
 			}
 			else {
 				response.status(400).send (error.UserAccessDeniedError());
@@ -261,7 +266,42 @@ InternalWebService.prototype.approveLeaveRequest = function approveLeaveRequest(
 	access.determineUser (req.body.tokenID, accessCallback);
 };
 
+function internalCancelLeave (req,response,requestID){
+	var callback = function (err,data){
+			if (err == null) {
+				//response.send(JSON.stringify(data));
+				var successResponse = {success : "Successfully updated leave request"};
+				response.send(successResponse);
+			}
+			else {
+				response.status(500).send(error.DatabaseError(err));
+			}
+	}
+
+	sqlHandle.rejectLeaveRequest(requestID,callback);
+}
+
 function internalApproveLeave (req,response,requestID){
+	
+	var statusCallback = function (status) {
+		if(status){
+			//approve
+			modifyLeaveState (req,response,requestID);
+		}
+		else {
+			//throw error
+			response.status(400).send(error.InputError("Something wrong with the request"));
+		}
+	}
+
+	checkValidityOfLeaveRequest(requestID,statusCallback);
+
+	
+}
+
+//actual approval
+function modifyLeaveState (req,response,requestID) {
+
 	var callback = function (err,data){
 			if (err == null) {
 				//response.send(JSON.stringify(data));
@@ -275,6 +315,46 @@ function internalApproveLeave (req,response,requestID){
 
 	sqlHandle.approveLeaveRequest(requestID,callback);
 }
+
+//function that checks if the leave request itself is valid
+function checkValidityOfLeaveRequest(requestID,statusCallback){
+	var callback = function (err,data){
+		if (err == null) {
+			//response.send(JSON.stringify(data));
+			var leaveRequest = data[0];
+			console.log("leaverequest  "+ leaveRequest.emp_id);
+			var daysRequested = utils.getWorkingDays (leaveRequest.date_from,leaveRequest.date_to);
+			var callback = function (err,data) {
+				if(err == null) {
+					var daysAvailable = data[0].available;
+					console.log("leaves available  "+daysAvailable);
+					if(daysRequested > daysAvailable){
+						//throw validation error
+						console.log("error daysRequested is more than available");
+						statusCallback(false);
+					}
+					else {
+						//send success
+						statusCallback(true);
+					}
+				}
+				else {
+					//something wrong handle this
+				}
+			} 
+
+			sqlHandle.getAvailableLeaves(leaveRequest.emp_id,callback);
+			
+		}
+		else {
+			
+		}
+	}
+
+	sqlHandle.fetchLeaveRequestFromID(requestID,callback);
+}
+
+
 
 function getUserRole (roleID) {
 	switch (roleID) {
