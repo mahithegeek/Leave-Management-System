@@ -116,15 +116,26 @@ Storage.prototype.fetchLeaveRequests = function (empID, callback) {
 };
 
 Storage.prototype.approveLeaveRequest = function (requestID,callback){
-  console.log("request id is  "+ requestID);
-  var queryString = "UPDATE leaves SET status_id = 2 WHERE id = '" + requestID + "'";
+  console.log("approveLeaveRequest request id is  "+ requestID);
+  var queryString = "UPDATE leaves SET status_id = 2 WHERE id = '" + requestID + "' AND status_id = 1";
   runSqlQuery (queryString,null,callback); 
+};
+
+Storage.prototype.rejectLeaveRequest = function (requestID,callback) {
+  console.log("rejectLeaveRequest request id is  "+ requestID);
+  var queryString = "UPDATE leaves SET status_id = 3 WHERE id = '" + requestID + "' AND status_id = 1 OR status_id = 2";
+  runSqlQuery (queryString,null,callback);
 };
 
 Storage.prototype.fetchLeaveHistory = function (empID,callback) {
   console.log("emp id is  "+ empID);
-  var queryString = "SELECT * from leaves WHERE emp_id = '" + empID + "'";
+  var queryString = "SELECT leaves.* ,status.status,DATE_FORMAT(leaves.date_from,'%Y-%m-%d') as date_from,DATE_FORMAT(leaves.date_to,'%Y-%m-%d') as date_to,DATE_FORMAT(leaves.applied_on,'%Y-%m-%d') as applied_on FROM leaves INNER JOIN status ON status.id = leaves.status_id  WHERE emp_id = '" + empID + "'";
   runSqlQuery (queryString,null,callback);
+};
+
+Storage.prototype.fetchLeaveRequestFromID = function (requestID,callback){
+  var queryString = "SELECT  leaves.*, DATE_FORMAT(leaves.date_from,'%Y-%m-%d') as date_from,DATE_FORMAT(leaves.date_to,'%Y-%m-%d') as date_to,DATE_FORMAT(leaves.applied_on,'%Y-%m-%d') as applied_on FROM leaves WHERE id = '" + requestID + "'";
+  runSqlQuery(queryString,null,callback);
 };
 
 
