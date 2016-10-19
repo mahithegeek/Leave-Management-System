@@ -123,7 +123,13 @@ Storage.prototype.approveLeaveRequest = function (requestID,callback){
 
 Storage.prototype.rejectLeaveRequest = function (requestID,callback) {
   console.log("rejectLeaveRequest request id is  "+ requestID);
-  var queryString = "UPDATE leaves SET status_id = 3 WHERE id = '" + requestID + "' AND status_id = 1 OR status_id = 2";
+  var queryString = "UPDATE leaves SET status_id = 3 WHERE id = '" + requestID + "' AND status_id = 1 ";
+  runSqlQuery (queryString,null,callback);
+};
+
+Storage.prototype.cancelLeaveRequest = function (requestID,callback) {
+  console.log("cancelLeaveRequest");
+  var queryString = "UPDATE leaves SET status_id = 4 WHERE id = '" + requestID + "' AND status_id = 1 OR status_id = 2 ";
   runSqlQuery (queryString,null,callback);
 };
 
