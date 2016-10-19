@@ -98,12 +98,16 @@ function validateTokenUsingLib (tokenID,callback) {
 function getMatchingClientAudience (audience) {
 	var iOSClientID = '890980614355-irpa0ap8n2phdq3fbop1382n2dufdep7.apps.googleusercontent.com'; //- iOS client
 	var webClientID = '890980614355-4l2uen2k564afacknt15nigdkst1ta08.apps.googleusercontent.com'; // - web client
+	var androidClientID = '890980614355-l8lm8hhjk7tidsvimq5meusk3q9t002n.apps.googleusercontent.com'; //Android client
 
 	if(audience == iOSClientID){
 		return iOSClientID;
 	}
 	else if(audience == webClientID) {
 		return webClientID;
+	}
+	else if(audience == androidClientID) {
+		return androidClientID;
 	}
 
 }
