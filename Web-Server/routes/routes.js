@@ -50,6 +50,10 @@ var appRouter = function(app) {
 		internalServices.getLeaveHistory (req,response);
 	});
 
+	app.post("/cancelLeave",function (req,response){
+		internalServices.cancelLeaveRequest (req,response);
+	});
+
 	
  
 }

@@ -242,17 +242,50 @@ function internalGetLeaveHistory (req,response,empID){
 }
 
 
+InternalWebService.prototype.cancelLeaveRequest = function cancelLeaveRequest (req,response){
+	var accessCallback = function (err, user) {
+		if(err == null) {
+			var userRole = getUserRole (user.role_id);
+			if(userRole == ROLE.SUPERVISOR || userRole == ROLE.MANAGER || userRole == ROLE.EMPLOYEE){
+				internalCancelLeaveRequest(req,response,req.body.requestID)
+			}
+			else {
+				response.status(400).send (error.UserAccessDeniedError());
+			}
+		}
+		else {
+			response.status(500).send(error.DatabaseError(err));
+		}
+	};
+	access.determineUser (req.body.tokenID, accessCallback);
+}
+
+function internalCancelLeaveRequest (req,response,requestID) {
+	var callback = function (err,data){
+		if (err == null) {
+			//response.send(JSON.stringify(data));
+			var successResponse = {success : "Successfully Canceled Leave Request"};
+			response.send(successResponse);
+		}
+		else {
+			response.status(500).send(error.DatabaseError(err));
+		}
+	}
+
+	sqlHandle.cancelLeaveRequest(requestID,callback);
+}
+
 InternalWebService.prototype.approveLeaveRequest = function approveLeaveRequest(req,response){
 
 	var accessCallback = function (err, user) {
 		if(err == null) {
 			var userRole = getUserRole (user.role_id);
 			if(userRole == ROLE.SUPERVISOR || userRole == ROLE.MANAGER){
-				if(req.body.leaveStatus = "Approve"){
+				if(req.body.leaveStatus == "Approve"){
 					internalApproveLeave (req,response,req.body.requestID);
 				}
-				else {
-					internalCancelLeave (req,response,req.body.requestID);
+				else if(req.body.leaveStatus == "Reject") {
+					internalRejectLeave (req,response,req.body.requestID);
 				}
 			}
 			else {
@@ -266,7 +299,7 @@ InternalWebService.prototype.approveLeaveRequest = function approveLeaveRequest(
 	access.determineUser (req.body.tokenID, accessCallback);
 };
 
-function internalCancelLeave (req,response,requestID){
+function internalRejectLeave (req,response,requestID){
 	var callback = function (err,data){
 			if (err == null) {
 				//response.send(JSON.stringify(data));
