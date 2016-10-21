@@ -102,7 +102,13 @@ function getLeavesForUser (req,response,empID) {
 	var callback = function (err,data){
 			if (err == null) {
 				console.log("successfully retrieved leaves");
-				response.send(JSON.stringify(data));
+				if(data.length > 0){
+					response.send(JSON.stringify(data));
+				}
+				else{
+					response.status(500).send(error.DatabaseError(err));
+				}
+				
 			}
 			else {
 				console.log("error in getting leaves");
