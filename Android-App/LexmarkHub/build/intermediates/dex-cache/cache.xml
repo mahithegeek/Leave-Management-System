@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="/Workspace/ProductsTeam/LexmarkHub/app/libs/gson-2.6.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="b9d63507329a7178e026fc334f87587ee5070ac5">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/2/gson-2.6.1_3be95dd9b9be607223e6cd3f0090cb41fabd015b/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/net.openid/appauth/0.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="f1f43c671e80e73e944c4db00f2052530a9bb881">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/net.openid-appauth-0.2.0_e195acea34f64fdb086d518f9092e309f7174267/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/venkateshkarra/.gradle/caches/modules-2/files-2.1/com.squareup.picasso/picasso/2.5.2/7446d06ec8d4f7ffcc53f1da37c95f200dcb9387/picasso-2.5.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/picasso-2.5.2_e8b08c41e91a5fa1c1603923851403c4c0994e77/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/venkateshkarra/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.2.0/f7873a2ebde246a45c2a8d6f3247108b4c88a879/okhttp-3.2.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="f7873a2ebde246a45c2a8d6f3247108b4c88a879">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/okhttp-3.2.0_1639213b8c3e261f4ac120b8739563b6b568c172/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.3.0_e8ecf085b85712ba88be67321e776d765cbc9be1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/customtabs/23.2.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="596fcec5b5b7080d2e5525dae976b5e9967a6b22">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-customtabs-23.2.0_bec436a4c41c692dc70c43713561512315107360/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="92956ac8e73849865ebbbb5edda9d0b488a2ebd9">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_1c1e23ab27525f1133669dfb3a1274ad89ad9064/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.3.0_297a9e8849efb0759865ee311fe65cce231b24b1/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.3.0_d2d7178301ce22617d2a3381869884403e32eae7/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="e557f43b9706ffec09532e95422ea0b1ca1ec39a">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_cbd31625d9499f5dac249868b080f269acff0d22/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.3.0_34262205d4f4050dd13791981a9ac6e2058ef669/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/venkateshkarra/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/okio-1.6.0_a59e498f8c68eca8f4f1865dbb094cbc4d2481a2/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/design/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="f0001e71cea6ae432a00021c6f727f5ef0f3d27e">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.3.0_628b6ba787e0931ee0de8cedb45b55ffa3820865/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.3.0_45e97ce77e1edffe407c6d3078c77b3b572b434d/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="debf30ce0a7560396b6235edef77e447006454c2">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.3.0_5078b85924b366fd6d09d37d751325473fe19611/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/Users/venkateshkarra/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.3"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.3.0_2591bdb3a92e0da51f208d1006d28ff33ea33807/classes.dex" />
+    </item>
+
+</items>

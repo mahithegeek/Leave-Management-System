@@ -1,0 +1,7 @@
+#Fri Oct 28 11:06:25 IST 2016
+base.0=/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_cbd31625d9499f5dac249868b080f269acff0d22
+renamed.1=classes.dex
+renamed.0=classes2.dex
+file.1=/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_1c1e23ab27525f1133669dfb3a1274ad89ad9064/classes.dex
+base.1=/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_1c1e23ab27525f1133669dfb3a1274ad89ad9064
+file.0=/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_cbd31625d9499f5dac249868b080f269acff0d22/classes.dex
