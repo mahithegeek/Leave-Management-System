@@ -1,0 +1,129 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:2:1-44:12
+	package
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:3:5-35
+		INJECTED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml
+		INJECTED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml
+		INJECTED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml
+		INJECTED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:4:5-79
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:4:22-76
+application
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:6:5-42:19
+MERGED from [com.android.support:design:23.3.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/design/23.3.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:23.3.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-vector-drawable:23.3.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:support-v4:23.3.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:animated-vector-drawable:23.3.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/AndroidManifest.xml:7:5-20
+MERGED from [com.android.support:customtabs:23.2.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/customtabs/23.2.0/AndroidManifest.xml:22:5-20
+	android:label
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:10:9-41
+	android:supportsRtl
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:11:9-35
+	android:allowBackup
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:8:9-35
+	android:icon
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:9:9-43
+	android:theme
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:12:9-40
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:7:9-51
+activity#com.kofax.lexmarkhub.Activities.MainActivity
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:13:9-25:20
+	android:screenOrientation
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:14:13-49
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:13:19-58
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:15:13-19:29
+action#android.intent.action.MAIN
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:16:17-69
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:16:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:18:17-77
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:18:27-74
+intent-filter#android.intent.category.DEFAULT+com.kofax.lexmarkhub.HANDLE_AUTHORIZATION_RESPONSE
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:20:13-24:29
+action#com.kofax.lexmarkhub.HANDLE_AUTHORIZATION_RESPONSE
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:21:17-93
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:21:25-90
+category#android.intent.category.DEFAULT
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:23:17-76
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:23:27-73
+activity#net.openid.appauth.RedirectUriReceiverActivity
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:26:9-35:20
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:26:19-80
+intent-filter#android.intent.action.VIEW+android.intent.category.BROWSABLE+android.intent.category.DEFAULT
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:27:13-34:29
+action#android.intent.action.VIEW
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:28:17-69
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:28:25-66
+category#android.intent.category.BROWSABLE
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:31:17-78
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:31:27-75
+data
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:33:17-63
+	android:scheme
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:33:23-60
+activity#com.kofax.lexmarkhub.Activities.LandingPageActivity
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:36:9-68
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:36:19-65
+activity#com.kofax.lexmarkhub.ServiceHandlers.LoginService
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:37:9-66
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:37:19-63
+activity#com.kofax.lexmarkhub.Activities.NewLeaveRequestActivity
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:38:9-72
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:38:19-69
+activity#com.kofax.lexmarkhub.Activities.PendingRequestsActivity
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:39:9-72
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:39:19-69
+activity#com.kofax.lexmarkhub.Activities.ViewStatusActivity
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:40:9-67
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:40:19-64
+activity#com.kofax.lexmarkhub.Activities.EditRequestActivity
+ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:41:9-77
+	android:name
+		ADDED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml:41:19-65
+uses-sdk
+INJECTED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:design:23.3.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/design/23.3.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:23.3.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-vector-drawable:23.3.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/AndroidManifest.xml:5:5-43
+MERGED from [com.android.support:support-v4:23.3.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:animated-vector-drawable:23.3.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/AndroidManifest.xml:5:5-44
+MERGED from [com.android.support:recyclerview-v7:23.3.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.3.0/AndroidManifest.xml:20:5-43
+MERGED from [net.openid:appauth:0.2.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/net.openid/appauth/0.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [com.android.support:customtabs:23.2.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/customtabs/23.2.0/AndroidManifest.xml:20:5-44
+	tools:overrideLibrary
+		ADDED from [com.android.support:appcompat-v7:23.3.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/AndroidManifest.xml:23:9-75
+	android:targetSdkVersion
+		INJECTED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml
+		INJECTED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml
+		INJECTED from /Workspace/ProductsTeam/LexmarkHub/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from [net.openid:appauth:0.2.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/net.openid/appauth/0.2.0/AndroidManifest.xml:24:5-67
+	android:name
+		ADDED from [net.openid:appauth:0.2.0] /Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/net.openid/appauth/0.2.0/AndroidManifest.xml:24:22-64

@@ -1,0 +1,58 @@
+[
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-xxhdpi/newrequest.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-xxhdpi/newrequest.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-xxhdpi/radiooff.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-xxhdpi/radiooff.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-xxhdpi/calender.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-xxhdpi/calender.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-xxhdpi/loginbackground.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-xxhdpi/loginbackground.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-xxhdpi/disclosure.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-xxhdpi/disclosure.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-xxhdpi/notes.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-xxhdpi/notes.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-xxhdpi/dropdown.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-xxhdpi/dropdown.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-xxhdpi/radioon.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-xxhdpi/radioon.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-xxhdpi/pendingrequest.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-xxhdpi/pendingrequest.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-xxhdpi/google.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-xxhdpi/google.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-xxhdpi/homescreenicon.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-xxhdpi/homescreenicon.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-xxhdpi/viewstatus.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-xxhdpi/viewstatus.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-xxhdpi/listofholidays.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-xxhdpi/listofholidays.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-xxhdpi/usericon.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-xxhdpi/usericon.png"
+    }
+]

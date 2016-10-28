@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kofax.lexmarkhub"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="22"
+        android:targetSdkVersion="23" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name="com.kofax.lexmarkhub.Activities.MainApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.kofax.lexmarkhub.Activities.MainActivity"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.kofax.lexmarkhub.HANDLE_AUTHORIZATION_RESPONSE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="net.openid.appauth.RedirectUriReceiverActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="com.kofax.lexmarkhub" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.kofax.lexmarkhub.Activities.LandingPageActivity" />
+        <activity android:name="com.kofax.lexmarkhub.ServiceHandlers.LoginService" />
+        <activity android:name="com.kofax.lexmarkhub.Activities.NewLeaveRequestActivity" />
+        <activity android:name="com.kofax.lexmarkhub.Activities.PendingRequestsActivity" />
+        <activity android:name="com.kofax.lexmarkhub.Activities.ViewStatusActivity" />
+        <activity android:name="com.kofax.lexmarkhub.Activities.EditRequestActivity" />
+    </application>
+
+</manifest>
