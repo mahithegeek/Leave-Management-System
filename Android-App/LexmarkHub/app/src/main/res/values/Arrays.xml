@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string-array name="leave_type_array_options">
+            <item>@string/leave_type_Vacation</item>
+            <item>@string/leave_type_CompOff</item>
+            <item>@string/leave_type_Special</item>
+            <item>@string/leave_type_carryForward</item>
+        </string-array>
+</resources>

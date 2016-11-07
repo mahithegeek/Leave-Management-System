@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#515050</color>
+    <color name="colorPrimaryDark">#515050</color>
+    <color name="colorAccent">#515050</color>
+    <color name="colorLexmarkHub_theam">#F6F2C0</color>
+    <color name="color_button_background">#515050</color>
+    <color name="color_list_background">#80515050</color>
+</resources>
