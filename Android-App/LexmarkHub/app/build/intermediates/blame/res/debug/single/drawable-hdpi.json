@@ -16,12 +16,12 @@
         "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-hdpi/notes.png"
     },
     {
-        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-hdpi/disclosure.png",
-        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-hdpi/disclosure.png"
-    },
-    {
         "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-hdpi/viewstatus.png",
         "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-hdpi/viewstatus.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-hdpi/disclosure.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/src/main/res/drawable-hdpi/disclosure.png"
     },
     {
         "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-hdpi/loginbackground.png",

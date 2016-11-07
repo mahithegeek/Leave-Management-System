@@ -61,7 +61,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
-        sha1="92956ac8e73849865ebbbb5edda9d0b488a2ebd9">
+        sha1="2558aed66f9eb447e509043b5228c7d352b4a541">
         <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_1c1e23ab27525f1133669dfb3a1274ad89ad9064/classes.dex" />
     </item>
     <item
@@ -88,7 +88,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
-        sha1="e557f43b9706ffec09532e95422ea0b1ca1ec39a">
+        sha1="82a892900f7bafa699c70ceb7daa31191f2f7c2d">
         <dex dex="/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_cbd31625d9499f5dac249868b080f269acff0d22/classes.dex" />
     </item>
     <item

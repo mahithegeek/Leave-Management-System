@@ -16,20 +16,20 @@
         "source": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-mdpi-v4/abc_ic_star_black_16dp.png"
     },
     {
-        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/abc_ic_menu_moreoverflow_mtrl_alpha.png",
-        "source": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-mdpi-v4/abc_ic_menu_moreoverflow_mtrl_alpha.png"
-    },
-    {
         "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/abc_textfield_search_default_mtrl_alpha.9.png",
         "source": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-mdpi-v4/abc_textfield_search_default_mtrl_alpha.9.png"
     },
     {
-        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/abc_menu_hardkey_panel_mtrl_mult.9.png",
-        "source": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-mdpi-v4/abc_menu_hardkey_panel_mtrl_mult.9.png"
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/abc_ic_menu_moreoverflow_mtrl_alpha.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-mdpi-v4/abc_ic_menu_moreoverflow_mtrl_alpha.png"
     },
     {
         "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/abc_btn_check_to_on_mtrl_015.png",
         "source": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-mdpi-v4/abc_btn_check_to_on_mtrl_015.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/abc_menu_hardkey_panel_mtrl_mult.9.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-mdpi-v4/abc_menu_hardkey_panel_mtrl_mult.9.png"
     },
     {
         "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/abc_ic_go_search_api_mtrl_alpha.png",
@@ -160,12 +160,12 @@
         "source": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-mdpi-v4/abc_btn_check_to_on_mtrl_000.png"
     },
     {
-        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/abc_popup_background_mtrl_mult.9.png",
-        "source": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-mdpi-v4/abc_popup_background_mtrl_mult.9.png"
-    },
-    {
         "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/abc_ic_star_half_black_36dp.png",
         "source": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-mdpi-v4/abc_ic_star_half_black_36dp.png"
+    },
+    {
+        "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/abc_popup_background_mtrl_mult.9.png",
+        "source": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res/drawable-mdpi-v4/abc_popup_background_mtrl_mult.9.png"
     },
     {
         "merged": "/Workspace/ProductsTeam/LexmarkHub/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/abc_btn_rating_star_on_mtrl_alpha.png",
