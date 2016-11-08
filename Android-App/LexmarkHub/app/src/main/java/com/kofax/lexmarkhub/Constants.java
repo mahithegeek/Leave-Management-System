@@ -2,6 +2,7 @@ package com.kofax.lexmarkhub;
 
 import com.kofax.lexmarkhub.Objects.User;
 
+import static android.R.attr.description;
 import static android.R.attr.id;
 
 /**
@@ -58,10 +59,15 @@ public class Constants {
     public static final String APPLIED_ON = "appliedOn";
     public static final String REQUESTID = "id";
     public static final String LEAVE_REQUESTS = "leaverequests";
+    public static final String SUCCESS = "success";
+    public static final String DESCRIPTION = "description";
 
     //Approve RequestKeys
     public static final String REQUEST_ID = "requestID";
-    public static final String LEAVE_STATUS = "LeaveStatus";
+    public static final String LEAVE_STATUS = "leaveStatus";
+    public static final String STATUS_APPROVE = "Approve";
+    public static final String STATUS_REJECT = "Reject";
+    public static final String STATUS_APPLIED = "Applied";
 
     //CustomKeys
     public static final String REQUEST_OBJECT_EXTRA = "RequestExtra";
