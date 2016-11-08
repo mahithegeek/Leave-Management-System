@@ -27,6 +27,8 @@ import java.util.Arrays;
 import static com.kofax.lexmarkhub.Constants.DUMMY_ERROR;
 import static com.kofax.lexmarkhub.Constants.LEAVE_REQUESTS;
 import static com.kofax.lexmarkhub.Constants.REQUEST_OBJECT_EXTRA;
+import static com.kofax.lexmarkhub.Constants.STATUS;
+import static com.kofax.lexmarkhub.Constants.STATUS_APPLIED;
 import static com.kofax.lexmarkhub.Constants.TOKEN_ID;
 
 public class PendingRequestsActivity extends AppCompatActivity {
@@ -37,17 +39,22 @@ public class PendingRequestsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending_requests);
         getSupportActionBar().setTitle(R.string.pending_requests_title);
-        getPendingRequests();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getPendingRequests();
+    }
     public void loadLeavesList(JSONArray response){
         final ArrayList<JSONObject> requests = new ArrayList<JSONObject>();
 
         if (response != null) {
             for (int i=0;i<response.length();i++){
                 try{
-                    JSONObject object = response.getJSONObject(0);
-                    requests.addAll(Arrays.asList(object));
+                    JSONObject object = response.getJSONObject(i);
+                    if (object.getString(STATUS).equalsIgnoreCase(STATUS_APPLIED))
+                        requests.addAll(Arrays.asList(object));
                 }
                 catch (JSONException e){
                     e.printStackTrace();

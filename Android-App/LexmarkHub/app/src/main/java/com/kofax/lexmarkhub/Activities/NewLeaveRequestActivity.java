@@ -32,10 +32,12 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import static com.kofax.lexmarkhub.Constants.AVAILABLE;
+import static com.kofax.lexmarkhub.Constants.DESCRIPTION;
 import static com.kofax.lexmarkhub.Constants.DUMMY_ERROR;
 import static com.kofax.lexmarkhub.Constants.FROM_DATE;
 import static com.kofax.lexmarkhub.Constants.IS_HALF_DAY;
 import static com.kofax.lexmarkhub.Constants.LEAVE;
+import static com.kofax.lexmarkhub.Constants.SUCCESS;
 import static com.kofax.lexmarkhub.Constants.TOKEN_ID;
 import static com.kofax.lexmarkhub.Constants.TO_DATE;
 import static com.kofax.lexmarkhub.Constants.TYPE;
@@ -122,16 +124,7 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
                 NewLeaveRequestActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         Log.d("new request page", ""+response);
-                        try{
-                            JSONArray responseObject = new JSONArray(response);
-                            JSONObject productsJson = responseObject.getJSONObject(0);
-                            finish();// show toast if required
-                        }
-                        catch (JSONException e){
-                            e.printStackTrace();
-                            Toast.makeText(NewLeaveRequestActivity.this, Utility.getErrorMessageForCode(DUMMY_ERROR),
-                                    Toast.LENGTH_SHORT).show();
-                        }
+                        showResult(response);
                     }
                 });
 
@@ -152,6 +145,27 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
         lms_serviceHandler.applyLeave(getJsonBodyForApplyLeave().toString().replace("\\",""));
 
     }
+    private void showResult(String response){
+        try{
+            JSONObject productsJson = new JSONObject(response);
+            String result = productsJson.getString(SUCCESS);
+            Toast.makeText(NewLeaveRequestActivity.this, result, Toast.LENGTH_SHORT).show();
+            finish();
+        }
+        catch (JSONException e){
+            try{
+                JSONObject productsJson = new JSONObject(response);
+                String result = productsJson.getString(DESCRIPTION);
+                Toast.makeText(NewLeaveRequestActivity.this, result, Toast.LENGTH_SHORT).show();
+            }
+            catch (JSONException ex){
+                ex.printStackTrace();
+                Toast.makeText(NewLeaveRequestActivity.this, Utility.getErrorMessageForCode(DUMMY_ERROR),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
     private JSONObject getJsonBodyForApplyLeave() {
         JSONObject parameters = new JSONObject();
 
@@ -160,9 +174,9 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
             JSONObject leaveObject = new JSONObject();
             try {
 
-                String startDt = startYear+"-"+startMonth+"-"+startDay;
+                String startDt = startYear+"-"+(startMonth+1)+"-"+startDay;
                 leaveObject.put(FROM_DATE, startDt);
-                leaveObject.put(TO_DATE, endYear+"-"+endMonth+"-"+endDay);
+                leaveObject.put(TO_DATE, endYear+"-"+(endMonth+1)+"-"+endDay);
                 leaveObject.put(IS_HALF_DAY, false);
                 String reason = reasonTxtView.getText().toString();
                 leaveObject.put(TYPE,reason.replace(getResources().getString(R.string.Reason),""));
@@ -252,6 +266,8 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, monthOfYear);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+        Log.d("ondateSet","monthOfYear : "+monthOfYear);
 
         Format formatter = new SimpleDateFormat("dd-MM-yyyy");
         String s = formatter.format(calendar.getTime());

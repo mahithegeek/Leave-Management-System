@@ -40,7 +40,7 @@ public class ViewStatusActivity extends AppCompatActivity {
         if (response != null) {
             for (int i=0;i<response.length();i++){
                 try{
-                    JSONObject object = response.getJSONObject(0);
+                    JSONObject object = response.getJSONObject(i);
                     requests.addAll(Arrays.asList(object));
                 }
                 catch (JSONException e){
