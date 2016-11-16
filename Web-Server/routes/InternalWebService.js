@@ -231,7 +231,7 @@ function formLeaveRequestResponse (dbResult) {
 	var leaveRequestResponse = [];
 	for(var i=0;i< dbResult.length;i++){
 		console.log("dbresult is  "+dbResult[i]);
-		var leaveRequest = {id:dbResult[i].id,firstName:dbResult[i].first_name,lastName:dbResult[i].last_name,email:dbResult[i].email,fromDate:dbResult[i].date_from,toDate:dbResult[i].date_to,half_Day:dbResult[i].half_Day,appliedOn:dbResult[i].applied_on,status:dbResult[i].status};
+		var leaveRequest = {id:dbResult[i].id,firstName:dbResult[i].first_name,lastName:dbResult[i].last_name,email:dbResult[i].email,fromDate:dbResult[i].date_from,toDate:dbResult[i].date_to,half_Day:dbResult[i].half_Day,appliedOn:dbResult[i].applied_on,status:dbResult[i].status,reason:dbResult[i].reason};
 		console.log("leave request is   "+ leaveRequest);
 		leaveRequestResponse.push(leaveRequest);
 
