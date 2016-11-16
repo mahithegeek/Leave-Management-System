@@ -49,8 +49,10 @@ function getSupervisorDetails(user,response) {
 			
 			console.log("count is " + data.length);
 			if(data.length > 0){
-				user.supervisor = data[0];
-				console.log("supervisor is " + user.supervisor);
+				var supervisorDetails = {firstName : data[0].first_name,lastName : data[0].last_name,email : data[0].email};
+				user.supervisor = supervisorDetails;
+				delete user.supervisorID;
+				console.log("user details are  " + JSON.stringify(user));
 				response.json (user);
 			}
 			else {
