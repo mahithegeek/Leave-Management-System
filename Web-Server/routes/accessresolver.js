@@ -59,7 +59,7 @@ accessresolver.prototype.determineUser = function determineUserAccess (tokenID,c
 };
 
 function createUser (sqlUser) {
-	user = new User (sqlUser.first_name,sqlUser.last_name,sqlUser.email,sqlUser.role,sqlUser.role_id,sqlUser.emp_id);
+	user = new User (sqlUser.first_name,sqlUser.last_name,sqlUser.email,sqlUser.role,sqlUser.role_id,sqlUser.emp_id,sqlUser.supervisor);
 	return user;
 }
 

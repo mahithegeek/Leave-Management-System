@@ -110,6 +110,11 @@ Storage.prototype.fetchUser = function fetchUser(userEmail,callback) {
     runSqlQuery (queryString,null,callback);
 };
 
+Storage.prototype.fetchSuperVisor = function fetchSuperVisor (supervisorID,callback) {
+    var queryString = "SELECT * FROM user WHERE emp_id = '"+supervisorID+ "'";
+    runSqlQuery (queryString,null,callback);
+};
+
 Storage.prototype.fetchLeaveRequests = function (empID, callback) {
   var queryString = "SELECT user.*,leaves.*,DATE_FORMAT(leaves.date_from,'%Y-%m-%d') as date_from,DATE_FORMAT(leaves.date_to,'%Y-%m-%d') as date_to,DATE_FORMAT(leaves.applied_on,'%Y-%m-%d') as applied_on ,status.status FROM user INNER JOIN leaves ON leaves.emp_id = user.emp_id INNER JOIN status ON status.id = leaves.status_id WHERE user.supervisor = '"+  empID + "'";
   runSqlQuery (queryString,null,callback); 

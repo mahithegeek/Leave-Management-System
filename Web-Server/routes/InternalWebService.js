@@ -28,10 +28,10 @@ InternalWebService.prototype.login = function (req, response) {
 	var accessCallback = function (err, user) {
 		console.log("callback triggered");
 		if(err == null ) {
-			console.log("creating user" + user);
-			var userData = {firstName : user.firstName, lastName: user.lastName,email : user.email, empID : user.emp_id.toString(), role : user.role};
-			response.setHeader('Content-Type', 'application/json');
-			response.json(userData);
+			var userData = {firstName : user.firstName, lastName: user.lastName,email : user.email, empID : user.emp_id.toString(), role : user.role,supervisorID : user.supervisor_id.toString(),supervisor:""};
+			/*response.setHeader('Content-Type', 'application/json');
+			response.json(userData);*/
+			getSupervisorDetails (userData,response);
 			
 		}
 		else {
@@ -42,6 +42,28 @@ InternalWebService.prototype.login = function (req, response) {
 	//console.log(req.body.tokenID);
 	access.determineUser (req.body.tokenID, accessCallback);
 };
+
+function getSupervisorDetails(user,response) {
+	var callback = function (err,data) {
+		if(err == null){
+			
+			console.log("count is " + data.length);
+			if(data.length > 0){
+				user.supervisor = data[0];
+				console.log("supervisor is " + user.supervisor);
+				response.json (user);
+			}
+			else {
+				response.status(500).send(error.SuperVisorNotFound());
+			}
+		}
+		else {
+			response.status(500).send (error.DatabaseError(err));
+		}
+	}
+	console.log("user details are " + user.supervisorID);
+	sqlHandle.fetchSuperVisor(user.supervisorID,callback);
+}
 
 //To DO just check the credentials and see if this is a legitimate request
 InternalWebService.prototype.getUsers = function getUsers (req,response) {

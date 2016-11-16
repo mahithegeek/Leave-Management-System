@@ -10,6 +10,16 @@ ServerError.prototype.UserAccessDeniedError = function () {
 
 };
 
+ServerError.prototype.UserNotFoundError = function () {
+	var error = {code : 4001, description:"User Not Found"};
+	return error;
+};
+
+ServerError.prototype.SuperVisorNotFound = function () {
+	var error = {code : 4002, description:"SuperVisor To this user doesnot exist"};
+	return error;
+};
+
 ServerError.prototype.DatabaseError = function (message) {
 	var error = {code:4100,description:message};
 	return error;
