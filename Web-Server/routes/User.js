@@ -1,6 +1,6 @@
 
 
-function User (firstName,lastName,email,role,role_id,empID) {
+function User (firstName,lastName,email,role,role_id,empID,superVisorID) {
 
 	this.firstName = firstName;
 	this.lastName = lastName;
@@ -8,6 +8,8 @@ function User (firstName,lastName,email,role,role_id,empID) {
 	this.role = role;
 	this.role_id = role_id;
 	this.emp_id = empID;
+	this.supervisor_id = superVisorID;
+	this.supervisorName = " ";
 
 }
 
