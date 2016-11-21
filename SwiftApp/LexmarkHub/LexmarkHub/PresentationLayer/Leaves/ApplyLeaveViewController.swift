@@ -260,6 +260,15 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
     }
     
     @IBAction func approveLeaveButtonAction(sender: AnyObject) {
+        approveLeave(true)
+    }
+    
+    @IBAction func rejectLeaveButtonAction(sender: AnyObject) {
+        approveLeave(false)
+    }
+    
+    
+    func approveLeave(approve:Bool) -> Void {
         
         Loader.show("Loading", disableUI: true)
         appDelegate.oAuthManager?.requestAccessToken(withCompletion: { (idToken, error) in
@@ -267,17 +276,18 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
             if idToken?.isEmpty == false {
                 let parameters = [
                     "tokenID": idToken!,
-                    " requestID": self.leaveRequest!.requestId
+                    "requestID": self.leaveRequest!.requestId,
+                    "leaveStatus":(approve ? "Approve":"Reject")
                 ]
                 
                 print(parameters)
                 LMSServiceFactory.sharedInstance().approveLeave(withURL: kApproveLeaveURL, withParams: parameters, completion: { (responseDict, error) in
                     
-                    print(responseDict)
-                    Loader.hide();
                     
+                    Loader.hide();
                     if responseDict != nil {
-                        Popups.SharedInstance.ShowAlert(self, title: kAppTitle, message: "Approved leave successfully.", buttons: ["OK"], completion: { (buttonPressed) in
+                        print(responseDict)
+                        Popups.SharedInstance.ShowAlert(self, title: kAppTitle, message: responseDict!["success"] as! String, buttons: ["OK"], completion: { (buttonPressed) in
                             LMSThreading.dispatchOnMain(withBlock: { (Void) in
                                 self.navigationController?.popViewControllerAnimated(true)
                             })
@@ -296,12 +306,8 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
                 }
             }
         })
+    }
 
-    }
-    
-    @IBAction func rejectLeaveButtonAction(sender: AnyObject) {
-    }
-    
     func compareDate(fromDate:NSDate, toDate:NSDate) -> NSComparisonResult{
         
         let order = NSCalendar.currentCalendar().compareDate(fromDate, toDate: toDate,

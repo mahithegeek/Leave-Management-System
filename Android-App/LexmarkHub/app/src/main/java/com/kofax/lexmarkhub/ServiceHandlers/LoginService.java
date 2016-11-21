@@ -35,6 +35,7 @@ import static com.kofax.lexmarkhub.Constants.FNAME;
 import static com.kofax.lexmarkhub.Constants.LNAME;
 import static com.kofax.lexmarkhub.Constants.REQUEST_METHOD_POST;
 import static com.kofax.lexmarkhub.Constants.ROLE;
+import static com.kofax.lexmarkhub.Constants.SUPERVISOR;
 import static com.kofax.lexmarkhub.Constants.TOKEN_ID;
 import static com.kofax.lexmarkhub.Constants.TYPE_JSON;
 import static com.kofax.lexmarkhub.Constants.baseUrl;
@@ -161,6 +162,14 @@ public class LoginService  extends AsyncTask<String, Void, String[]> {
             user.setEmail(userJson.getString(EMAIL));
             user.setEmpId(userJson.getString(EMPID));
             user.setRole(userJson.getString(ROLE));
+
+            if (!userJson.optString(SUPERVISOR).isEmpty()){
+                JSONObject supervisorDetails = new JSONObject(userJson.getString(SUPERVISOR));
+
+                user.setSupervisorDetails(supervisorDetails.getString(FNAME),
+                        supervisorDetails.getString(LNAME),
+                        supervisorDetails.getString(EMAIL));
+            }
             mLoginServiceCallBack.didFinishLogin(user);
         }
         catch (JSONException e){

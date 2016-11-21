@@ -20,5 +20,5 @@
     <string name="pending_requests_title">Pending Requests</string>
     <string name="pending_request_title">Pending Request</string>
     <string name="user_requests_title">User Requests</string>
-
+    <string name="welcome">Welcome :</string>
 </resources>

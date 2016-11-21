@@ -18,6 +18,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.xml.transform.stream.StreamSource;
+
 import static com.kofax.lexmarkhub.Constants.DESCRIPTION;
 import static com.kofax.lexmarkhub.Constants.DUMMY_ERROR;
 import static com.kofax.lexmarkhub.Constants.FNAME;
@@ -25,6 +27,7 @@ import static com.kofax.lexmarkhub.Constants.FROM_DATE;
 import static com.kofax.lexmarkhub.Constants.LEAVE_REQUESTS;
 import static com.kofax.lexmarkhub.Constants.LEAVE_STATUS;
 import static com.kofax.lexmarkhub.Constants.LNAME;
+import static com.kofax.lexmarkhub.Constants.REASON;
 import static com.kofax.lexmarkhub.Constants.REQUESTID;
 import static com.kofax.lexmarkhub.Constants.REQUEST_ID;
 import static com.kofax.lexmarkhub.Constants.REQUEST_OBJECT_EXTRA;
@@ -40,6 +43,7 @@ public class EditRequestActivity extends AppCompatActivity {
     private TextView toDateTxtView;
     private TextView reasonTxtView;
     private TextView nameTxtView;
+    private TextView notesTxtView;
     private JSONObject requestObject;
     private ProgressDialog mProgress;
     @Override
@@ -52,7 +56,7 @@ public class EditRequestActivity extends AppCompatActivity {
         toDateTxtView = (TextView) findViewById(R.id.todate_textView);
         reasonTxtView = (TextView) findViewById(R.id.reason_txtView);
         nameTxtView = (TextView) findViewById(R.id.name_textView);
-
+        notesTxtView = (TextView) findViewById(R.id.notes_textView);
         try{
             requestObject = new JSONObject(getIntent().getStringExtra(REQUEST_OBJECT_EXTRA));
             String userName = requestObject.getString(FNAME)+" "+requestObject.getString(LNAME);
@@ -60,10 +64,10 @@ public class EditRequestActivity extends AppCompatActivity {
             fromDateTxtView.setText(requestObject.getString(FROM_DATE).replace("-","/"));
             toDateTxtView.setText(requestObject.getString(TO_DATE).replace("-","/"));
             //TODO remove hardcoding
-
             String reason = getResources().getString(R.string.Reason)+ " "
                     + getResources().getString(R.string.leave_type_Vacation);
             reasonTxtView.setText(reason);
+            notesTxtView.setText(requestObject.getString(REASON));
 
         }catch (JSONException e){
             e.printStackTrace();
