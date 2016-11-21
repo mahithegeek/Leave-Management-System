@@ -165,22 +165,4 @@ public class LMS_ServiceHandler {
             return params;
         }
     }
-
-
-    private void sendResponseToController(String response){
-
-        Log.d("LMS_ServiceHandler","Response :"+ response);
-        try {
-            JSONArray responseObject = new JSONArray(response);
-           // mLmsServiceHandlerCallBack.didFinishServiceWithResponse(responseObject);
-        }
-        catch (JSONException e){
-            //send Random Error code as the parsing failed
-            // need toc change
-            mLmsServiceHandlerCallBack.didFailService(DUMMY_ERROR);
-            e.printStackTrace();
-        }
-    }
-
-
 }

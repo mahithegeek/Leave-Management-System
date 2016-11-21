@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 
+import com.kofax.lexmarkhub.Objects.User;
 import com.kofax.lexmarkhub.Utility.DatePickerDialogFragment;
 import com.kofax.lexmarkhub.R;
 import com.kofax.lexmarkhub.ServiceHandlers.LMS_ServiceHandler;
@@ -37,6 +38,7 @@ import static com.kofax.lexmarkhub.Constants.DUMMY_ERROR;
 import static com.kofax.lexmarkhub.Constants.FROM_DATE;
 import static com.kofax.lexmarkhub.Constants.IS_HALF_DAY;
 import static com.kofax.lexmarkhub.Constants.LEAVE;
+import static com.kofax.lexmarkhub.Constants.REASON;
 import static com.kofax.lexmarkhub.Constants.SUCCESS;
 import static com.kofax.lexmarkhub.Constants.TOKEN_ID;
 import static com.kofax.lexmarkhub.Constants.TO_DATE;
@@ -58,6 +60,8 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
     private TextView reasonTxtView;
     private RadioGroup radioLeaveTypeGroup;
     private RadioButton radioLeaveTypeButton;
+    private TextView toTextView;
+    private TextView notesView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +75,8 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
         toDateTxtView = (TextView) findViewById(R.id.todate_textView);
         reasonTxtView = (TextView) findViewById(R.id.reason_txtView);
         radioLeaveTypeGroup = (RadioGroup) findViewById(R.id.timeOff_radioGrooup);
+        toTextView = (TextView) findViewById(R.id.toTextView);
+        notesView = (TextView) findViewById(R.id.notes_view);
 
         final Calendar c = Calendar.getInstance();
         startYear = endYear = c.get(Calendar.YEAR);
@@ -110,6 +116,10 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
         });
 
         setCurrentDate();
+        User user = Utility.getLoggedInUser(this);
+        toTextView.setText(getResources().getString(R.string.to)
+                +" "+user.getSuperVisorFName()
+                +" "+user.getSuperVisorLName());
     }
     public void submitRequestAction(View view){
         if (validateDate() == false){
@@ -180,6 +190,7 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
                 leaveObject.put(IS_HALF_DAY, false);
                 String reason = reasonTxtView.getText().toString();
                 leaveObject.put(TYPE,reason.replace(getResources().getString(R.string.Reason),""));
+                leaveObject.put(REASON,notesView.getText());
             }
             catch (JSONException e){
                 e.printStackTrace();

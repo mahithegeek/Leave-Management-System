@@ -15,6 +15,9 @@ public class User {
     private String mEmpId;
     private String mEmailId;
     private Role mRole;
+    private String mSupervisorFName;
+    private String mSupervisorLName;
+    private String mSupervisorEmail;
 
     public User(String fName,String lName){
         mFName = fName;
@@ -38,6 +41,12 @@ public class User {
     public void setEmpId(String empId){
         mEmpId = empId;
     }
+
+    public void setSupervisorDetails(String fName,String lName,String email){
+        mSupervisorEmail = email;
+        mSupervisorLName = lName;
+        mSupervisorFName = fName;
+    }
     //Getter methods
     public String getfName(){
         return mFName;
@@ -50,6 +59,24 @@ public class User {
     }
     public String getEmpId(){
         return mEmpId;
+    }
+    public String getEmailId() {
+        return mEmailId;
+    }
+    public String getSuperVisorFName(){
+        if (mSupervisorFName == null)
+            return "";
+        return mSupervisorFName;
+    }
+    public String getSuperVisorLName(){
+        if (mSupervisorLName == null)
+            return "";
+        return mSupervisorLName;
+    }
+    public String getSuperVisorEmail(){
+        if (mSupervisorEmail == null)
+            return "";
+        return mSupervisorEmail;
     }
 
 }

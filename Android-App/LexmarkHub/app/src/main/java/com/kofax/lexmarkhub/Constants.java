@@ -35,6 +35,7 @@ public class Constants {
     public static final String EMAIL = "email";
     public static final String EMPID = "empID";
     public static final String ROLE = "role";
+    public static final String SUPERVISOR = "supervisor";
 
     //AvailableLEave Response Keys
     public static final String REC_ID ="id";
@@ -55,12 +56,14 @@ public class Constants {
     public static final String DATE_TO = "date_to";
     public static final String STATUS = "status";
 
+
     //LeaveRequests responseKeys
     public static final String APPLIED_ON = "appliedOn";
     public static final String REQUESTID = "id";
     public static final String LEAVE_REQUESTS = "leaverequests";
     public static final String SUCCESS = "success";
     public static final String DESCRIPTION = "description";
+    public static final String REASON = "reason";
 
     //Approve RequestKeys
     public static final String REQUEST_ID = "requestID";
