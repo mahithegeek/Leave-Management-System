@@ -12,6 +12,7 @@ import UIKit
 // Segues
 let kDashboardSegue:String = "dashboardSegue"
 let kUserLeaveRequestsSegue:String = "userLeaveRequestsSegue"
+let kUserApplyLeaveSegue:String = "userApplyLeaveSegue"
 
 /*! @var kIssuer
  @brief The OIDC issuer from which the configuration will be discovered.

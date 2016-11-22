@@ -15,10 +15,13 @@ let kFirstName:String = "firstName"
 let kLastName:String = "lastName"
 let kRole:String = "role"
 let kEmail:String = "email"
+let kSupervisor = "supervisor"
 
 class Employee: NSObject {
     private (set)var id: NSNumber?
     private (set)var name, role,  email: String?
+    private (set)var supervisorName, supervisorEmail :String?
+    
     
     init(withDictionary dict:NSDictionary){
        
@@ -38,6 +41,20 @@ class Employee: NSObject {
         }
         if dict[kEmail] != nil {
             self.email = dict[kEmail] as? String
+        }
+        
+        let supervisor = dict[kSupervisor] as? NSDictionary
+        if supervisor != nil {
+            
+            if let firstName = supervisor![kFirstName] {
+                self.supervisorName = firstName as? String
+            }
+            if let lastName = supervisor![kLastName] {
+                self.supervisorName = (self.supervisorName != nil) ? ("\(self.supervisorName!) " + (lastName as! String)): (lastName as! String)
+            }
+            if supervisor![kEmail] != nil {
+                self.supervisorEmail = supervisor![kEmail] as? String
+            }
         }
         
         super.init()

@@ -36,6 +36,7 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
     var leaveRequest:LeaveRequest?
     var leave=Leave(reason:"Vacation",employee:nil ,startDate:NSDate(),endDate: NSDate(),leaveType:"Vacation")
     var isFromPending:Bool = false
+    var employee: Employee?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +52,7 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
             applyButtonWidthConstraint.constant = (UIScreen.mainScreen().bounds.size.width - 2 * padding - gapBetweenDates) / 2
             self.reportToLabel.text = "From: " + (leave.employee?.name)!
             self.titleLabel.text = "Pending Request"
+            reasonTextView.text = leave.reason
             approveButton.hidden = false
             rejectButton.hidden = false
             startDateButton.userInteractionEnabled = false
@@ -58,6 +60,9 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
             reasonTextView.editable = false
             submitButton.hidden = true
             leaveTypeButton.userInteractionEnabled = false
+        }
+        else if let supervisorName = self.employee!.supervisorName {
+            self.reportToLabel.text = "To: " + supervisorName
         }
         // Do any additional setup after loading the view.
     }
@@ -226,7 +231,8 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
                         "fromDate": AppUtilities().dateStringFromDate(self.leave.startDate!),
                         "toDate" : AppUtilities().dateStringFromDate(self.leave.endDate!),
                         "isHalfDay" : false,
-                        "type" : self.leave.leaveType!
+                        "type" : self.leave.leaveType!,
+                        "reason" : self.reasonTextView.text
                         ]
                 ]
                 
