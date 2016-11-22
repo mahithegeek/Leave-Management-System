@@ -91,6 +91,13 @@ class DashboardViewController: UIViewController {
                 }
             }
         }
+        else if segue.identifier == kUserApplyLeaveSegue {
+            if let userRequestsViewController = segue.destinationViewController as? ApplyLeaveViewController {
+                if let employee = self.employee {
+                    userRequestsViewController.employee = employee
+                }
+            }
+        }
     }
  
 
