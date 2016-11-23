@@ -11,6 +11,6 @@ import org.json.JSONObject;
  */
 
 public interface LMS_ServiceHandlerCallBack {
-    void didFinishServiceWithResponse(String response);
-    void didFailService(int responseCode);
+    void didFinishServiceWithResponse(String response, LMS_ServiceHandler.RequestType requestType);
+    void didFailService(int responseCode, LMS_ServiceHandler.RequestType requestType);
 }

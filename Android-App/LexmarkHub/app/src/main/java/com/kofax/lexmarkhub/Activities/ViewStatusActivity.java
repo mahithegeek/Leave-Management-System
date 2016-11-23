@@ -22,9 +22,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static com.kofax.lexmarkhub.Constants.DUMMY_ERROR;
+import static com.kofax.lexmarkhub.Constants.REC_ID;
+import static com.kofax.lexmarkhub.Constants.STATUS;
+import static com.kofax.lexmarkhub.Constants.STATUS_CANCELLED;
+import static com.kofax.lexmarkhub.Constants.SUCCESS;
 import static com.kofax.lexmarkhub.Constants.TOKEN_ID;
 
-public class ViewStatusActivity extends AppCompatActivity {
+public class ViewStatusActivity extends AppCompatActivity implements RequestListAdapter.RequestListAdapterCallBack,LMS_ServiceHandlerCallBack{
     private  ProgressDialog mProgress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,6 @@ public class ViewStatusActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(R.string.user_requests_title);
         getLeaveHistory();
     }
-
     public void loadLeavesList(JSONArray response){
         final ArrayList<JSONObject> requests = new ArrayList<JSONObject>();
 
@@ -41,7 +44,8 @@ public class ViewStatusActivity extends AppCompatActivity {
             for (int i=0;i<response.length();i++){
                 try{
                     JSONObject object = response.getJSONObject(i);
-                    requests.addAll(Arrays.asList(object));
+                    if (!object.getString(STATUS).equalsIgnoreCase(STATUS_CANCELLED))
+                        requests.addAll(Arrays.asList(object));
                 }
                 catch (JSONException e){
                     e.printStackTrace();
@@ -49,46 +53,17 @@ public class ViewStatusActivity extends AppCompatActivity {
             }
         }
         RequestListAdapter requestListAdapter = new RequestListAdapter(this,requests,false);
+        requestListAdapter.requestListAdapterCallBack = this;
         ListView listview = (ListView)findViewById(R.id.requestList);
         listview.setAdapter(requestListAdapter);
     }
     public void  getLeaveHistory(){
         showSpinner();
         LMS_ServiceHandler lms_serviceHandler = new LMS_ServiceHandler(this);
-        lms_serviceHandler.setLmsServiceCallBack(new LMS_ServiceHandlerCallBack() {
-            @Override
-            public void didFinishServiceWithResponse(final String response) {
-                removeSpinner();
-                ViewStatusActivity.this.runOnUiThread(new Runnable() {
-                    public void run() {
-                        Log.d("viewStatus Page", ""+response);
-                        try{
-                            JSONArray responseObject = new JSONArray(response);
-                            loadLeavesList(responseObject);
-                        }
-                        catch (JSONException e){
-                            e.printStackTrace();
-                            Toast.makeText(ViewStatusActivity.this, Utility.getErrorMessageForCode(DUMMY_ERROR),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-            }
-            @Override
-            public void didFailService(final int responseCode) {
-                ViewStatusActivity.this.runOnUiThread(new Runnable() {
-                    public void run() {
-                        removeSpinner();
-                        Toast.makeText(ViewStatusActivity.this, Utility.getErrorMessageForCode(responseCode),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
-
-        lms_serviceHandler.getLeaveHistory(getJsonBodyForleaveHistory().toString());
+        lms_serviceHandler.lmsServiceHandlerCallBack = this;
+        lms_serviceHandler.startRequest(LMS_ServiceHandler.RequestType.LeaveHistory,
+                getJsonBodyForleaveHistory().toString());
     }
-
     private JSONObject getJsonBodyForleaveHistory() {
         JSONObject parameters = new JSONObject();
         try {
@@ -99,14 +74,78 @@ public class ViewStatusActivity extends AppCompatActivity {
         }
         return parameters;
     }
-
     public void showSpinner(){
         mProgress = new ProgressDialog(this);
         mProgress.setMessage("Wait while loading...");
         mProgress.show();
     }
-
     private void removeSpinner(){
         mProgress.dismiss();
+    }
+    private JSONObject getJsonBodyForCancelLeave(JSONObject leaveObject) {
+        JSONObject parameters = new JSONObject();
+        try {
+            parameters.put(TOKEN_ID, SharedPreferences.getAuthToken(this));
+            parameters.put("requestID", leaveObject.getString(REC_ID));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return parameters;
+    }
+
+    //RequestListAdapterCallBack Methods
+    @Override
+    public void didSelectRequestItemWithAction(JSONObject requestItem, RequestListAdapter.RequestAction requestAction) {
+        LMS_ServiceHandler lms_serviceHandler = new LMS_ServiceHandler(this);
+        lms_serviceHandler.lmsServiceHandlerCallBack = this;
+        lms_serviceHandler.startRequest(LMS_ServiceHandler.RequestType.CancelLeave,
+                getJsonBodyForCancelLeave(requestItem).toString());
+    }
+
+    //lmsServiceHandlerCallBack Methods
+    @Override
+    public void didFailService(int responseCode, LMS_ServiceHandler.RequestType requestType) {
+        final int serResponseCode = responseCode;
+        ViewStatusActivity.this.runOnUiThread(new Runnable() {
+            public void run() {
+                removeSpinner();
+                Toast.makeText(ViewStatusActivity.this, Utility.getErrorMessageForCode(serResponseCode),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void didFinishServiceWithResponse(String response, LMS_ServiceHandler.RequestType requestType) {
+        final String serviceRes = response;
+        final LMS_ServiceHandler.RequestType reqType = requestType;
+        ViewStatusActivity.this.runOnUiThread(new Runnable() {
+            public void run() {
+                removeSpinner();
+                Log.d("viewStatus Page", ""+serviceRes);
+                try{
+                    switch (reqType){
+                        case LeaveHistory:
+                            JSONArray responseObject = new JSONArray(serviceRes);
+                            loadLeavesList(responseObject);
+                            break;
+                        case CancelLeave:
+                            JSONObject jsonObject = new JSONObject(serviceRes);
+                            String response = jsonObject.getString(SUCCESS);
+                            Toast.makeText(ViewStatusActivity.this, response,
+                                    Toast.LENGTH_SHORT).show();
+                            //TODO reload the list
+                            getLeaveHistory();
+                            break;
+                    }
+                }
+                catch (JSONException e){
+                    e.printStackTrace();
+                    Toast.makeText(ViewStatusActivity.this, Utility.getErrorMessageForCode(DUMMY_ERROR),
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

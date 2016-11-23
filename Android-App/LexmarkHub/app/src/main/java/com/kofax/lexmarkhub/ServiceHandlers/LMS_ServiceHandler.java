@@ -20,6 +20,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.PublicKey;
 
 import okhttp3.RequestBody;
 
@@ -36,8 +37,16 @@ import static com.kofax.lexmarkhub.Constants.applyLeave_Endpoint;
 import static com.kofax.lexmarkhub.Constants.approveLeave_Endpoint;
 import static com.kofax.lexmarkhub.Constants.availableLeaves_Endpoint;
 import static com.kofax.lexmarkhub.Constants.baseUrl;
+import static com.kofax.lexmarkhub.Constants.cancelLeave_Endpoint;
 import static com.kofax.lexmarkhub.Constants.leaveHistory_Endpoint;
 import static com.kofax.lexmarkhub.Constants.leaverequests_Endpoint;
+import static com.kofax.lexmarkhub.ServiceHandlers.GoogleAuthenticator.GoogleAuthResponse.GoogleAuthenticationSuccess;
+import static com.kofax.lexmarkhub.ServiceHandlers.LMS_ServiceHandler.RequestType.ApplyLeave;
+import static com.kofax.lexmarkhub.ServiceHandlers.LMS_ServiceHandler.RequestType.ApproveLeave;
+import static com.kofax.lexmarkhub.ServiceHandlers.LMS_ServiceHandler.RequestType.AvailableLeaves;
+import static com.kofax.lexmarkhub.ServiceHandlers.LMS_ServiceHandler.RequestType.CancelLeave;
+import static com.kofax.lexmarkhub.ServiceHandlers.LMS_ServiceHandler.RequestType.LeaveHistory;
+import static com.kofax.lexmarkhub.ServiceHandlers.LMS_ServiceHandler.RequestType.LeaveRequests;
 
 /**
  * Created by venkateshkarra on 20/10/16.
@@ -45,34 +54,76 @@ import static com.kofax.lexmarkhub.Constants.leaverequests_Endpoint;
 
 public class LMS_ServiceHandler {
 
+    public  enum RequestType {
+        AvailableLeaves,
+        ApplyLeave,
+        LeaveHistory,
+        LeaveRequests,
+        ApproveLeave,
+        CancelLeave
+    }
+
     private Context mContext;
-    private LMS_ServiceHandlerCallBack mLmsServiceHandlerCallBack;
+    public LMS_ServiceHandlerCallBack lmsServiceHandlerCallBack;
 
     public LMS_ServiceHandler(Context context) {
         mContext = context;
     }
     public void setLmsServiceCallBack(LMS_ServiceHandlerCallBack callBack){
-        mLmsServiceHandlerCallBack = callBack;
+        lmsServiceHandlerCallBack = callBack;
     }
-    public void getAvailableLeaves(String requestBody) {
+
+    public void startRequest(RequestType requestType,String requestBody){
+        String reqEndPoint = null;
+        switch (requestType){
+            case AvailableLeaves:
+                reqEndPoint = availableLeaves_Endpoint;
+                break;
+            case ApplyLeave:
+                reqEndPoint = applyLeave_Endpoint;
+                break;
+            case LeaveHistory:
+                reqEndPoint = leaveHistory_Endpoint;
+                break;
+            case LeaveRequests:
+                reqEndPoint = leaverequests_Endpoint;
+                break;
+            case ApproveLeave:
+                reqEndPoint = approveLeave_Endpoint;
+                break;
+            case CancelLeave:
+                reqEndPoint = cancelLeave_Endpoint;
+                break;
+
+        }
         LmsServiceTask lmsServiceTask = new LmsServiceTask();
-        lmsServiceTask.execute(availableLeaves_Endpoint,requestBody);
+        lmsServiceTask.execute(reqEndPoint,requestBody);
     }
-    public void applyLeave(String requestBody){
-        LmsServiceTask lmsServiceTask = new LmsServiceTask();
-        lmsServiceTask.execute(applyLeave_Endpoint,requestBody);
-    }
-    public void getLeaveHistory(String requestBody){
-        LmsServiceTask lmsServiceTask = new LmsServiceTask();
-        lmsServiceTask.execute(leaveHistory_Endpoint,requestBody);
-    }
-    public void getLeaveRequests(String requestBody){
-        LmsServiceTask lmsServiceTask = new LmsServiceTask();
-        lmsServiceTask.execute(leaverequests_Endpoint,requestBody);
-    }
-    public void approveLeave(String requestBody){
-        LmsServiceTask lmsServiceTask = new LmsServiceTask();
-        lmsServiceTask.execute(approveLeave_Endpoint,requestBody);
+
+    private RequestType getRequestTypeForEndpoint(String requestEndPoint){
+        RequestType requestType = null;
+        switch (requestEndPoint){
+            case availableLeaves_Endpoint:
+                requestType = AvailableLeaves;
+                break;
+            case applyLeave_Endpoint:
+                requestType = ApplyLeave;
+                break;
+            case leaveHistory_Endpoint:
+                requestType = LeaveHistory;
+                break;
+            case leaverequests_Endpoint:
+                requestType = LeaveRequests;
+                break;
+            case approveLeave_Endpoint:
+                requestType = ApproveLeave;
+                break;
+            case cancelLeave_Endpoint:
+                requestType = CancelLeave;
+                break;
+
+        }
+        return requestType;
     }
 
     public class LmsServiceTask extends AsyncTask<String,Void,String[]>{
@@ -114,7 +165,8 @@ public class LMS_ServiceHandler {
                 }
 
                 if (urlConnection.getResponseCode() != ERROR_CODE_SUCCESS){
-                    mLmsServiceHandlerCallBack.didFailService(urlConnection.getResponseCode());
+                    lmsServiceHandlerCallBack.didFailService(urlConnection.getResponseCode()
+                            ,getRequestTypeForEndpoint(urlEndPoint));
                     return null;
                 }
 
@@ -138,15 +190,15 @@ public class LMS_ServiceHandler {
                 }
 
                 if (buffer.length() == 0) {
-                    // Stream was empty.  No point in parsing.
+                    // Stream was empty. No point in parsing.
                     return null;
                 }
                 String mProductsJsonStr = buffer.toString();
-                mLmsServiceHandlerCallBack.didFinishServiceWithResponse(mProductsJsonStr);
+                lmsServiceHandlerCallBack.didFinishServiceWithResponse(mProductsJsonStr,getRequestTypeForEndpoint(urlEndPoint));
 
             } catch (IOException e) {
                 //hardcoding this error code because we could't get the error code here from exception object
-                mLmsServiceHandlerCallBack.didFailService(EXCEPTION_ERROR);
+                lmsServiceHandlerCallBack.didFailService(EXCEPTION_ERROR,getRequestTypeForEndpoint(urlEndPoint));
                 return null;
             } finally {
                 if (urlConnection != null) {
@@ -158,7 +210,7 @@ public class LMS_ServiceHandler {
                     } catch (final IOException e) {
                         //check
                         //hardcoding this error code because we could't get the error code here from exception object
-                        mLmsServiceHandlerCallBack.didFailService(EXCEPTION_ERROR);
+                        lmsServiceHandlerCallBack.didFailService(EXCEPTION_ERROR,getRequestTypeForEndpoint(urlEndPoint));
                     }
                 }
             }

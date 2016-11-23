@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.google.gson.JsonObject;
 import com.google.gson.internal.Primitives;
 import com.kofax.lexmarkhub.R;
+import com.kofax.lexmarkhub.ServiceHandlers.GoogleAuthenticator;
 import com.kofax.lexmarkhub.Utility.Utility;
 
 import org.json.JSONException;
@@ -29,6 +30,8 @@ import static com.kofax.lexmarkhub.Constants.FNAME;
 import static com.kofax.lexmarkhub.Constants.FROM_DATE;
 import static com.kofax.lexmarkhub.Constants.LNAME;
 import static com.kofax.lexmarkhub.Constants.STATUS;
+import static com.kofax.lexmarkhub.Constants.STATUS_REJECT;
+import static com.kofax.lexmarkhub.Constants.STATUS_REJECTED;
 import static com.kofax.lexmarkhub.Constants.TO_DATE;
 
 /**
@@ -36,17 +39,23 @@ import static com.kofax.lexmarkhub.Constants.TO_DATE;
  */
 
 public class RequestListAdapter extends ArrayAdapter<JSONObject> {
+    public enum RequestAction {
+        RequestCancel
+    }
+
+    public interface RequestListAdapterCallBack {
+        void didSelectRequestItemWithAction(JSONObject RequestItem, RequestAction requestAction);
+    }
 
     private Context mContext;
     private Boolean mIsForPendingScreen;
-
+    public RequestListAdapterCallBack requestListAdapterCallBack;
 
     public RequestListAdapter(Context context, ArrayList<JSONObject> requests,Boolean isForPendingScreen){
         super(context, 0, requests);
         mContext = context;
         mIsForPendingScreen = isForPendingScreen;
     }
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
@@ -57,6 +66,7 @@ public class RequestListAdapter extends ArrayAdapter<JSONObject> {
         }
         TextView cancelTextView = (TextView)listItemView.findViewById(R.id.cancel_action);
         ImageView arrowImage = (ImageView)listItemView.findViewById(R.id.disclosure_arrow);
+        final JSONObject request = getItem(position);
         if(mIsForPendingScreen == true){
             cancelTextView.setVisibility(View.GONE);
             arrowImage.setVisibility(View.VISIBLE);
@@ -66,8 +76,11 @@ public class RequestListAdapter extends ArrayAdapter<JSONObject> {
             arrowImage.setVisibility(View.GONE);
         }
 
-        JSONObject request = getItem(position);
         try {
+            // don't show cancel button if the status is rejected
+            if (request.getString(STATUS).equalsIgnoreCase(STATUS_REJECTED)){
+                cancelTextView.setVisibility(View.GONE);
+            }
             TextView status = (TextView) listItemView.findViewById(R.id.status_lable);
             status.setText(request.getString(STATUS));
 
@@ -85,8 +98,6 @@ public class RequestListAdapter extends ArrayAdapter<JSONObject> {
                 dateString = request.getString(DATE_FROM)+" to "+request.getString(DATE_TO);
             }
             name.setText(userName);
-
-
             date.setText(dateString);
 
             TextView reason = (TextView) listItemView.findViewById(R.id.reason_txtView);
@@ -96,6 +107,13 @@ public class RequestListAdapter extends ArrayAdapter<JSONObject> {
         catch (JSONException e){
             e.printStackTrace();
         }
+
+        cancelTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestListAdapterCallBack.didSelectRequestItemWithAction(request,RequestAction.RequestCancel);
+            }
+        });
         return  listItemView;
     }
 }
