@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.kofax.lexmarkhub.Adapters.RequestListAdapter;
 import com.kofax.lexmarkhub.R;
 import com.kofax.lexmarkhub.ServiceHandlers.LMS_ServiceHandler;
 import com.kofax.lexmarkhub.ServiceHandlers.LMS_ServiceHandlerCallBack;
@@ -79,7 +80,7 @@ public class EditRequestActivity extends AppCompatActivity {
         LMS_ServiceHandler lms_serviceHandler = new LMS_ServiceHandler(this);
         lms_serviceHandler.setLmsServiceCallBack(new LMS_ServiceHandlerCallBack() {
             @Override
-            public void didFinishServiceWithResponse(final String response) {
+            public void didFinishServiceWithResponse(final String response, LMS_ServiceHandler.RequestType requestType) {
                 removeSpinner();
                 EditRequestActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
@@ -89,7 +90,7 @@ public class EditRequestActivity extends AppCompatActivity {
                 });
             }
             @Override
-            public void didFailService(final int responseCode) {
+            public void didFailService(final int responseCode, LMS_ServiceHandler.RequestType requestType) {
                 EditRequestActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         removeSpinner();
@@ -99,8 +100,7 @@ public class EditRequestActivity extends AppCompatActivity {
                 });
             }
         });
-
-        lms_serviceHandler.approveLeave(getJsonBodyForPendingRequests(view).toString());
+        lms_serviceHandler.startRequest(LMS_ServiceHandler.RequestType.ApproveLeave, getJsonBodyForPendingRequests(view).toString());
     }
     public void showSpinner(){
         mProgress = new ProgressDialog(this);

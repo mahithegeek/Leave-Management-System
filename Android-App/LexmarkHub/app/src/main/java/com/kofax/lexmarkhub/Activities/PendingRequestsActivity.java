@@ -79,7 +79,7 @@ public class PendingRequestsActivity extends AppCompatActivity {
         LMS_ServiceHandler lms_serviceHandler = new LMS_ServiceHandler(this);
         lms_serviceHandler.setLmsServiceCallBack(new LMS_ServiceHandlerCallBack() {
             @Override
-            public void didFinishServiceWithResponse(final String response) {
+            public void didFinishServiceWithResponse(final String response, LMS_ServiceHandler.RequestType requestType) {
                 removeSpinner();
                 PendingRequestsActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
@@ -99,7 +99,7 @@ public class PendingRequestsActivity extends AppCompatActivity {
                 });
             }
             @Override
-            public void didFailService(final int responseCode) {
+            public void didFailService(final int responseCode, LMS_ServiceHandler.RequestType requestType) {
                 PendingRequestsActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         removeSpinner();
@@ -110,7 +110,8 @@ public class PendingRequestsActivity extends AppCompatActivity {
             }
         });
 
-        lms_serviceHandler.getLeaveRequests(getJsonBodyForPendingRequests().toString());
+        lms_serviceHandler.startRequest(LMS_ServiceHandler.RequestType.LeaveRequests,
+                getJsonBodyForPendingRequests().toString());
     }
 
     private JSONObject getJsonBodyForPendingRequests() {

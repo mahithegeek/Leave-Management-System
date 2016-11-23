@@ -136,7 +136,7 @@ public class LandingPageActivity extends Activity {
         LMS_ServiceHandler lms_serviceHandler = new LMS_ServiceHandler(this);
         lms_serviceHandler.setLmsServiceCallBack(new LMS_ServiceHandlerCallBack() {
             @Override
-            public void didFinishServiceWithResponse(final String response) {
+            public void didFinishServiceWithResponse(final String response, LMS_ServiceHandler.RequestType requestType) {
 
                 LandingPageActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
@@ -159,7 +159,7 @@ public class LandingPageActivity extends Activity {
             }
 
             @Override
-            public void didFailService(final int responseCode) {
+            public void didFailService(final int responseCode, LMS_ServiceHandler.RequestType requestType) {
                 LandingPageActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         removeSpinner();
@@ -170,7 +170,8 @@ public class LandingPageActivity extends Activity {
             }
         });
 
-        lms_serviceHandler.getAvailableLeaves(getJsonBodyForAvailableLeaves().toString());
+        lms_serviceHandler.startRequest(LMS_ServiceHandler.RequestType.AvailableLeaves,
+                getJsonBodyForAvailableLeaves().toString());
     }
 
     private JSONObject getJsonBodyForAvailableLeaves() {

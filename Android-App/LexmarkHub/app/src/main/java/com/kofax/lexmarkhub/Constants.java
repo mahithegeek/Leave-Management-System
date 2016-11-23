@@ -17,6 +17,7 @@ public class Constants {
     public static final String leaveHistory_Endpoint = "leaveHistory";
     public static final String leaverequests_Endpoint = "leaverequests";
     public static final String approveLeave_Endpoint = "approveLeave";
+    public static final String cancelLeave_Endpoint = "cancelLeave";
 
     public static final String ENCODING_TYPE = "UTF-8";
 
@@ -55,6 +56,8 @@ public class Constants {
     public static final String DATE_FROM = "date_from";
     public static final String DATE_TO = "date_to";
     public static final String STATUS = "status";
+    public static final String STATUS_CANCELLED = "Cancelled";
+    public static final String STATUS_REJECTED = "Rejected";
 
 
     //LeaveRequests responseKeys
@@ -71,6 +74,7 @@ public class Constants {
     public static final String STATUS_APPROVE = "Approve";
     public static final String STATUS_REJECT = "Reject";
     public static final String STATUS_APPLIED = "Applied";
+
 
     //CustomKeys
     public static final String REQUEST_OBJECT_EXTRA = "RequestExtra";

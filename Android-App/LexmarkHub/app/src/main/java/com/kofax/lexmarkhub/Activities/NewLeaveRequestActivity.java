@@ -129,7 +129,7 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
         LMS_ServiceHandler lms_serviceHandler = new LMS_ServiceHandler(this);
         lms_serviceHandler.setLmsServiceCallBack(new LMS_ServiceHandlerCallBack() {
             @Override
-            public void didFinishServiceWithResponse(final String response) {
+            public void didFinishServiceWithResponse(final String response, LMS_ServiceHandler.RequestType requestType) {
                 removeSpinner();
                 NewLeaveRequestActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
@@ -141,7 +141,7 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
             }
 
             @Override
-            public void didFailService(final int responseCode) {
+            public void didFailService(final int responseCode, LMS_ServiceHandler.RequestType requestType) {
                 NewLeaveRequestActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         removeSpinner();
@@ -152,7 +152,8 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
             }
         });
 
-        lms_serviceHandler.applyLeave(getJsonBodyForApplyLeave().toString().replace("\\",""));
+        lms_serviceHandler.startRequest(LMS_ServiceHandler.RequestType.ApplyLeave,
+                getJsonBodyForApplyLeave().toString().replace("\\",""));
 
     }
     private void showResult(String response){
