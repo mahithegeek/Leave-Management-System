@@ -52,7 +52,10 @@ class PendingRequestViewController: UIViewController {
                             let leave = Leave(reason: reason, employee: employee, startDate: AppUtilities().dateFromString(leaveRequest["fromDate"] as! String), endDate: AppUtilities().dateFromString(leaveRequest["toDate"] as! String),leaveType: "Vocation")
                             let leaveRequest = LeaveRequest(requestId: leaveRequest["id"] as! NSInteger
                                 , status: leaveRequest["status"] as! String, leave: leave)
-                            self.pendingRequests.append(leaveRequest)
+                            let leavestatus = leaveRequest.status
+                            if (leavestatus == "Applied"){
+                                self.pendingRequests.append(leaveRequest)
+                            }
                         }
                         
                         LMSThreading.dispatchOnMain(withBlock: { (Void) in

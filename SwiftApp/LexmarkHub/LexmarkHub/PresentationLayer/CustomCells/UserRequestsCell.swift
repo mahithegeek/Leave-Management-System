@@ -8,6 +8,10 @@
 
 import UIKit
 
+@objc protocol UserRequestsCellDelegate {
+    func didSelectUserRequestWithId(requestId:NSNumber);
+}
+
 class UserRequestsCell: UITableViewCell {
    
     @IBOutlet weak var leaveDatesLabel: UILabel!
@@ -15,7 +19,8 @@ class UserRequestsCell: UITableViewCell {
     @IBOutlet weak var reasonLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var cancelWidthConstraint: NSLayoutConstraint!
-   
+    var reqId : NSNumber!
+    weak var delegate : UserRequestsCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -25,6 +30,9 @@ class UserRequestsCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+    }
+    @IBAction func cancelButtonAction(sender: AnyObject){
+        delegate?.didSelectUserRequestWithId(reqId)
     }
     
 }

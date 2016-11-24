@@ -10,7 +10,7 @@ import UIKit
 
 let cancelButtonWidth:CGFloat = 57
 
-class UserRequestsViewController: UIViewController {
+class UserRequestsViewController: UIViewController, UserRequestsCellDelegate {
     
     var pendingRequests = [LeaveRequest]()
     var employee: Employee?
@@ -24,7 +24,7 @@ class UserRequestsViewController: UIViewController {
     
     
     func refreshUserLeaveRequests() {
-        
+        print("hbjshdbfhjsdbf jhsb dfsbdfjbsdjfhbdhsfjs")
         Loader.show("Loading", disableUI: true)
         appDelegate.oAuthManager?.requestAccessToken(withCompletion: { (idToken, error) in
             
@@ -48,7 +48,11 @@ class UserRequestsViewController: UIViewController {
                             let leave = Leave(reason: "Vocation", employee: employee, startDate: AppUtilities().dateFromString(leaveRequest["date_from"] as! String), endDate: AppUtilities().dateFromString(leaveRequest["date_to"] as! String),leaveType: "Vocation")
                             let leaveRequest = LeaveRequest(requestId: leaveRequest["id"] as! NSInteger
                                 , status: leaveRequest["status"] as! String, leave: leave)
-                            self.pendingRequests.append(leaveRequest)
+                            
+                            let status = leaveRequest.status
+                            if(status != "Cancelled"){
+                                self.pendingRequests.append(leaveRequest)
+                            }
                         }
                         
                         LMSThreading.dispatchOnMain(withBlock: { (Void) in
@@ -72,7 +76,6 @@ class UserRequestsViewController: UIViewController {
                 }
             }
         })
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -97,11 +100,12 @@ class UserRequestsViewController: UIViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("UserRequests", forIndexPath: indexPath) as? UserRequestsCell
         cell?.selectionStyle = .None
         let pendingRequest = pendingRequests[indexPath.row] as LeaveRequest
+        cell?.delegate = self
         cell?.nameLabel.text = pendingRequest.leave.employee!.name!
         cell?.leaveDatesLabel.text = AppUtilities().dateStringFromDate(pendingRequest.leave.startDate!) + " to " + AppUtilities().dateStringFromDate(pendingRequest.leave.endDate!)
         cell?.reasonLabel.text = "\(pendingRequest.leave.leaveType! )"
         cell?.statusLabel.text = pendingRequest.status
-        
+        cell?.reqId = pendingRequest.requestId
         if pendingRequest.status == "Applied" {
             cell?.cancelWidthConstraint.constant = cancelButtonWidth
         }
@@ -124,4 +128,38 @@ class UserRequestsViewController: UIViewController {
         self.navigationController?.popViewControllerAnimated(true)
     }
     
+    func didSelectUserRequestWithId(requestId: NSNumber) {
+        cancelLeaveWithId(requestId)
+    }
+    
+    func cancelLeaveWithId(reqId: NSNumber){
+        Loader.show("Loading", disableUI: true)
+        appDelegate.oAuthManager?.requestAccessToken(withCompletion: { (idToken, error) in
+            
+            if idToken?.isEmpty == false {
+                let parameters = [
+                    "tokenID": idToken!,
+                    "requestID":reqId
+                ]
+                LMSServiceFactory.sharedInstance().cancelLeave(withURL: kCancelLeaveURL, withParams: parameters, completion: { (response, error) in
+                    Loader.hide();
+                    if response != nil {
+                        self.refreshUserLeaveRequests()
+                        print("response:\(response)")
+                    }
+                    else {
+                        if error != nil {
+                            Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                        }
+                    }
+                })
+            }
+            else {
+                Loader.hide();
+                if error != nil {
+                    Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                }
+            }
+        })
+    }
 }

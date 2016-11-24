@@ -37,6 +37,11 @@ class LoginViewController: UIViewController {
 
        appDelegate.oAuthManager  = OAuthManager.init(withIssuer: NSURL(string: kIssuer)!, clientID: kClientID, redirecURI: NSURL(string: kRedirectURI)!, viewController: self)
         appDelegate.oAuthManager!.authWithAutoCodeExchange { (token, error) in
+            if((token == nil)){
+                Popups.SharedInstance.ShowPopup(kAppTitle, message: "Problem occured while authenticating. Please try again.")
+                return
+            }
+            
             let parameters = [
                 "tokenID": token!
             ]
@@ -51,10 +56,8 @@ class LoginViewController: UIViewController {
                 } else {
                     Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                 }
-                
             })
         }
-
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -70,5 +73,4 @@ class LoginViewController: UIViewController {
     @IBAction func logoutButtonAction(segue: UIStoryboardSegue){
         self.navigationController?.popViewControllerAnimated(true)
     }
-
 }
