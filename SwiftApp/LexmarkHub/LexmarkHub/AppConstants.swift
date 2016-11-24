@@ -43,6 +43,7 @@ let kApplyLeaveURL:String = "http://172.26.32.163:9526/leave"
 let kApproveLeaveURL:String = "http://172.26.32.163:9526/approveLeave"
 let kLeaveRequestsURL:String = "http://172.26.32.163:9526/leaveRequests"
 let kUserRequestsURL:String = "http://172.26.32.163:9526/leaveHistory"
+let kCancelLeaveURL:String = "http://172.26.32.163:9526/cancelLeave"
 
 let kAppTitle = "Lexmark Hub"
 

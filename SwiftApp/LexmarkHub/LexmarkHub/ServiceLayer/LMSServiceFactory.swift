@@ -114,6 +114,28 @@ class LMSServiceFactory: BaseServiceFactory {
             
         }
     }
+    func cancelLeave(withURL url:String, withParams parameters: [String : AnyObject], completion:lmsCallback){
+        
+        Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON, headers: self.headers).responseJSON{ response in
+            
+            if response.response?.statusCode == successCode {
+                if let JSON = response.result.value{
+                    completion(JSON as? NSDictionary, response.result.error)
+                    
+                }else{
+                    completion(nil,response.result.error)
+                }
+            }
+            else {
+                if let JSON = response.result.value{
+                    let errorDict = JSON as? NSDictionary
+                    completion(nil, self.getError(FromDict: errorDict!, errorCode: (response.response?.statusCode)!))
+                } else {
+                    completion(nil,response.result.error)
+                }
+            }
+        }
+    }
     
     func applyLeave(withURL url:String, withParams parameters: [String : AnyObject], completion:lmsCallback){
         
