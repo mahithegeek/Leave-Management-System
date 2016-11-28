@@ -135,7 +135,6 @@ public class ViewStatusActivity extends AppCompatActivity implements RequestList
                             String response = jsonObject.getString(SUCCESS);
                             Toast.makeText(ViewStatusActivity.this, response,
                                     Toast.LENGTH_SHORT).show();
-                            //TODO reload the list
                             getLeaveHistory();
                             break;
                     }

@@ -23,7 +23,10 @@ class DashboardViewController: UIViewController {
     @IBOutlet weak var availableLeavesLabel: UILabel!
 
     var employee: Employee?
-
+    @IBOutlet weak var nameLbl:UILabel!
+    @IBOutlet weak var empIdLbl:UILabel!
+    @IBOutlet weak var emailIdLbl:UILabel!
+    @IBOutlet weak var profileImgView:UIImageView!
     @IBOutlet weak var reportiesButton: UIButton!
     @IBOutlet weak var pendingRequestsButton: UIButton!
     @IBOutlet weak var pendingRequestsLabel: UILabel!
@@ -35,9 +38,32 @@ class DashboardViewController: UIViewController {
             self.pendingRequestsButton.hidden = true
             pendingRequestsLabel.hidden = true
         }
+        
+        self.nameLbl.text = employee?.name
+        self.emailIdLbl.text = employee?.email
+        self.empIdLbl.text = employee?.id?.stringValue
+        self.fetchProfilepic()
         self.fetchAvailableLeaves()
     }
 
+    func fetchProfilepic(){
+        appDelegate.oAuthManager?.requestUserinfo(withCompletion: { (response, error) in
+            if(error != nil){
+                print(error?.description)
+            }
+            else{
+                print(response)
+
+                let imageUrl = response!["picture"] as! String
+                self.profileImgView.image = NSURL(string: imageUrl)
+                        .flatMap { NSData(contentsOfURL: $0) }
+                        .flatMap { UIImage(data: $0) }
+            }
+        })
+        
+    }
+    
+    
     func fetchAvailableLeaves() {
         self.availableLeavesLabel.text = ""
         
