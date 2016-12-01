@@ -30,6 +30,11 @@ ServerError.prototype.InputError = function (message) {
 	return error;
 }
 
+ServerError.prototype.LeaveAvailabilityError = function (message) {
+	var error = {code : 4300,description:message};
+	return error;
+}
+
 module.exports = ServerError;
 
 
