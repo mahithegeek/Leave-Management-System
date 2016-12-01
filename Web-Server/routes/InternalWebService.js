@@ -162,6 +162,54 @@ InternalWebService.prototype.applyLeave = function (req,response) {
 };
 
 function internalApplyLeave (req,response,leaveRequestReceived,user) {
+	
+	var leaveAvailabilitycallback = function (err,data){
+		if (err == null) {
+			console.log("successfully retrieved leaves");
+			if(data.length > 0){
+				console.log ("checking leaves");
+				var leaveAvailability = data[0];
+				console.log("leaves from dB " + JSON.stringify(leaveAvailability));
+				if(checkLeavesType(leaveRequestReceived,leaveAvailability)){
+					insertLeaves (leaveRequestReceived,req,response);
+				}
+				else {
+					response.status(500).send(error.LeaveAvailabilityError("Leaves of type not available"));
+				}
+				
+			}
+			else{
+				response.status(500).send(error.DatabaseError(err));
+			}
+			
+		}
+		else {
+			console.log("error in getting leaves");
+			response.status(500).send(error.DatabaseError(err));
+		}
+	}
+
+	checkLeaveAvailability (leaveRequestReceived,user,leaveAvailabilitycallback);
+}
+
+function checkLeavesType (leaveRequestReceived,dbRecord) {
+	if(leaveRequestReceived.leaveType == 'casual') {
+		console.log("leave type is 1");
+		if(leaveRequestReceived.days > dbRecord.casual){
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	return true;
+}
+
+function checkLeaveAvailability (leaveRequestReceived,user,callback) {
+	sqlHandle.getAvailableLeaves(user.emp_id,callback);
+}
+
+function insertLeaves (leaveRequestReceived,req,response) {
 	if(utils.validateDate(leaveRequestReceived.fromDate) && utils.validateDate(leaveRequestReceived.toDate)) {
 		var callback = function (err,data) {
 			if(err == null){
@@ -181,10 +229,18 @@ function internalApplyLeave (req,response,leaveRequestReceived,user) {
 	}
 }
 
+
+
 function constructLeaveRequest (leaveRequestReceived,user) {
 	var date = utils.getFormattedDate (new Date());
 	var numberOfDays = utils.getWorkingDays(leaveRequestReceived.fromDate,leaveRequestReceived.toDate);
-	console.log("number of days "+ numberOfDays);
+	console.log("type id  "+ leaveRequestReceived.leaveType);
+	if(leaveRequestReceived.leaveType == 'casual'){
+		leaveRequestReceived.typeid = 1;
+	}
+	else if(leaveRequestReceived.leaveType == 'comp-off'){
+		leaveRequestReceived.typeid = 6;
+	}
 
     var dbRequestObject = {date_from : leaveRequestReceived.fromDate,date_to : leaveRequestReceived.toDate, half_Day : leaveRequestReceived.isHalfDay,applied_on : date, status_id : 0,type_id : leaveRequestReceived.typeid,emp_id : user.emp_id,days : numberOfDays,reason : leaveRequestReceived.reason};
     console.log(numberOfDays);
@@ -231,7 +287,7 @@ function formLeaveRequestResponse (dbResult) {
 	var leaveRequestResponse = [];
 	for(var i=0;i< dbResult.length;i++){
 		console.log("dbresult is  "+dbResult[i]);
-		var leaveRequest = {id:dbResult[i].id,firstName:dbResult[i].first_name,lastName:dbResult[i].last_name,email:dbResult[i].email,fromDate:dbResult[i].date_from,toDate:dbResult[i].date_to,half_Day:dbResult[i].half_Day,appliedOn:dbResult[i].applied_on,status:dbResult[i].status};
+		var leaveRequest = {id:dbResult[i].id,firstName:dbResult[i].first_name,lastName:dbResult[i].last_name,email:dbResult[i].email,fromDate:dbResult[i].date_from,toDate:dbResult[i].date_to,half_Day:dbResult[i].half_Day,appliedOn:dbResult[i].applied_on,status:dbResult[i].status,reason:dbResult[i].reason};
 		console.log("leave request is   "+ leaveRequest);
 		leaveRequestResponse.push(leaveRequest);
 
