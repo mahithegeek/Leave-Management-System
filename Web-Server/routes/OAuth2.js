@@ -14,7 +14,7 @@ OAuth2.prototype.verifyTokenID = function (tokenID,callback) {
 
 	//TODO put more stricter verification and validation
 	if(!tokenID || typeof tokenID === 'undefined'){
-		console.log("token ID is " + tokenID);
+		//console.log("token ID is " + tokenID);
 		callback("Invalid Token ID",null);
 		return;
 	}
@@ -33,7 +33,7 @@ function getAudFromToken (tokenID) {
 	var header = JSON.parse(headerBuf.toString());
 	var body = JSON.parse (bodyBuf.toString());
 
-	console.log ("body is " + JSON.stringify(body));
+	//console.log ("body is " + JSON.stringify(body));
 
 	return body.aud;
 }
