@@ -199,8 +199,11 @@ function checkLeavesType (leaveRequestReceived,dbRecord) {
 			return true;
 		}
 	}
+	else if(leaveRequestReceived.type_id > 1 && leaveRequestReceived.type_id < 10 ) {
+		return true;
+	}
 
-	return true;
+	return false;
 }
 
 function checkLeaveAvailability (leaveRequestReceived,user,callback) {
