@@ -26,11 +26,8 @@ var ROLE = {
 InternalWebService.prototype.login = function (req, response) {
 
 	var accessCallback = function (err, user) {
-		console.log("callback triggered");
 		if(err == null ) {
 			var userData = {firstName : user.firstName, lastName: user.lastName,email : user.email, empID : user.emp_id.toString(), role : user.role,supervisorID : user.supervisor_id.toString(),supervisor:""};
-			/*response.setHeader('Content-Type', 'application/json');
-			response.json(userData);*/
 			getSupervisorDetails (userData,response);
 			
 		}
@@ -46,13 +43,11 @@ InternalWebService.prototype.login = function (req, response) {
 function getSupervisorDetails(user,response) {
 	var callback = function (err,data) {
 		if(err == null){
-			
-			console.log("count is " + data.length);
 			if(data.length > 0){
 				var supervisorDetails = {firstName : data[0].first_name,lastName : data[0].last_name,email : data[0].email};
 				user.supervisor = supervisorDetails;
 				delete user.supervisorID;
-				console.log("user details are  " + JSON.stringify(user));
+				//console.log("user details are  " + JSON.stringify(user));
 				response.json (user);
 			}
 			else {
@@ -63,7 +58,6 @@ function getSupervisorDetails(user,response) {
 			response.status(500).send (error.DatabaseError(err));
 		}
 	}
-	console.log("user details are " + user.supervisorID);
 	sqlHandle.fetchSuperVisor(user.supervisorID,callback);
 }
 
@@ -189,20 +183,27 @@ function internalApplyLeave (req,response,leaveRequestReceived,user) {
 		}
 	}
 
+	leaveRequestReceived = constructLeaveRequest (leaveRequestReceived,user);
+	console.log("received request is " + JSON.stringify(leaveRequestReceived));
 	checkLeaveAvailability (leaveRequestReceived,user,leaveAvailabilitycallback);
 }
 
 function checkLeavesType (leaveRequestReceived,dbRecord) {
-	if(leaveRequestReceived.leaveType == 'casual') {
-		console.log("leave type is 1");
-		if(leaveRequestReceived.days > dbRecord.casual){
+	if(leaveRequestReceived.type_id == 1) {
+		console.log("leave type received is casual");
+		if(leaveRequestReceived.days > dbRecord.casual && leaveRequestReceived.days > dbRecord.carry_forward){
+			console.log("No Leaves for the user of this type");
 			return false;
 		}
 		else {
 			return true;
 		}
 	}
-	return true;
+	else if(leaveRequestReceived.type_id > 1 && leaveRequestReceived.type_id < 10 ) {
+		return true;
+	}
+
+	return false;
 }
 
 function checkLeaveAvailability (leaveRequestReceived,user,callback) {
@@ -220,8 +221,8 @@ function insertLeaves (leaveRequestReceived,req,response) {
 				response.send(error.DatabaseError(err));
 			}
 		}
-		var leave = constructLeaveRequest(leaveRequestReceived,user);
-		sqlHandle.insertLeaves (leave,callback);
+		//var leave = constructLeaveRequest(leaveRequestReceived,user);
+		sqlHandle.insertLeaves (leaveRequestReceived,callback);
 		
 	}
 	else {
@@ -235,7 +236,7 @@ function constructLeaveRequest (leaveRequestReceived,user) {
 	var date = utils.getFormattedDate (new Date());
 	var numberOfDays = utils.getWorkingDays(leaveRequestReceived.fromDate,leaveRequestReceived.toDate);
 	console.log("type id  "+ leaveRequestReceived.leaveType);
-	if(leaveRequestReceived.leaveType == 'casual'){
+	if(leaveRequestReceived.leaveType == 'vacation'){
 		leaveRequestReceived.typeid = 1;
 	}
 	else if(leaveRequestReceived.leaveType == 'comp-off'){
