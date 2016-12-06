@@ -83,7 +83,7 @@ Storage.prototype.insertLeaves = function insertLeaves (leaveRequest,callback) {
 
    var queryString = "INSERT INTO leaves SET date_from = ?, date_to = ?,half_Day = ?,applied_on = ?,status_id = (SELECT id FROM status WHERE status = 'Applied'),emp_id = ?, type_id = ?,days = ?,reason = ?";
   
-   var dataObject = [leaveRequest.date_from,leaveRequest.date_to,leaveRequest.half_Day,leaveRequest.applied_on,leaveRequest.emp_id,1,leaveRequest.days,leaveRequest.reason];
+   var dataObject = [leaveRequest.date_from,leaveRequest.date_to,leaveRequest.half_Day,leaveRequest.applied_on,leaveRequest.emp_id,leaveRequest.type_id,leaveRequest.days,leaveRequest.reason];
    runSqlQuery(queryString,dataObject,callback);
 };
 
