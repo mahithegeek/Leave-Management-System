@@ -222,6 +222,7 @@ function insertLeaves (leaveRequestReceived,req,response) {
 			}
 		}
 		//var leave = constructLeaveRequest(leaveRequestReceived,user);
+		console.log("leave received is   "+ JSON.stringify(leaveRequestReceived));
 		sqlHandle.insertLeaves (leaveRequestReceived,callback);
 		
 	}
@@ -241,6 +242,9 @@ function constructLeaveRequest (leaveRequestReceived,user) {
 	}
 	else if(leaveRequestReceived.leaveType == 'comp-off'){
 		leaveRequestReceived.typeid = 6;
+	}
+	else{
+		leaveRequestReceived.typeid = 10;
 	}
 
     var dbRequestObject = {date_from : leaveRequestReceived.fromDate,date_to : leaveRequestReceived.toDate, half_Day : leaveRequestReceived.isHalfDay,applied_on : date, status_id : 0,type_id : leaveRequestReceived.typeid,emp_id : user.emp_id,days : numberOfDays,reason : leaveRequestReceived.reason};
