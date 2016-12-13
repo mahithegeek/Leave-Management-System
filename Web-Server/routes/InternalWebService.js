@@ -278,19 +278,34 @@ function constructLeaveRequest (leaveRequestReceived,user) {
 	var date = utils.getFormattedDate (new Date());
 	var numberOfDays = utils.getWorkingDays(leaveRequestReceived.fromDate,leaveRequestReceived.toDate);
 	console.log("type id  "+ leaveRequestReceived.leaveType);
-	if(leaveRequestReceived.leaveType == 'vacation'){
-		leaveRequestReceived.typeid = 1;
-	}
-	else if(leaveRequestReceived.leaveType == 'comp-off'){
-		leaveRequestReceived.typeid = 6;
-	}
-	else{
-		leaveRequestReceived.typeid = 10;
-	}
+	leaveRequestReceived.typeid = getLeaveTypeIDFromLeave (leaveRequestReceived.leaveType);
 
     var dbRequestObject = {date_from : leaveRequestReceived.fromDate,date_to : leaveRequestReceived.toDate, half_Day : leaveRequestReceived.isHalfDay,applied_on : date, status_id : 0,type_id : leaveRequestReceived.typeid,emp_id : user.emp_id,days : numberOfDays,reason : leaveRequestReceived.reason};
     console.log(numberOfDays);
     return dbRequestObject;
+}
+
+function getLeaveTypeIDFromLeave (leaveType) {
+	switch(leaveType) {
+		case 'vacation':
+			return 1;
+		case 'maternity':
+			return 2;
+		case 'paternity':
+			return 3;
+		case 'bereavement':
+			return 4;
+		case 'loss of pay':
+			return 5;
+		case 'comp-off':
+			return 6;
+		case 'work from home':
+			return 7;
+		case 'forgot id':
+			return 8;
+		default :
+			return 10;
+	}
 }
 
 
