@@ -308,6 +308,29 @@ function getLeaveTypeIDFromLeave (leaveType) {
 	}
 }
 
+function getLeaveFromType (leaveID){
+	switch(leaveID) {
+		case 1 :
+			return 'vacation';
+		case 2 :
+			return 'maternity';
+		case 3 :
+			return 'paternity';
+		case 4 :
+			return 'bereavement';
+		case 5 :
+			return 'loss of pay';
+		case 6 :
+			return 'comp-off';
+		case 7:
+			return 'work from home';
+		case 8:
+			return 'forgot id';
+		default:
+			return 'unknown';
+	}
+}
+
 
 InternalWebService.prototype.getLeaveRequests = function (req,response) {
 	console.log("getLeaveRequests");
@@ -341,7 +364,7 @@ function internalGetLeaveRequests (req,response,empID) {
 			if (err == null) {
 				//response.send(JSON.stringify(data));
 				var requests = formLeaveRequestResponse(data);
-				response.send({leaverequests:requests});
+				response.send({leaveRequests:requests});
 			}
 			else {
 				response.status(500).send(error.DatabaseError(err));
@@ -355,13 +378,23 @@ function formLeaveRequestResponse (dbResult) {
 	var leaveRequestResponse = [];
 	for(var i=0;i< dbResult.length;i++){
 		console.log("dbresult is  "+dbResult[i]);
-		var leaveRequest = {id:dbResult[i].id,firstName:dbResult[i].first_name,lastName:dbResult[i].last_name,email:dbResult[i].email,fromDate:dbResult[i].date_from,toDate:dbResult[i].date_to,half_Day:dbResult[i].half_Day,appliedOn:dbResult[i].applied_on,status:dbResult[i].status,reason:dbResult[i].reason};
+		//var type = getLeaveFromType(dbResult[i].type_id);
+		
+		//var leaveRequest = {id:dbResult[i].id,firstName:dbResult[i].first_name,lastName:dbResult[i].last_name,email:dbResult[i].email,fromDate:dbResult[i].date_from,toDate:dbResult[i].date_to,half_Day:dbResult[i].half_Day,appliedOn:dbResult[i].applied_on,status:dbResult[i].status,leaveType:type,reason:dbResult[i].reason};
+		var leaveRequest = convertDBResultToJSON (dbResult[i]);
 		console.log("leave request is   "+ leaveRequest);
 		leaveRequestResponse.push(leaveRequest);
 
 	}
 	
 	return leaveRequestResponse;
+}
+
+function convertDBResultToJSON (dbResult) {
+	var type = getLeaveFromType(dbResult.type_id);
+	console.log ("type is " + type);
+	var leaveRequest = {id:dbResult.id,firstName:dbResult.first_name,lastName:dbResult.last_name,email:dbResult.email,fromDate:dbResult.date_from,toDate:dbResult.date_to,half_Day:dbResult.half_Day,appliedOn:dbResult.applied_on,status:dbResult.status,leaveType:type,reason:dbResult.reason};
+	return leaveRequest;
 }
 
 InternalWebService.prototype.getLeaveHistory = function getLeaveHistory (req,response) {
@@ -393,7 +426,9 @@ InternalWebService.prototype.getLeaveHistory = function getLeaveHistory (req,res
 function internalGetLeaveHistory (req,response,empID){
 	var callback = function (err,data){
 		if (err == null) {
-			response.send(JSON.stringify(data));
+			//response.send(JSON.stringify(data));
+			var requests = formLeaveRequestResponse(data);
+			response.send({leaveHistory:requests});
 		}
 		else {
 			response.status(500).send(error.DatabaseError(err));
