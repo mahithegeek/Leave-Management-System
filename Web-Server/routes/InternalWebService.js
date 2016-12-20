@@ -197,7 +197,6 @@ function internalApplyLeave (req,response,leaveRequestReceived,user) {
 		if (err == null) {
 			console.log("successfully retrieved leaves");
 			if(data.length > 0){
-				console.log ("checking leaves");
 				var leaveAvailability = data[0];
 				console.log("leaves from dB " + JSON.stringify(leaveAvailability));
 				if(checkLeavesType(leaveRequestReceived,leaveAvailability)){
@@ -221,7 +220,6 @@ function internalApplyLeave (req,response,leaveRequestReceived,user) {
 
 	if(utils.validateInputParameters(leaveRequestReceived) && utils.validateInputParameters(user)){
 		leaveRequestReceived = constructLeaveRequest (leaveRequestReceived,user);
-		console.log("received request is " + JSON.stringify(leaveRequestReceived));
 		checkLeaveAvailability (leaveRequestReceived,user,leaveAvailabilitycallback);
 	}
 	else {
@@ -231,7 +229,6 @@ function internalApplyLeave (req,response,leaveRequestReceived,user) {
 
 function checkLeavesType (leaveRequestReceived,dbRecord) {
 	if(leaveRequestReceived.type_id == 1) {
-		console.log("leave type received is casual");
 		if(leaveRequestReceived.days > dbRecord.casual && leaveRequestReceived.days > dbRecord.carry_forward){
 			console.log("No Leaves for the user of this type");
 			return false;
@@ -275,13 +272,23 @@ function insertLeaves (leaveRequestReceived,req,response) {
 
 
 function constructLeaveRequest (leaveRequestReceived,user) {
+	console.log("constructLeaveRequest  " + JSON.stringify(leaveRequestReceived));
 	var date = utils.getFormattedDate (new Date());
-	var numberOfDays = utils.getWorkingDays(leaveRequestReceived.fromDate,leaveRequestReceived.toDate);
-	console.log("type id  "+ leaveRequestReceived.leaveType);
+	var numberOfDays;
+	if(!leaveRequestReceived.isHalfDay){
+		 console.log("not half day");
+		 numberOfDays = utils.getWorkingDays(leaveRequestReceived.fromDate,leaveRequestReceived.toDate);
+	}
+	else {
+		 numberOfDays = 0.5;
+		 console.log("not half day");
+	}
+	
+	console.log("leave request is  " +JSON.stringify(leaveRequestReceived));
 	leaveRequestReceived.typeid = getLeaveTypeIDFromLeave (leaveRequestReceived.leaveType);
 
     var dbRequestObject = {date_from : leaveRequestReceived.fromDate,date_to : leaveRequestReceived.toDate, half_Day : leaveRequestReceived.isHalfDay,applied_on : date, status_id : 0,type_id : leaveRequestReceived.typeid,emp_id : user.emp_id,days : numberOfDays,reason : leaveRequestReceived.reason};
-    console.log(numberOfDays);
+    
     return dbRequestObject;
 }
 
