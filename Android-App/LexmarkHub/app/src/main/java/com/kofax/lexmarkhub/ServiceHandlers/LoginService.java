@@ -25,7 +25,6 @@ import java.net.URL;
 
 import static com.kofax.lexmarkhub.Constants.ACCEPT;
 import static com.kofax.lexmarkhub.Constants.CONTENT_TYPE;
-import static com.kofax.lexmarkhub.Constants.DUMMY_ERROR;
 import static com.kofax.lexmarkhub.Constants.EMAIL;
 import static com.kofax.lexmarkhub.Constants.EMPID;
 import static com.kofax.lexmarkhub.Constants.ENCODING_TYPE;
@@ -33,6 +32,7 @@ import static com.kofax.lexmarkhub.Constants.ERROR_CODE_SUCCESS;
 import static com.kofax.lexmarkhub.Constants.EXCEPTION_ERROR;
 import static com.kofax.lexmarkhub.Constants.FNAME;
 import static com.kofax.lexmarkhub.Constants.LNAME;
+import static com.kofax.lexmarkhub.Constants.PARSING_ERROR;
 import static com.kofax.lexmarkhub.Constants.REQUEST_METHOD_POST;
 import static com.kofax.lexmarkhub.Constants.ROLE;
 import static com.kofax.lexmarkhub.Constants.SUPERVISOR;
@@ -175,7 +175,7 @@ public class LoginService  extends AsyncTask<String, Void, String[]> {
         catch (JSONException e){
             //send Random Error code as the parsing failed
             // need toc change
-            mLoginServiceCallBack.didFailLogin(DUMMY_ERROR);
+            mLoginServiceCallBack.didFailLogin(PARSING_ERROR);
             e.printStackTrace();
         }
     }

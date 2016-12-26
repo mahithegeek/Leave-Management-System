@@ -143,6 +143,7 @@
                 android:layout_marginLeft="5dp"
                 />
             <EditText
+                android:id="@+id/notes_textView"
                 android:layout_width = "match_parent"
                 android:layout_height = "150dp"
                 android:background = "#80F6F2C0"

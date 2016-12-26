@@ -26,12 +26,10 @@ import okhttp3.RequestBody;
 
 import static com.kofax.lexmarkhub.Constants.ACCEPT;
 import static com.kofax.lexmarkhub.Constants.CONTENT_TYPE;
-import static com.kofax.lexmarkhub.Constants.DUMMY_ERROR;
 import static com.kofax.lexmarkhub.Constants.ENCODING_TYPE;
 import static com.kofax.lexmarkhub.Constants.ERROR_CODE_SUCCESS;
 import static com.kofax.lexmarkhub.Constants.EXCEPTION_ERROR;
 import static com.kofax.lexmarkhub.Constants.REQUEST_METHOD_POST;
-import static com.kofax.lexmarkhub.Constants.TOKEN_ID;
 import static com.kofax.lexmarkhub.Constants.TYPE_JSON;
 import static com.kofax.lexmarkhub.Constants.applyLeave_Endpoint;
 import static com.kofax.lexmarkhub.Constants.approveLeave_Endpoint;
@@ -40,7 +38,6 @@ import static com.kofax.lexmarkhub.Constants.baseUrl;
 import static com.kofax.lexmarkhub.Constants.cancelLeave_Endpoint;
 import static com.kofax.lexmarkhub.Constants.leaveHistory_Endpoint;
 import static com.kofax.lexmarkhub.Constants.leaverequests_Endpoint;
-import static com.kofax.lexmarkhub.ServiceHandlers.GoogleAuthenticator.GoogleAuthResponse.GoogleAuthenticationSuccess;
 import static com.kofax.lexmarkhub.ServiceHandlers.LMS_ServiceHandler.RequestType.ApplyLeave;
 import static com.kofax.lexmarkhub.ServiceHandlers.LMS_ServiceHandler.RequestType.ApproveLeave;
 import static com.kofax.lexmarkhub.ServiceHandlers.LMS_ServiceHandler.RequestType.AvailableLeaves;
@@ -165,8 +162,24 @@ public class LMS_ServiceHandler {
                 }
 
                 if (urlConnection.getResponseCode() != ERROR_CODE_SUCCESS){
-                    lmsServiceHandlerCallBack.didFailService(urlConnection.getResponseCode()
-                            ,getRequestTypeForEndpoint(urlEndPoint));
+
+                    StringBuffer errorBuffer = new StringBuffer();
+                    reader = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream()));
+
+                    String errorLine;
+                    while ((errorLine = reader.readLine()) != null) {
+                        errorBuffer.append(errorLine);
+                    }
+
+                    if (errorBuffer.length() == 0) {
+                        lmsServiceHandlerCallBack.didFailService(urlConnection.getResponseCode(),null
+                                ,getRequestTypeForEndpoint(urlEndPoint));
+                    }
+                    else{
+                        String errorString = errorBuffer.toString();
+                        lmsServiceHandlerCallBack.didFailService(urlConnection.getResponseCode(),errorString
+                                ,getRequestTypeForEndpoint(urlEndPoint));
+                    }
                     return null;
                 }
 
@@ -197,8 +210,9 @@ public class LMS_ServiceHandler {
                 lmsServiceHandlerCallBack.didFinishServiceWithResponse(mProductsJsonStr,getRequestTypeForEndpoint(urlEndPoint));
 
             } catch (IOException e) {
+                e.printStackTrace();
                 //hardcoding this error code because we could't get the error code here from exception object
-                lmsServiceHandlerCallBack.didFailService(EXCEPTION_ERROR,getRequestTypeForEndpoint(urlEndPoint));
+                lmsServiceHandlerCallBack.didFailService(EXCEPTION_ERROR,null,getRequestTypeForEndpoint(urlEndPoint));
                 return null;
             } finally {
                 if (urlConnection != null) {
@@ -210,7 +224,7 @@ public class LMS_ServiceHandler {
                     } catch (final IOException e) {
                         //check
                         //hardcoding this error code because we could't get the error code here from exception object
-                        lmsServiceHandlerCallBack.didFailService(EXCEPTION_ERROR,getRequestTypeForEndpoint(urlEndPoint));
+                        lmsServiceHandlerCallBack.didFailService(EXCEPTION_ERROR,null,getRequestTypeForEndpoint(urlEndPoint));
                     }
                 }
             }

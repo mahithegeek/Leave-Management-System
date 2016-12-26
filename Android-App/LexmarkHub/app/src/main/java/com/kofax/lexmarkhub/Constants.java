@@ -11,6 +11,7 @@ import static android.R.attr.id;
 
 public class Constants {
     public static final String baseUrl = "http://172.26.32.163:9526/";
+    //public static final String baseUrl = "http://172.26.34.33:9526/";
     public static final String availableLeaves_Endpoint = "availableLeaves";
     public static final String applyLeave_Endpoint = "leave";
     public static final String login_Endpoint = "login";
@@ -20,7 +21,6 @@ public class Constants {
     public static final String cancelLeave_Endpoint = "cancelLeave";
 
     public static final String ENCODING_TYPE = "UTF-8";
-
     public static final String ACCEPT = "Accept";
     public static final String TYPE_JSON = "application/json";
     public static final String CONTENT_TYPE= "Content-Type";
@@ -44,13 +44,14 @@ public class Constants {
     public static final String COMP_OFF = "comp-off";
     public static final String CARRY_FORWARD = "carry_forward";
     public static final String AVAILABLE = "available";
+    public static final String VACATION = "vacation";
 
     //ApplyLeave Request Keys
     public static final String LEAVE = "leave";
     public static final String FROM_DATE = "fromDate";
     public static final String TO_DATE = "toDate";
     public static final String IS_HALF_DAY = "isHalfDay";
-    public static final String TYPE = "type";
+    public static final String LEAVE_TYPE = "leaveType";
 
     //LeaveHistory ResponseKeys
     public static final String DATE_FROM = "date_from";
@@ -63,9 +64,8 @@ public class Constants {
     //LeaveRequests responseKeys
     public static final String APPLIED_ON = "appliedOn";
     public static final String REQUESTID = "id";
-    public static final String LEAVE_REQUESTS = "leaverequests";
+    public static final String LEAVE_REQUESTS = "leaveRequests";
     public static final String SUCCESS = "success";
-    public static final String DESCRIPTION = "description";
     public static final String REASON = "reason";
 
     //Approve RequestKeys
@@ -80,7 +80,11 @@ public class Constants {
     public static final String REQUEST_OBJECT_EXTRA = "RequestExtra";
 
     //Exception Codes
-    public static final int EXCEPTION_ERROR =  111;
-    public static final int DUMMY_ERROR = 0;
+    public static final int EXCEPTION_ERROR =  123456;
+    public static final int PARSING_ERROR = 0;
     public static final int ERROR_CODE_SUCCESS = 200;
+
+    //common Response Keys
+    public static final String RESPONSEKEY_CODE = "code";
+    public static final String DESCRIPTION = "description";
 }

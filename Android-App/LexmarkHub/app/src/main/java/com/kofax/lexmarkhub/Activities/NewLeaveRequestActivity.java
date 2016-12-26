@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 
@@ -19,12 +20,10 @@ import com.kofax.lexmarkhub.SharedPreferences;
 import com.kofax.lexmarkhub.Utility.Utility;
 
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,56 +31,68 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import static com.kofax.lexmarkhub.Constants.AVAILABLE;
+
 import static com.kofax.lexmarkhub.Constants.DESCRIPTION;
-import static com.kofax.lexmarkhub.Constants.DUMMY_ERROR;
 import static com.kofax.lexmarkhub.Constants.FROM_DATE;
 import static com.kofax.lexmarkhub.Constants.IS_HALF_DAY;
 import static com.kofax.lexmarkhub.Constants.LEAVE;
+import static com.kofax.lexmarkhub.Constants.LEAVE_TYPE;
+import static com.kofax.lexmarkhub.Constants.PARSING_ERROR;
 import static com.kofax.lexmarkhub.Constants.REASON;
 import static com.kofax.lexmarkhub.Constants.SUCCESS;
 import static com.kofax.lexmarkhub.Constants.TOKEN_ID;
 import static com.kofax.lexmarkhub.Constants.TO_DATE;
-import static com.kofax.lexmarkhub.Constants.TYPE;
 
 public class NewLeaveRequestActivity extends AppCompatActivity implements OnDateSetListener{
     static final int START_DATE_PICKER_TAG = 1298;//random tag numbers
     static final int END_DATE_PICKER_TAG = 1299;
-    private int startYear;
-    private int startMonth;
-    private int startDay;
-    private int endYear;
-    private int endMonth;
-    private int endDay;
 
     private ProgressDialog mProgress;
     private TextView fromDateTxtView;
     private TextView toDateTxtView;
     private TextView reasonTxtView;
-    private RadioGroup radioLeaveTypeGroup;
-    private RadioButton radioLeaveTypeButton;
     private TextView toTextView;
     private TextView notesView;
+    private CheckBox halfDayLeaveCheckBox;
+    private Calendar mEndCalendar;
+    private Calendar mStartCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_new_leave_request);
 
         getSupportActionBar().setTitle(R.string.new_request_title);
         ImageView startDateButton = (ImageView) findViewById(R.id.startDateView);
-        ImageView endDateButton = (ImageView) findViewById(R.id.endDateView);
+        final ImageView endDateButton = (ImageView) findViewById(R.id.endDateView);
         fromDateTxtView = (TextView) findViewById(R.id.fromdate_textView);
         toDateTxtView = (TextView) findViewById(R.id.todate_textView);
         reasonTxtView = (TextView) findViewById(R.id.reason_txtView);
-        radioLeaveTypeGroup = (RadioGroup) findViewById(R.id.timeOff_radioGrooup);
         toTextView = (TextView) findViewById(R.id.toTextView);
         notesView = (TextView) findViewById(R.id.notes_view);
+        halfDayLeaveCheckBox = (CheckBox) findViewById(R.id.HDL_checkbox);
 
-        final Calendar c = Calendar.getInstance();
-        startYear = endYear = c.get(Calendar.YEAR);
-        startMonth = endMonth = c.get(Calendar.MONTH);
-        startDay = endDay = c.get(Calendar.DAY_OF_MONTH);
+        mStartCalendar = mEndCalendar = Calendar.getInstance();
+        setCurrentDate();
+
+        halfDayLeaveCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(halfDayLeaveCheckBox.isChecked()){
+                    endDateButton.setClickable(false);
+                    if (mStartCalendar != mEndCalendar){
+                        mEndCalendar = mStartCalendar;
+                        Format formatter = new SimpleDateFormat("dd-MM-yyyy");
+                        String s = formatter.format(mEndCalendar.getTime());
+                        toDateTxtView.setText(s);
+                    }
+                }
+                else {
+                    endDateButton.setClickable(true);
+                }
+            }
+        });
 
         startDateButton.setOnClickListener(new View.OnClickListener()
         {
@@ -89,9 +100,9 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
             public void onClick(View v)
             {
                 Bundle b = new Bundle();
-                b.putInt(DatePickerDialogFragment.YEAR, startYear);
-                b.putInt(DatePickerDialogFragment.MONTH, startMonth);
-                b.putInt(DatePickerDialogFragment.DATE, startDay);
+                b.putInt(DatePickerDialogFragment.YEAR,mStartCalendar.get(Calendar.YEAR));
+                b.putInt(DatePickerDialogFragment.MONTH, mStartCalendar.get(Calendar.MONTH));
+                b.putInt(DatePickerDialogFragment.DATE, mStartCalendar.get(Calendar.DAY_OF_MONTH));
                 b.putInt(DatePickerDialogFragment.TAG, START_DATE_PICKER_TAG);
                 android.app.DialogFragment picker = new DatePickerDialogFragment();
                 picker.setArguments(b);
@@ -105,9 +116,9 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
             public void onClick(View v)
             {
                 Bundle b = new Bundle();
-                b.putInt(DatePickerDialogFragment.YEAR, endYear);
-                b.putInt(DatePickerDialogFragment.MONTH, endMonth);
-                b.putInt(DatePickerDialogFragment.DATE, endDay);
+                b.putInt(DatePickerDialogFragment.YEAR, mEndCalendar.get(Calendar.YEAR));
+                b.putInt(DatePickerDialogFragment.MONTH, mEndCalendar.get(Calendar.MONTH));
+                b.putInt(DatePickerDialogFragment.DATE, mEndCalendar.get(Calendar.DAY_OF_MONTH));
                 b.putInt(DatePickerDialogFragment.TAG, END_DATE_PICKER_TAG);
                 android.app.DialogFragment picker = new DatePickerDialogFragment();
                 picker.setArguments(b);
@@ -115,7 +126,7 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
             }
         });
 
-        setCurrentDate();
+
         User user = Utility.getLoggedInUser(this);
         toTextView.setText(getResources().getString(R.string.to)
                 +" "+user.getSuperVisorFName()
@@ -141,11 +152,11 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
             }
 
             @Override
-            public void didFailService(final int responseCode, LMS_ServiceHandler.RequestType requestType) {
+            public void didFailService(final int responseCode, final String errorResponse, LMS_ServiceHandler.RequestType requestType) {
                 NewLeaveRequestActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         removeSpinner();
-                        Toast.makeText(NewLeaveRequestActivity.this, Utility.getErrorMessageForCode(responseCode),
+                        Toast.makeText(NewLeaveRequestActivity.this, Utility.getErrorMessageForCode(responseCode,errorResponse),
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -171,7 +182,7 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
             }
             catch (JSONException ex){
                 ex.printStackTrace();
-                Toast.makeText(NewLeaveRequestActivity.this, Utility.getErrorMessageForCode(DUMMY_ERROR),
+                Toast.makeText(NewLeaveRequestActivity.this, Utility.getErrorMessageForCode(PARSING_ERROR,null),
                         Toast.LENGTH_SHORT).show();
             }
 
@@ -184,13 +195,17 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
             parameters.put(TOKEN_ID, SharedPreferences.getAuthToken(this));
             JSONObject leaveObject = new JSONObject();
             try {
-
-                String startDt = startYear+"-"+(startMonth+1)+"-"+startDay;
+                String startDt = mStartCalendar.get(Calendar.YEAR)
+                        +"-"+(mStartCalendar.get(Calendar.MONTH)+1)
+                        +"-"+mStartCalendar.get(Calendar.DAY_OF_MONTH);
                 leaveObject.put(FROM_DATE, startDt);
-                leaveObject.put(TO_DATE, endYear+"-"+(endMonth+1)+"-"+endDay);
-                leaveObject.put(IS_HALF_DAY, false);
+                String endDate = mEndCalendar.get(Calendar.YEAR)
+                        +"-"+(mEndCalendar.get(Calendar.MONTH)+1)
+                        +"-"+mEndCalendar.get(Calendar.DAY_OF_MONTH);
+                leaveObject.put(TO_DATE, endDate);
+                leaveObject.put(IS_HALF_DAY, halfDayLeaveCheckBox.isChecked());
                 String reason = reasonTxtView.getText().toString();
-                leaveObject.put(TYPE,reason.replace(getResources().getString(R.string.Reason),""));
+                leaveObject.put(LEAVE_TYPE,reason.replace(getResources().getString(R.string.Reason),"").toLowerCase());
                 leaveObject.put(REASON,notesView.getText());
             }
             catch (JSONException e){
@@ -219,24 +234,8 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
         alert.show();
     }
     public boolean validateDate(){
-        Calendar startcalendar = Calendar.getInstance();
-        startcalendar.set(Calendar.YEAR, startYear);
-        startcalendar.set(Calendar.MONTH, startMonth);
-        startcalendar.set(Calendar.DAY_OF_MONTH, startDay);
-
-        Calendar endcalendar = Calendar.getInstance();
-        endcalendar.set(Calendar.YEAR, endYear);
-        endcalendar.set(Calendar.MONTH, endMonth);
-        endcalendar.set(Calendar.DAY_OF_MONTH, endDay);
-
-
-        long startTime = startcalendar.getTimeInMillis();
-        long endTime = endcalendar.getTimeInMillis();
-
-        int selectedId = radioLeaveTypeGroup.getCheckedRadioButtonId();
-        radioLeaveTypeButton = (RadioButton)findViewById(selectedId);
-        if (startcalendar.getTimeInMillis()>endcalendar.getTimeInMillis()){
-            Toast.makeText(this,"End date should be later than start Date",Toast.LENGTH_LONG).show();
+        if (mStartCalendar.getTimeInMillis()>mEndCalendar.getTimeInMillis()){
+            Toast.makeText(this,"End date should be later than start date",Toast.LENGTH_LONG).show();
             return false;
         }
         else if(reasonTxtView.getText().equals(getResources().getString(R.string.Reason))){
@@ -245,20 +244,10 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
         }
 
         return true;
-
     }
     public void setCurrentDate(){
-
         Calendar calendar = Calendar.getInstance();
-
-        this.startYear = calendar.get(Calendar.YEAR);
-        this.startMonth = calendar.get(Calendar.MONTH);
-        this.startDay = calendar.get(Calendar.DAY_OF_MONTH);
-
-        this.endYear = calendar.get(Calendar.YEAR);
-        this.endMonth = calendar.get(Calendar.MONTH);
-        this.endDay = calendar.get(Calendar.DAY_OF_MONTH);
-
+        mStartCalendar = mEndCalendar = calendar;
         Format formatter = new SimpleDateFormat("dd-MM-yyyy");
         String s = formatter.format(calendar.getTime());
         fromDateTxtView.setText(s);
@@ -278,22 +267,20 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, monthOfYear);
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-        Log.d("ondateSet","monthOfYear : "+monthOfYear);
-
         Format formatter = new SimpleDateFormat("dd-MM-yyyy");
         String s = formatter.format(calendar.getTime());
 
         if (view.getTag().equals(START_DATE_PICKER_TAG)){
-            this.startYear = year;
-            this.startMonth = monthOfYear;
-            this.startDay = dayOfMonth;
+            mStartCalendar = calendar;
             fromDateTxtView.setText(s);
+
+            if(halfDayLeaveCheckBox.isChecked()){
+                mEndCalendar = mStartCalendar;
+                toDateTxtView.setText(s);
+            }
         }
         else if (view.getTag().equals(END_DATE_PICKER_TAG)){
-            this.endYear = year;
-            this.endMonth = monthOfYear;
-            this.endDay = dayOfMonth;
+            mEndCalendar = calendar;
             toDateTxtView.setText(s);
         }
     }

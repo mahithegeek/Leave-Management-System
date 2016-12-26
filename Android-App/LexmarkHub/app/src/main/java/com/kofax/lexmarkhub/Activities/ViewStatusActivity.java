@@ -21,7 +21,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.kofax.lexmarkhub.Constants.DUMMY_ERROR;
+import static com.kofax.lexmarkhub.Constants.PARSING_ERROR;
 import static com.kofax.lexmarkhub.Constants.REC_ID;
 import static com.kofax.lexmarkhub.Constants.STATUS;
 import static com.kofax.lexmarkhub.Constants.STATUS_CANCELLED;
@@ -105,12 +105,12 @@ public class ViewStatusActivity extends AppCompatActivity implements RequestList
 
     //lmsServiceHandlerCallBack Methods
     @Override
-    public void didFailService(int responseCode, LMS_ServiceHandler.RequestType requestType) {
+    public void didFailService(int responseCode, final String errorResponse, LMS_ServiceHandler.RequestType requestType) {
         final int serResponseCode = responseCode;
         ViewStatusActivity.this.runOnUiThread(new Runnable() {
             public void run() {
                 removeSpinner();
-                Toast.makeText(ViewStatusActivity.this, Utility.getErrorMessageForCode(serResponseCode),
+                Toast.makeText(ViewStatusActivity.this, Utility.getErrorMessageForCode(serResponseCode,errorResponse),
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -127,7 +127,8 @@ public class ViewStatusActivity extends AppCompatActivity implements RequestList
                 try{
                     switch (reqType){
                         case LeaveHistory:
-                            JSONArray responseObject = new JSONArray(serviceRes);
+                            JSONObject leaveHistory = new JSONObject(serviceRes);
+                            JSONArray responseObject = leaveHistory.getJSONArray("leaveHistory");
                             loadLeavesList(responseObject);
                             break;
                         case CancelLeave:
@@ -141,7 +142,7 @@ public class ViewStatusActivity extends AppCompatActivity implements RequestList
                 }
                 catch (JSONException e){
                     e.printStackTrace();
-                    Toast.makeText(ViewStatusActivity.this, Utility.getErrorMessageForCode(DUMMY_ERROR),
+                    Toast.makeText(ViewStatusActivity.this, Utility.getErrorMessageForCode(PARSING_ERROR,null),
                             Toast.LENGTH_SHORT).show();
                 }
             }

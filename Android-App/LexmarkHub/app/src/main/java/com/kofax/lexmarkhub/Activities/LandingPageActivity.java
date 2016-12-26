@@ -26,9 +26,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static com.kofax.lexmarkhub.Constants.AVAILABLE;
-import static com.kofax.lexmarkhub.Constants.DUMMY_ERROR;
+
+import static com.kofax.lexmarkhub.Constants.PARSING_ERROR;
 import static com.kofax.lexmarkhub.Constants.TOKEN_ID;
+import static com.kofax.lexmarkhub.Constants.VACATION;
 
 public class LandingPageActivity extends Activity {
 
@@ -145,12 +146,12 @@ public class LandingPageActivity extends Activity {
                         try{
                             JSONArray responseObject = new JSONArray(response);
                             JSONObject requestJson = responseObject.getJSONObject(0);
-                            String availableLeaves = requestJson.getString(AVAILABLE);
+                            String availableLeaves = requestJson.getString(VACATION);
                             mLeavesTextView.setText(availableLeaves);
                         }
                         catch (JSONException e){
                             e.printStackTrace();
-                            Toast.makeText(LandingPageActivity.this, Utility.getErrorMessageForCode(DUMMY_ERROR),
+                            Toast.makeText(LandingPageActivity.this, Utility.getErrorMessageForCode(PARSING_ERROR,null),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -159,11 +160,11 @@ public class LandingPageActivity extends Activity {
             }
 
             @Override
-            public void didFailService(final int responseCode, LMS_ServiceHandler.RequestType requestType) {
+            public void didFailService(final int responseCode, final String errorResponse, LMS_ServiceHandler.RequestType requestType) {
                 LandingPageActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         removeSpinner();
-                        Toast.makeText(LandingPageActivity.this, Utility.getErrorMessageForCode(responseCode),
+                        Toast.makeText(LandingPageActivity.this, Utility.getErrorMessageForCode(responseCode,errorResponse),
                                 Toast.LENGTH_SHORT).show();
                     }
                 });

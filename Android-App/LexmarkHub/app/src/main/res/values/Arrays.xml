@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
         <string-array name="leave_type_array_options">
-            <item>@string/leave_type_Vacation</item>
+            <item>@string/leave_type_Bereavement</item>
+            <item>@string/leave_type_Business_trip</item>
             <item>@string/leave_type_CompOff</item>
-            <item>@string/leave_type_Special</item>
-            <item>@string/leave_type_carryForward</item>
+            <item>@string/leave_type_ForgotId</item>
+            <item>@string/leave_type_LossOfPay</item>
+            <item>@string/leave_type_Maternity</item>
+            <item>@string/leave_type_Paternity</item>
+            <item>@string/leave_type_Vacation</item>
+            <item>@string/leave_type_WorkFromHome</item>
+
         </string-array>
 </resources>

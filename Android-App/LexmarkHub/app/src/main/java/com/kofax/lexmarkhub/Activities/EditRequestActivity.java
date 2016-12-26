@@ -21,18 +21,15 @@ import org.json.JSONObject;
 
 import javax.xml.transform.stream.StreamSource;
 
-import static com.kofax.lexmarkhub.Constants.DESCRIPTION;
-import static com.kofax.lexmarkhub.Constants.DUMMY_ERROR;
 import static com.kofax.lexmarkhub.Constants.FNAME;
 import static com.kofax.lexmarkhub.Constants.FROM_DATE;
-import static com.kofax.lexmarkhub.Constants.LEAVE_REQUESTS;
 import static com.kofax.lexmarkhub.Constants.LEAVE_STATUS;
 import static com.kofax.lexmarkhub.Constants.LNAME;
+import static com.kofax.lexmarkhub.Constants.PARSING_ERROR;
 import static com.kofax.lexmarkhub.Constants.REASON;
 import static com.kofax.lexmarkhub.Constants.REQUESTID;
 import static com.kofax.lexmarkhub.Constants.REQUEST_ID;
 import static com.kofax.lexmarkhub.Constants.REQUEST_OBJECT_EXTRA;
-import static com.kofax.lexmarkhub.Constants.STATUS;
 import static com.kofax.lexmarkhub.Constants.STATUS_APPROVE;
 import static com.kofax.lexmarkhub.Constants.STATUS_REJECT;
 import static com.kofax.lexmarkhub.Constants.SUCCESS;
@@ -80,7 +77,8 @@ public class EditRequestActivity extends AppCompatActivity {
         LMS_ServiceHandler lms_serviceHandler = new LMS_ServiceHandler(this);
         lms_serviceHandler.setLmsServiceCallBack(new LMS_ServiceHandlerCallBack() {
             @Override
-            public void didFinishServiceWithResponse(final String response, LMS_ServiceHandler.RequestType requestType) {
+            public void didFinishServiceWithResponse(final String response,
+                                                     LMS_ServiceHandler.RequestType requestType) {
                 removeSpinner();
                 EditRequestActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
@@ -90,21 +88,24 @@ public class EditRequestActivity extends AppCompatActivity {
                 });
             }
             @Override
-            public void didFailService(final int responseCode, LMS_ServiceHandler.RequestType requestType) {
+            public void didFailService(final int responseCode, final String errorResponse,
+                                       LMS_ServiceHandler.RequestType requestType) {
                 EditRequestActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         removeSpinner();
-                        Toast.makeText(EditRequestActivity.this, Utility.getErrorMessageForCode(responseCode),
+                        Toast.makeText(EditRequestActivity.this,
+                                Utility.getErrorMessageForCode(responseCode,errorResponse),
                                 Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
-        lms_serviceHandler.startRequest(LMS_ServiceHandler.RequestType.ApproveLeave, getJsonBodyForPendingRequests(view).toString());
+        lms_serviceHandler.startRequest(LMS_ServiceHandler.RequestType.ApproveLeave,
+                getJsonBodyForPendingRequests(view).toString());
     }
     public void showSpinner(){
         mProgress = new ProgressDialog(this);
-        mProgress.setMessage("Wait while loading...");
+        mProgress.setMessage("Loading...");
         //mProgress.setCancelable(false);
         mProgress.show();
     }
@@ -117,7 +118,7 @@ public class EditRequestActivity extends AppCompatActivity {
         }
         catch (JSONException e){
             e.printStackTrace();
-            Toast.makeText(EditRequestActivity.this, Utility.getErrorMessageForCode(DUMMY_ERROR),
+            Toast.makeText(EditRequestActivity.this, Utility.getErrorMessageForCode(PARSING_ERROR,null),
                         Toast.LENGTH_SHORT).show();
         }
     }

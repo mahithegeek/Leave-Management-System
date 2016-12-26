@@ -28,6 +28,7 @@ import static com.kofax.lexmarkhub.Constants.DATE_FROM;
 import static com.kofax.lexmarkhub.Constants.DATE_TO;
 import static com.kofax.lexmarkhub.Constants.FNAME;
 import static com.kofax.lexmarkhub.Constants.FROM_DATE;
+import static com.kofax.lexmarkhub.Constants.LEAVE_TYPE;
 import static com.kofax.lexmarkhub.Constants.LNAME;
 import static com.kofax.lexmarkhub.Constants.STATUS;
 import static com.kofax.lexmarkhub.Constants.STATUS_REJECT;
@@ -95,14 +96,14 @@ public class RequestListAdapter extends ArrayAdapter<JSONObject> {
             else{
                 userName = Utility.getLoggedInUser(mContext).getfName()+" "
                         +Utility.getLoggedInUser(mContext).getlName();
-                dateString = request.getString(DATE_FROM)+" to "+request.getString(DATE_TO);
+                dateString = request.getString(FROM_DATE)+" to "+request.getString(TO_DATE);
             }
             name.setText(userName);
             date.setText(dateString);
 
             TextView reason = (TextView) listItemView.findViewById(R.id.reason_txtView);
             //TODO hardcoding this text for now. Once we get tha reason in response change this
-            reason.setText(mContext.getResources().getString(R.string.leave_type_Vacation));
+            reason.setText(request.getString(LEAVE_TYPE));
         }
         catch (JSONException e){
             e.printStackTrace();

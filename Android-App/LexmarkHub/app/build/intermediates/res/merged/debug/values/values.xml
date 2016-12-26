@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="leave_type_array_options">
-            <item>@string/leave_type_Vacation</item>
+            <item>@string/leave_type_Bereavement</item>
+            <item>@string/leave_type_Business_trip</item>
             <item>@string/leave_type_CompOff</item>
-            <item>@string/leave_type_Special</item>
-            <item>@string/leave_type_carryForward</item>
+            <item>@string/leave_type_ForgotId</item>
+            <item>@string/leave_type_LossOfPay</item>
+            <item>@string/leave_type_Maternity</item>
+            <item>@string/leave_type_Paternity</item>
+            <item>@string/leave_type_Vacation</item>
+            <item>@string/leave_type_WorkFromHome</item>
+
         </string-array>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
@@ -267,6 +273,7 @@
     <integer name="cancel_button_image_alpha">127</integer>
     <integer name="design_snackbar_text_max_lines">2</integer>
     <integer name="status_bar_notification_info_maxnum">999</integer>
+    <string name="HalfDayLeave">Half Day Leave</string>
     <string name="Reason">Reason :</string>
     <string name="Timeoftobe">Time-Off to be</string>
     <string name="WithPay">With Pay</string>
@@ -295,10 +302,15 @@
     <string name="approve">Approve</string>
     <string name="bottom_sheet_behavior" translatable="false">android.support.design.widget.BottomSheetBehavior</string>
     <string name="character_counter_pattern" translatable="false">%1$d / %2$d</string>
-    <string name="leave_type_CompOff">Comp-of</string>
-    <string name="leave_type_Special">Special</string>
+    <string name="leave_type_Bereavement">Bereavement</string>
+    <string name="leave_type_Business_trip">Business Trip</string>
+    <string name="leave_type_CompOff">Comp-off</string>
+    <string name="leave_type_ForgotId">Forgot Id</string>
+    <string name="leave_type_LossOfPay">Loss Of Pay</string>
+    <string name="leave_type_Maternity">Maternity</string>
+    <string name="leave_type_Paternity">Paternity</string>
     <string name="leave_type_Vacation">Vacation</string>
-    <string name="leave_type_carryForward">Carry-forward</string>
+    <string name="leave_type_WorkFromHome">Work From Home</string>
     <string name="new_request_title">New Request</string>
     <string name="pending_request_title">Pending Request</string>
     <string name="pending_requests_title">Pending Requests</string>
@@ -308,6 +320,7 @@
     <string name="submit">Submit</string>
     <string name="to">To:</string>
     <string name="user_requests_title">User Requests</string>
+    <string name="welcome">Welcome :</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
     <style name="Animation.AppCompat.Dialog" parent="Base.Animation.AppCompat.Dialog"/>

@@ -10,10 +10,15 @@
     <string name="Reason">Reason :</string>
     <string name="please_select_leave_type">Please select leave type</string>
     <string name="leave_type_Vacation">Vacation</string>
-    <string name="leave_type_CompOff">Comp-of</string>
-    <string name="leave_type_Special">Special</string>
-    <string name="leave_type_carryForward">Carry-forward</string>
-
+    <string name="leave_type_CompOff">Comp-off</string>
+    <string name="leave_type_Bereavement">Bereavement</string>
+    <string name="leave_type_Business_trip">Business Trip</string>
+    <string name="leave_type_ForgotId">Forgot Id</string>
+    <string name="leave_type_LossOfPay">Loss Of Pay</string>
+    <string name="leave_type_Maternity">Maternity</string>
+    <string name="leave_type_Paternity">Paternity</string>
+    <string name="leave_type_WorkFromHome">Work From Home</string>
+    <string name="HalfDayLeave">Half Day Leave</string>
 
     <!--screen titles-->
     <string name="new_request_title">New Request</string>

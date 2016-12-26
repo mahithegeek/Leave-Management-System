@@ -24,8 +24,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static com.kofax.lexmarkhub.Constants.DUMMY_ERROR;
 import static com.kofax.lexmarkhub.Constants.LEAVE_REQUESTS;
+import static com.kofax.lexmarkhub.Constants.PARSING_ERROR;
 import static com.kofax.lexmarkhub.Constants.REQUEST_OBJECT_EXTRA;
 import static com.kofax.lexmarkhub.Constants.STATUS;
 import static com.kofax.lexmarkhub.Constants.STATUS_APPLIED;
@@ -91,7 +91,7 @@ public class PendingRequestsActivity extends AppCompatActivity {
                         }
                         catch (JSONException e){
                             e.printStackTrace();
-                            Toast.makeText(PendingRequestsActivity.this, Utility.getErrorMessageForCode(DUMMY_ERROR),
+                            Toast.makeText(PendingRequestsActivity.this, Utility.getErrorMessageForCode(PARSING_ERROR,null),
                                     Toast.LENGTH_SHORT).show();
                         }
 
@@ -99,12 +99,13 @@ public class PendingRequestsActivity extends AppCompatActivity {
                 });
             }
             @Override
-            public void didFailService(final int responseCode, LMS_ServiceHandler.RequestType requestType) {
+            public void didFailService(final int responseCode, final String errorResponse, LMS_ServiceHandler.RequestType requestType) {
                 PendingRequestsActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         removeSpinner();
-                        Toast.makeText(PendingRequestsActivity.this, Utility.getErrorMessageForCode(responseCode),
+                        Toast.makeText(PendingRequestsActivity.this, Utility.getErrorMessageForCode(responseCode,errorResponse),
                                 Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }

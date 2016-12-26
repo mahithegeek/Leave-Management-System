@@ -99,28 +99,13 @@
                 android:layout_height="wrap_content"
                 style="@style/TextBoxStyle"
                 android:textSize="18dp"
-                android:text="@string/Timeoftobe"/>
-            <RadioGroup
-                android:id="@+id/timeOff_radioGrooup"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-                <RadioButton
-                    android:id="@+id/WithPay_RadioBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/WithPay"
-                    android:textSize="18dp"
-                    android:checked="true"/>
+                android:text="@string/HalfDayLeave"/>
+            <CheckBox
+                android:id="@+id/HDL_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"/>
 
-                <RadioButton
-                    android:id="@+id/WithOutPay_RadioBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/WithoutPay"
-                    android:textSize="18dp"/>
-            </RadioGroup>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -167,7 +152,8 @@
                 android:background = "#80F6F2C0"
                 android:layout_margin = "5dp"
                 android:gravity = "top"
-                android:textSize = "20sp"/>
+                android:textSize = "20sp"
+                android:digits="abcdefghijklmnopqrstuvwxyz1234567890.,() "/>
         </LinearLayout>
 
     </LinearLayout>
