@@ -43,4 +43,12 @@ Utilities.prototype.getWorkingDays = function getWorkingDays(startDate, toDate) 
 	return result;
 };
 
+Utilities.prototype.validateInputParameters = function validateInputParameters (parameter) {
+	if(typeof parameter !== undefined){
+		return true;
+	}
+
+	return false;
+};
+
 module.exports = Utilities;

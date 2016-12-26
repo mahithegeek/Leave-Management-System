@@ -26,11 +26,8 @@ var ROLE = {
 InternalWebService.prototype.login = function (req, response) {
 
 	var accessCallback = function (err, user) {
-		console.log("callback triggered");
 		if(err == null ) {
 			var userData = {firstName : user.firstName, lastName: user.lastName,email : user.email, empID : user.emp_id.toString(), role : user.role,supervisorID : user.supervisor_id.toString(),supervisor:""};
-			/*response.setHeader('Content-Type', 'application/json');
-			response.json(userData);*/
 			getSupervisorDetails (userData,response);
 			
 		}
@@ -39,20 +36,25 @@ InternalWebService.prototype.login = function (req, response) {
 		}
 	};
 
+	var tokenID = req.body.tokenID;
 	//console.log(req.body.tokenID);
-	access.determineUser (req.body.tokenID, accessCallback);
+	if(utils.validateInputParameters(tokenID)){
+		access.determineUser (tokenID, accessCallback);
+	}
+	else {
+		response.status(500).send(error.InputValidationError());
+	}
+	
 };
 
 function getSupervisorDetails(user,response) {
 	var callback = function (err,data) {
 		if(err == null){
-			
-			console.log("count is " + data.length);
 			if(data.length > 0){
 				var supervisorDetails = {firstName : data[0].first_name,lastName : data[0].last_name,email : data[0].email};
 				user.supervisor = supervisorDetails;
 				delete user.supervisorID;
-				console.log("user details are  " + JSON.stringify(user));
+				//console.log("user details are  " + JSON.stringify(user));
 				response.json (user);
 			}
 			else {
@@ -63,8 +65,15 @@ function getSupervisorDetails(user,response) {
 			response.status(500).send (error.DatabaseError(err));
 		}
 	}
-	console.log("user details are " + user.supervisorID);
-	sqlHandle.fetchSuperVisor(user.supervisorID,callback);
+
+	if(utils.validateInputParameters(user.supervisorID)){
+		sqlHandle.fetchSuperVisor(user.supervisorID,callback);
+	}
+	else {
+		response.status(500).send(error.InputValidationError());
+	}
+
+	
 }
 
 //To DO just check the credentials and see if this is a legitimate request
@@ -86,7 +95,14 @@ InternalWebService.prototype.getUsers = function getUsers (req,response) {
 		}
 	};
 
-	access.determineUser (req.body.tokenID, accessCallback);
+	var tokenID = req.body.tokenID;
+	//console.log(req.body.tokenID);
+	if(utils.validateInputParameters(tokenID)){
+		access.determineUser (tokenID, accessCallback);
+	}
+	else {
+		response.status(500).send(error.InputValidationError());
+	}
 };
 
 function internalGetUsers (req,response,supervisorID) {
@@ -119,7 +135,14 @@ InternalWebService.prototype.getAvailableLeaves = function (req,response) {
 		}
 	};
 
-	access.determineUser (req.body.tokenID, accessCallback);
+	var tokenID = req.body.tokenID;
+	//console.log(req.body.tokenID);
+	if(utils.validateInputParameters(tokenID)){
+		access.determineUser (tokenID, accessCallback);
+	}
+	else {
+		response.status(500).send(error.InputValidationError());
+	}
 };
 
 function getLeavesForUser (req,response,empID) {
@@ -158,10 +181,74 @@ InternalWebService.prototype.applyLeave = function (req,response) {
 			response.status(500).send(error.DatabaseError(err));
 		}
 	};
-	access.determineUser (req.body.tokenID, accessCallback);
+	
+	var tokenID = req.body.tokenID;
+	if(utils.validateInputParameters(tokenID)){
+		access.determineUser (tokenID, accessCallback);
+	}
+	else {
+		response.status(500).send(error.InputValidationError());
+	}
 };
 
 function internalApplyLeave (req,response,leaveRequestReceived,user) {
+	
+	var leaveAvailabilitycallback = function (err,data){
+		if (err == null) {
+			console.log("successfully retrieved leaves");
+			if(data.length > 0){
+				var leaveAvailability = data[0];
+				console.log("leaves from dB " + JSON.stringify(leaveAvailability));
+				if(checkLeavesType(leaveRequestReceived,leaveAvailability)){
+					insertLeaves (leaveRequestReceived,req,response);
+				}
+				else {
+					response.status(500).send(error.LeaveAvailabilityError("Leaves of type not available"));
+				}
+				
+			}
+			else{
+				response.status(500).send(error.DatabaseError(err));
+			}
+			
+		}
+		else {
+			console.log("error in getting leaves");
+			response.status(500).send(error.DatabaseError(err));
+		}
+	}
+
+	if(utils.validateInputParameters(leaveRequestReceived) && utils.validateInputParameters(user)){
+		leaveRequestReceived = constructLeaveRequest (leaveRequestReceived,user);
+		checkLeaveAvailability (leaveRequestReceived,user,leaveAvailabilitycallback);
+	}
+	else {
+		response.status(500).send (error.InputValidationError());
+	}
+}
+
+function checkLeavesType (leaveRequestReceived,dbRecord) {
+	if(leaveRequestReceived.type_id == 1) {
+		if(leaveRequestReceived.days > dbRecord.casual && leaveRequestReceived.days > dbRecord.carry_forward){
+			console.log("No Leaves for the user of this type");
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+	else if(leaveRequestReceived.type_id > 1 && leaveRequestReceived.type_id < 10 ) {
+		return true;
+	}
+
+	return false;
+}
+
+function checkLeaveAvailability (leaveRequestReceived,user,callback) {
+	sqlHandle.getAvailableLeaves(user.emp_id,callback);
+}
+
+function insertLeaves (leaveRequestReceived,req,response) {
 	if(utils.validateDate(leaveRequestReceived.fromDate) && utils.validateDate(leaveRequestReceived.toDate)) {
 		var callback = function (err,data) {
 			if(err == null){
@@ -172,8 +259,9 @@ function internalApplyLeave (req,response,leaveRequestReceived,user) {
 				response.send(error.DatabaseError(err));
 			}
 		}
-		var leave = constructLeaveRequest(leaveRequestReceived,user);
-		sqlHandle.insertLeaves (leave,callback);
+		//var leave = constructLeaveRequest(leaveRequestReceived,user);
+		console.log("leave received is   "+ JSON.stringify(leaveRequestReceived));
+		sqlHandle.insertLeaves (leaveRequestReceived,callback);
 		
 	}
 	else {
@@ -181,14 +269,73 @@ function internalApplyLeave (req,response,leaveRequestReceived,user) {
 	}
 }
 
+
+
 function constructLeaveRequest (leaveRequestReceived,user) {
+	console.log("constructLeaveRequest  " + JSON.stringify(leaveRequestReceived));
 	var date = utils.getFormattedDate (new Date());
-	var numberOfDays = utils.getWorkingDays(leaveRequestReceived.fromDate,leaveRequestReceived.toDate);
-	console.log("number of days "+ numberOfDays);
+	var numberOfDays;
+	if(!leaveRequestReceived.isHalfDay){
+		 console.log("not half day");
+		 numberOfDays = utils.getWorkingDays(leaveRequestReceived.fromDate,leaveRequestReceived.toDate);
+	}
+	else {
+		 numberOfDays = 0.5;
+		 console.log("not half day");
+	}
+	
+	console.log("leave request is  " +JSON.stringify(leaveRequestReceived));
+	leaveRequestReceived.typeid = getLeaveTypeIDFromLeave (leaveRequestReceived.leaveType);
 
     var dbRequestObject = {date_from : leaveRequestReceived.fromDate,date_to : leaveRequestReceived.toDate, half_Day : leaveRequestReceived.isHalfDay,applied_on : date, status_id : 0,type_id : leaveRequestReceived.typeid,emp_id : user.emp_id,days : numberOfDays,reason : leaveRequestReceived.reason};
-    console.log(numberOfDays);
+    
     return dbRequestObject;
+}
+
+function getLeaveTypeIDFromLeave (leaveType) {
+	switch(leaveType) {
+		case 'vacation':
+			return 1;
+		case 'maternity':
+			return 2;
+		case 'paternity':
+			return 3;
+		case 'bereavement':
+			return 4;
+		case 'loss of pay':
+			return 5;
+		case 'comp-off':
+			return 6;
+		case 'work from home':
+			return 7;
+		case 'forgot id':
+			return 8;
+		default :
+			return 10;
+	}
+}
+
+function getLeaveFromType (leaveID){
+	switch(leaveID) {
+		case 1 :
+			return 'vacation';
+		case 2 :
+			return 'maternity';
+		case 3 :
+			return 'paternity';
+		case 4 :
+			return 'bereavement';
+		case 5 :
+			return 'loss of pay';
+		case 6 :
+			return 'comp-off';
+		case 7:
+			return 'work from home';
+		case 8:
+			return 'forgot id';
+		default:
+			return 'unknown';
+	}
 }
 
 
@@ -208,7 +355,14 @@ InternalWebService.prototype.getLeaveRequests = function (req,response) {
 			response.status(500).send(error.DatabaseError(err));
 		}
 	};
-	access.determineUser (req.body.tokenID, accessCallback);
+	
+	var tokenID = req.body.tokenID;
+	if(utils.validateInputParameters(tokenID)){
+		access.determineUser (tokenID, accessCallback);
+	}
+	else {
+		response.status(500).send(error.InputValidationError());
+	}
 };
 
 function internalGetLeaveRequests (req,response,empID) {
@@ -217,7 +371,7 @@ function internalGetLeaveRequests (req,response,empID) {
 			if (err == null) {
 				//response.send(JSON.stringify(data));
 				var requests = formLeaveRequestResponse(data);
-				response.send({leaverequests:requests});
+				response.send({leaveRequests:requests});
 			}
 			else {
 				response.status(500).send(error.DatabaseError(err));
@@ -231,13 +385,23 @@ function formLeaveRequestResponse (dbResult) {
 	var leaveRequestResponse = [];
 	for(var i=0;i< dbResult.length;i++){
 		console.log("dbresult is  "+dbResult[i]);
-		var leaveRequest = {id:dbResult[i].id,firstName:dbResult[i].first_name,lastName:dbResult[i].last_name,email:dbResult[i].email,fromDate:dbResult[i].date_from,toDate:dbResult[i].date_to,half_Day:dbResult[i].half_Day,appliedOn:dbResult[i].applied_on,status:dbResult[i].status};
+		//var type = getLeaveFromType(dbResult[i].type_id);
+		
+		//var leaveRequest = {id:dbResult[i].id,firstName:dbResult[i].first_name,lastName:dbResult[i].last_name,email:dbResult[i].email,fromDate:dbResult[i].date_from,toDate:dbResult[i].date_to,half_Day:dbResult[i].half_Day,appliedOn:dbResult[i].applied_on,status:dbResult[i].status,leaveType:type,reason:dbResult[i].reason};
+		var leaveRequest = convertDBResultToJSON (dbResult[i]);
 		console.log("leave request is   "+ leaveRequest);
 		leaveRequestResponse.push(leaveRequest);
 
 	}
 	
 	return leaveRequestResponse;
+}
+
+function convertDBResultToJSON (dbResult) {
+	var type = getLeaveFromType(dbResult.type_id);
+	console.log ("type is " + type);
+	var leaveRequest = {id:dbResult.id,firstName:dbResult.first_name,lastName:dbResult.last_name,email:dbResult.email,fromDate:dbResult.date_from,toDate:dbResult.date_to,half_Day:dbResult.half_Day,appliedOn:dbResult.applied_on,status:dbResult.status,leaveType:type,reason:dbResult.reason};
+	return leaveRequest;
 }
 
 InternalWebService.prototype.getLeaveHistory = function getLeaveHistory (req,response) {
@@ -255,14 +419,23 @@ InternalWebService.prototype.getLeaveHistory = function getLeaveHistory (req,res
 			response.status(500).send(error.DatabaseError(err));
 		}
 	};
-	access.determineUser (req.body.tokenID, accessCallback);
+	
+	var tokenID = req.body.tokenID;
+	if(utils.validateInputParameters(tokenID)){
+		access.determineUser (tokenID, accessCallback);
+	}
+	else {
+		response.status(500).send(error.InputValidationError());
+	}
 
 }
 
 function internalGetLeaveHistory (req,response,empID){
 	var callback = function (err,data){
 		if (err == null) {
-			response.send(JSON.stringify(data));
+			//response.send(JSON.stringify(data));
+			var requests = formLeaveRequestResponse(data);
+			response.send({leaveHistory:requests});
 		}
 		else {
 			response.status(500).send(error.DatabaseError(err));
@@ -287,7 +460,13 @@ InternalWebService.prototype.cancelLeaveRequest = function cancelLeaveRequest (r
 			response.status(500).send(error.DatabaseError(err));
 		}
 	};
-	access.determineUser (req.body.tokenID, accessCallback);
+	var tokenID = req.body.tokenID;
+	if(utils.validateInputParameters(tokenID)){
+		access.determineUser (tokenID, accessCallback);
+	}
+	else {
+		response.status(500).send(error.InputValidationError());
+	}
 }
 
 function internalCancelLeaveRequest (req,response,requestID) {
@@ -302,7 +481,13 @@ function internalCancelLeaveRequest (req,response,requestID) {
 		}
 	}
 
-	sqlHandle.cancelLeaveRequest(requestID,callback);
+	if(utils.validateInputParameters (requestID)) {
+		sqlHandle.cancelLeaveRequest(requestID,callback);
+	}
+	else {
+		response.status(500).send (error.InputValidationError());
+	}
+	
 }
 
 InternalWebService.prototype.approveLeaveRequest = function approveLeaveRequest(req,response){
@@ -326,7 +511,14 @@ InternalWebService.prototype.approveLeaveRequest = function approveLeaveRequest(
 			response.status(500).send(error.DatabaseError(err));
 		}
 	};
-	access.determineUser (req.body.tokenID, accessCallback);
+
+	var tokenID = req.body.tokenID;
+	if(utils.validateInputParameters(tokenID)){
+		access.determineUser (tokenID, accessCallback);
+	}
+	else {
+		response.status(500).send(error.InputValidationError());
+	}
 };
 
 function internalRejectLeave (req,response,requestID){
@@ -341,7 +533,13 @@ function internalRejectLeave (req,response,requestID){
 			}
 	}
 
-	sqlHandle.rejectLeaveRequest(requestID,callback);
+	if(utils.validateInputParameters(requestID)){
+		sqlHandle.rejectLeaveRequest(requestID,callback);
+	}
+	else {
+		response.status(500).send(error.InputValidationError());
+	}
+	
 }
 
 function internalApproveLeave (req,response,requestID){
@@ -357,7 +555,12 @@ function internalApproveLeave (req,response,requestID){
 		}
 	}
 
-	checkValidityOfLeaveRequest(requestID,statusCallback);
+	if(utils.validateInputParameters(requestID)){
+		checkValidityOfLeaveRequest(requestID,statusCallback);
+	}
+	else {
+		response.status(500).send (error.InputValidationError());
+	}
 
 	
 }

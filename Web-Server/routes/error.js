@@ -30,6 +30,15 @@ ServerError.prototype.InputError = function (message) {
 	return error;
 }
 
+ServerError.prototype.LeaveAvailabilityError = function (message) {
+	var error = {code : 4300,description:message};
+	return error;
+}
+
+ServerError.prototype.InputValidationError = function () {
+	var error = {code : 4400 , description:"Invalid Input Parameters "};
+}
+
 module.exports = ServerError;
 
 
