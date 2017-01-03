@@ -310,6 +310,8 @@ function getLeaveTypeIDFromLeave (leaveType) {
 			return 7;
 		case 'forgot id':
 			return 8;
+		case 'business trip':
+			return 9;
 		default :
 			return 10;
 	}
@@ -333,6 +335,8 @@ function getLeaveFromType (leaveID){
 			return 'work from home';
 		case 8:
 			return 'forgot id';
+		case 9:
+			return 'business trip';
 		default:
 			return 'unknown';
 	}
@@ -389,7 +393,8 @@ function formLeaveRequestResponse (dbResult) {
 		
 		//var leaveRequest = {id:dbResult[i].id,firstName:dbResult[i].first_name,lastName:dbResult[i].last_name,email:dbResult[i].email,fromDate:dbResult[i].date_from,toDate:dbResult[i].date_to,half_Day:dbResult[i].half_Day,appliedOn:dbResult[i].applied_on,status:dbResult[i].status,leaveType:type,reason:dbResult[i].reason};
 		var leaveRequest = convertDBResultToJSON (dbResult[i]);
-		console.log("leave request is   "+ leaveRequest);
+		console.log("formLeaveRequestResponse: leave request is   "+ JSON.stringify(leaveRequest));
+
 		leaveRequestResponse.push(leaveRequest);
 
 	}
@@ -400,7 +405,7 @@ function formLeaveRequestResponse (dbResult) {
 function convertDBResultToJSON (dbResult) {
 	var type = getLeaveFromType(dbResult.type_id);
 	console.log ("type is " + type);
-	var leaveRequest = {id:dbResult.id,firstName:dbResult.first_name,lastName:dbResult.last_name,email:dbResult.email,fromDate:dbResult.date_from,toDate:dbResult.date_to,half_Day:dbResult.half_Day,appliedOn:dbResult.applied_on,status:dbResult.status,leaveType:type,reason:dbResult.reason};
+	var leaveRequest = {id:dbResult.id,firstName:dbResult.first_name,lastName:dbResult.last_name,email:dbResult.email,fromDate:dbResult.date_from,toDate:dbResult.date_to,halfDay:parseInt(dbResult.half_day),appliedOn:dbResult.applied_on,status:dbResult.status,leaveType:type,reason:dbResult.reason};
 	return leaveRequest;
 }
 
