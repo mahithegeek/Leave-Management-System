@@ -31,10 +31,11 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
     @IBOutlet weak var rejectButton: UIButton!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var approveButton: UIButton!
-    let leaveTypes = ["Vacation", "Comp-of", "Special", "carry-forward"]
+    @IBOutlet weak var halfDayLeaveButton: UIButton!
+    let leaveTypes = ["Vacation", "Comp-off", "Bereavement", "Business Trip","Forgot Id","Loss Of Pay","Maternity","Paternity","Work From Home"]
     var pickerView = UIPickerView()
     var leaveRequest:LeaveRequest?
-    var leave=Leave(reason:"Vacation",employee:nil ,startDate:NSDate(),endDate: NSDate(),leaveType:"Vacation")
+    var leave=Leave(reason:"Vacation",employee:nil ,startDate:NSDate(),endDate: NSDate(),isHalfDay: false,leaveType:"Vacation")
     var isFromPending:Bool = false
     var employee: Employee?
     
@@ -60,6 +61,8 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
             reasonTextView.editable = false
             submitButton.hidden = true
             leaveTypeButton.userInteractionEnabled = false
+            self.halfDayLeaveButton.selected = leave.isHalfDay!
+            self.halfDayLeaveButton.userInteractionEnabled = false
         }
         else if let supervisorName = self.employee!.supervisorName {
             self.reportToLabel.text = "To: " + supervisorName
@@ -153,6 +156,10 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
             (date) -> Void in
             self.leave.startDate = date
             self.startDateLabel.text = AppUtilities().dateStringFromDate(date)
+            if (self.halfDayLeaveButton.selected) {
+                self.leave.endDate! = self.leave.startDate!
+                self.endDateLabel.text = AppUtilities().dateStringFromDate(self.leave.endDate!)
+            }
         }
     }
     
@@ -211,6 +218,22 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         return count
     }
 
+    @IBAction func halfDayButtonAction(sender: UIButton) {
+        sender.selected = !sender.selected
+        if sender.selected {
+            endDateButton.userInteractionEnabled = false
+            if compareDate(leave.startDate!, toDate: leave.endDate!) != .OrderedSame {
+                leave.endDate! = leave.startDate!
+                self.endDateLabel.text = AppUtilities().dateStringFromDate(leave.endDate!)
+            }
+        }
+        else {
+            endDateButton.userInteractionEnabled = true
+        }
+        
+        
+        
+    }
     @IBAction func submitButtonAction(sender: AnyObject) {
         
         
@@ -225,13 +248,15 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         appDelegate.oAuthManager?.requestAccessToken(withCompletion: { (idToken, error) in
             
             if idToken?.isEmpty == false {
+                
+                var ishalfDay = self.halfDayLeaveButton.selected
                 let parameters = [
                     "tokenID": idToken!,
                     "leave": [
                         "fromDate": AppUtilities().dateStringFromDate(self.leave.startDate!),
                         "toDate" : AppUtilities().dateStringFromDate(self.leave.endDate!),
-                        "isHalfDay" : false,
-                        "type" : self.leave.leaveType!,
+                        "isHalfDay" : ishalfDay,
+                        "type" : self.leave.leaveType!.lowercaseString,
                         "reason" : self.reasonTextView.text
                         ]
                 ]

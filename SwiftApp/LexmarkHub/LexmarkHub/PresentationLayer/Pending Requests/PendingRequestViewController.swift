@@ -49,7 +49,8 @@ class PendingRequestViewController: UIViewController {
                                 ])
                             
                             let reason = leaveRequest["reason"] as! String
-                            let leave = Leave(reason: reason, employee: employee, startDate: AppUtilities().dateFromString(leaveRequest["fromDate"] as! String), endDate: AppUtilities().dateFromString(leaveRequest["toDate"] as! String),leaveType: "Vocation")
+                            let leave = Leave(reason: reason, employee: employee, startDate: AppUtilities().dateFromString(leaveRequest["fromDate"] as! String), endDate: AppUtilities().dateFromString(leaveRequest["toDate"] as! String), isHalfDay:leaveRequest["halfDay"] as! Bool,leaveType: leaveRequest["leaveType"] as! String)
+                           
                             let leaveRequest = LeaveRequest(requestId: leaveRequest["id"] as! NSInteger
                                 , status: leaveRequest["status"] as! String, leave: leave)
                             let leavestatus = leaveRequest.status
@@ -108,8 +109,6 @@ class PendingRequestViewController: UIViewController {
         cell?.leaveDatesLabel.text = AppUtilities().dateStringFromDate(pendingRequest.leave.startDate!) + " to " + AppUtilities().dateStringFromDate(pendingRequest.leave.endDate!)
         cell?.reasonLabel.text = "\(pendingRequest.leave.leaveType! )"
         cell?.statusLabel.text = pendingRequest.status
-        
-        
         return cell!
     }
 
@@ -122,7 +121,7 @@ class PendingRequestViewController: UIViewController {
         let pendingRequest = pendingRequests[indexPath.row] as LeaveRequest
         let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("ApplyLeaveViewControllerIdentifier") as? ApplyLeaveViewController
         viewController?.leaveRequest = pendingRequest
-        viewController?.leave = Leave(reason:pendingRequest.leave.reason! ,employee:pendingRequest.leave.employee ,startDate:pendingRequest.leave.startDate,endDate: pendingRequest.leave.endDate,leaveType:"Vacation")
+        viewController?.leave = Leave(reason:pendingRequest.leave.reason! ,employee:pendingRequest.leave.employee ,startDate:pendingRequest.leave.startDate,endDate: pendingRequest.leave.endDate,isHalfDay:pendingRequest.leave.isHalfDay!,leaveType:pendingRequest.leave.leaveType!)
         viewController?.isFromPending = true
         self.navigationController?.pushViewController(viewController!, animated: true)
 

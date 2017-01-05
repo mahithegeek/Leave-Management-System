@@ -44,8 +44,8 @@ import static com.kofax.lexmarkhub.Constants.TOKEN_ID;
 import static com.kofax.lexmarkhub.Constants.TO_DATE;
 
 public class NewLeaveRequestActivity extends AppCompatActivity implements OnDateSetListener{
-    static final int START_DATE_PICKER_TAG = 1298;//random tag numbers
-    static final int END_DATE_PICKER_TAG = 1299;
+    private static final int START_DATE_PICKER_TAG = 1298;//random tag numbers
+    private static final int END_DATE_PICKER_TAG = 1299;
 
     private ProgressDialog mProgress;
     private TextView fromDateTxtView;
@@ -269,7 +269,6 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         Format formatter = new SimpleDateFormat("dd-MM-yyyy");
         String s = formatter.format(calendar.getTime());
-
         if (view.getTag().equals(START_DATE_PICKER_TAG)){
             mStartCalendar = calendar;
             fromDateTxtView.setText(s);

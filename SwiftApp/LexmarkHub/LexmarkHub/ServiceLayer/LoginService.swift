@@ -24,6 +24,7 @@ class LoginService: AnyObject {
     
     
     func fireService(withParams params:[String: String], completion:LoginCallback){
+        print(self.urlString)
         Alamofire.request(.POST, self.urlString, parameters: params, encoding: .JSON, headers: self.headers).responseJSON{ response in
             if let JSON = response.result.value{
                 completion(JSON as? NSDictionary,nil)

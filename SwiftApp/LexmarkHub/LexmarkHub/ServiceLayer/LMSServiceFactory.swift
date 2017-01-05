@@ -64,7 +64,7 @@ class LMSServiceFactory: BaseServiceFactory {
                 print(response.result.value)
                 if let JSON = response.result.value{
                     let leaveRquestsDict = JSON as? NSDictionary
-                    completion(leaveRquestsDict!["leaverequests"]
+                    completion(leaveRquestsDict!["leaveRequests"]
                         as? NSArray, response.result.error)
                     
                 }else{
@@ -93,8 +93,9 @@ class LMSServiceFactory: BaseServiceFactory {
             if response.response?.statusCode == successCode {
                 print(response.result.value)
                 if let JSON = response.result.value{
-                    let leaveRquestsArray = JSON as? NSArray
-                    completion(leaveRquestsArray, response.result.error)
+                    let leaveRquestsArray = JSON as? NSDictionary
+                    completion(leaveRquestsArray!["leaveHistory"]
+                        as? NSArray, response.result.error)
                     
                 }else{
                     completion(nil,response.result.error)
