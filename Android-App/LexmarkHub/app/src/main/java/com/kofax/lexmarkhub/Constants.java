@@ -10,8 +10,8 @@ import static android.R.attr.id;
  */
 
 public class Constants {
-    public static final String baseUrl = "http://172.26.32.163:9526/";
-    //public static final String baseUrl = "http://172.26.34.33:9526/";
+    public static final String baseUrl = "http://172.26.32.93:9526/";
+    //public static final String baseUrl = "http://172.26.34.65:9526/";
     public static final String availableLeaves_Endpoint = "availableLeaves";
     public static final String applyLeave_Endpoint = "leave";
     public static final String login_Endpoint = "login";
@@ -67,6 +67,7 @@ public class Constants {
     public static final String LEAVE_REQUESTS = "leaveRequests";
     public static final String SUCCESS = "success";
     public static final String REASON = "reason";
+    public static final String IS_HALFDAY = "halfDay";
 
     //Approve RequestKeys
     public static final String REQUEST_ID = "requestID";

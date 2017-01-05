@@ -13,11 +13,13 @@ class Leave: NSObject {
     var employee: Employee?
     var startDate, endDate:NSDate?
     var leaveType:String?
-    init(reason:String, employee: Employee?, startDate: NSDate?, endDate: NSDate?,leaveType:String){
+    var isHalfDay:Bool?
+    init(reason:String, employee: Employee?, startDate: NSDate?, endDate: NSDate?,isHalfDay: Bool,leaveType:String){
         self.reason = reason
         self.employee = employee
         self.startDate = startDate
         self.endDate = endDate
         self.leaveType = leaveType
+        self.isHalfDay = isHalfDay
     }
 }

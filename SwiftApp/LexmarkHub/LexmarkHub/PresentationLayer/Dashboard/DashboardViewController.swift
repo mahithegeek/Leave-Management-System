@@ -12,6 +12,7 @@ let EID_KEY:String = "emp_id"
 let AVAILABLE_LEAVES_KEY:String = "available"
 let COMPOFF_LEAVES_KEY:String = "comp-off"
 let SPECIAL_LEAVES_KEY:String = "special"
+let VACATION_LEAVES_KEY:String = "vacation"
 let CARRYFORWARD_LEAVES_KEY:String = "carry_forward"
 
 enum role: String {
@@ -77,7 +78,7 @@ class DashboardViewController: UIViewController {
                 LMSServiceFactory.sharedInstance().getAvilableLeaves(withURL: kAvailableLeavesURL, withParams: parameters, completion: { (availableLeaves, error) in
                     Loader.hide();
                     if availableLeaves != nil {
-                        let availLeaves:Int? = availableLeaves?.objectForKey(AVAILABLE_LEAVES_KEY)?.integerValue
+                        let availLeaves:Float? = availableLeaves?.objectForKey(VACATION_LEAVES_KEY)?.floatValue
                         self.availableLeavesLabel.text = "\(availLeaves!)"
                     }
                         
@@ -126,10 +127,8 @@ class DashboardViewController: UIViewController {
         }
     }
  
-
     @IBAction func logoutButtonAction(sender: AnyObject) {
         self.navigationController?.popViewControllerAnimated(true)
     }
    
-
 }

@@ -45,7 +45,7 @@ class UserRequestsViewController: UIViewController, UserRequestsCellDelegate {
                                 kFirstName:(self.employee?.name?.componentsSeparatedByString(" ").first)!,
                                 kLastName:(self.employee?.name?.componentsSeparatedByString(" ").last)!
                                 ])
-                            let leave = Leave(reason: "Vocation", employee: employee, startDate: AppUtilities().dateFromString(leaveRequest["date_from"] as! String), endDate: AppUtilities().dateFromString(leaveRequest["date_to"] as! String),leaveType: "Vocation")
+                            let leave = Leave(reason: leaveRequest["reason"] as! String, employee: employee, startDate: AppUtilities().dateFromString(leaveRequest["fromDate"] as! String), endDate: AppUtilities().dateFromString(leaveRequest["toDate"] as! String),isHalfDay:leaveRequest["halfDay"] as! Bool,leaveType: leaveRequest["leaveType"] as! String)
                             let leaveRequest = LeaveRequest(requestId: leaveRequest["id"] as! NSInteger
                                 , status: leaveRequest["status"] as! String, leave: leave)
                             
@@ -106,7 +106,7 @@ class UserRequestsViewController: UIViewController, UserRequestsCellDelegate {
         cell?.reasonLabel.text = "\(pendingRequest.leave.leaveType! )"
         cell?.statusLabel.text = pendingRequest.status
         cell?.reqId = pendingRequest.requestId
-        if pendingRequest.status == "Applied" {
+        if pendingRequest.status != "Rejected" {
             cell?.cancelWidthConstraint.constant = cancelButtonWidth
         }
         else {

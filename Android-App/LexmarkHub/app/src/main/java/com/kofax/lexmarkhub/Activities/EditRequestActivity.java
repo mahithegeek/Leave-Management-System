@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import javax.xml.transform.stream.StreamSource;
 
 import static com.kofax.lexmarkhub.Constants.FNAME;
 import static com.kofax.lexmarkhub.Constants.FROM_DATE;
+import static com.kofax.lexmarkhub.Constants.IS_HALFDAY;
 import static com.kofax.lexmarkhub.Constants.LEAVE_STATUS;
 import static com.kofax.lexmarkhub.Constants.LNAME;
 import static com.kofax.lexmarkhub.Constants.PARSING_ERROR;
@@ -44,6 +46,7 @@ public class EditRequestActivity extends AppCompatActivity {
     private TextView notesTxtView;
     private JSONObject requestObject;
     private ProgressDialog mProgress;
+    private CheckBox mHalfdayCheckBox;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,7 @@ public class EditRequestActivity extends AppCompatActivity {
         reasonTxtView = (TextView) findViewById(R.id.reason_txtView);
         nameTxtView = (TextView) findViewById(R.id.name_textView);
         notesTxtView = (TextView) findViewById(R.id.notes_textView);
+        mHalfdayCheckBox = (CheckBox)findViewById(R.id.HDL_checkbox);
         try{
             requestObject = new JSONObject(getIntent().getStringExtra(REQUEST_OBJECT_EXTRA));
             String userName = requestObject.getString(FNAME)+" "+requestObject.getString(LNAME);
@@ -66,6 +70,8 @@ public class EditRequestActivity extends AppCompatActivity {
                     + getResources().getString(R.string.leave_type_Vacation);
             reasonTxtView.setText(reason);
             notesTxtView.setText(requestObject.getString(REASON));
+            mHalfdayCheckBox.setChecked(requestObject.getInt(IS_HALFDAY)==1) ;
+
 
         }catch (JSONException e){
             e.printStackTrace();

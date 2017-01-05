@@ -49,7 +49,7 @@ import static com.kofax.lexmarkhub.ServiceHandlers.LMS_ServiceHandler.RequestTyp
  * Created by venkateshkarra on 20/10/16.
  */
 
-public class LMS_ServiceHandler {
+public class  LMS_ServiceHandler {
 
     public  enum RequestType {
         AvailableLeaves,
