@@ -35,7 +35,7 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
     let leaveTypes = ["Vacation", "Comp-off", "Bereavement", "Business Trip","Forgot Id","Loss Of Pay","Maternity","Paternity","Work From Home"]
     var pickerView = UIPickerView()
     var leaveRequest:LeaveRequest?
-    var leave=Leave(reason:"Vacation",employee:nil ,startDate:NSDate(),endDate: NSDate(),isHalfDay: false,leaveType:"Vacation")
+    var leave=Leave(reason:"Vacation",employee:nil ,startDate:NSDate(),endDate: NSDate(),isHalfDay: false,leaveType:"")
     var isFromPending:Bool = false
     var employee: Employee?
     
@@ -54,6 +54,7 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
             self.reportToLabel.text = "From: " + (leave.employee?.name)!
             self.titleLabel.text = "Pending Request"
             reasonTextView.text = leave.reason
+            self.leaveTypeLabel.text = "Reason: " + leave.leaveType!
             approveButton.hidden = false
             rejectButton.hidden = false
             startDateButton.userInteractionEnabled = false
@@ -187,6 +188,10 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         if daysBetweenDates(leave.startDate!, endDate: leave.endDate!) > kMaxLeaves - 1 {
             return(false, "You can only apply \(kMaxLeaves) days continuously")
         }
+        
+        else if (self.leave.leaveType!.characters.count <= 0) {
+            return(false, "Please select reason for leave.")
+        }
         print(numberOfWeekendsBeetweenDates(startDate:leave.startDate!, endDate: leave.endDate!))
 
         return(true, "Success")
@@ -249,18 +254,18 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
             
             if idToken?.isEmpty == false {
                 
-                var ishalfDay = self.halfDayLeaveButton.selected
+                let ishalfDay = self.halfDayLeaveButton.selected
                 let parameters = [
                     "tokenID": idToken!,
                     "leave": [
                         "fromDate": AppUtilities().dateStringFromDate(self.leave.startDate!),
                         "toDate" : AppUtilities().dateStringFromDate(self.leave.endDate!),
                         "isHalfDay" : ishalfDay,
-                        "type" : self.leave.leaveType!.lowercaseString,
-                        "reason" : self.reasonTextView.text
+                        "leaveType" : self.leave.leaveType!.lowercaseString,
+                        "reason" : (self.reasonTextView.text as NSString).stringByReplacingOccurrencesOfString("Notes :", withString: "")
                         ]
                 ]
-                
+                //Notes :
                 print(parameters)
                 LMSServiceFactory.sharedInstance().applyLeave(withURL: kApplyLeaveURL, withParams: parameters as! [String : AnyObject], completion: { (responseDict, error) in
                     
