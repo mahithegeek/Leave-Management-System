@@ -36,14 +36,14 @@ let kClientID:String = "890980614355-irpa0ap8n2phdq3fbop1382n2dufdep7.apps.googl
  */
 let kRedirectURI:String = "com.googleusercontent.apps.890980614355-irpa0ap8n2phdq3fbop1382n2dufdep7:/oauthredirect"
 
-let kLoginURL:String = "http://172.26.32.93:9526/login"
-let kAvailableLeavesURL:String = "http://172.26.32.93:9526/availableLeaves"
-let kgetUsersURL:String = "http://172.26.32.93:9526/users"
-let kApplyLeaveURL:String = "http://172.26.32.93:9526/leave"
-let kApproveLeaveURL:String = "http://172.26.32.93:9526/approveLeave"
-let kLeaveRequestsURL:String = "http://172.26.32.93:9526/leaveRequests"
-let kUserRequestsURL:String = "http://172.26.32.93:9526/leaveHistory"
-let kCancelLeaveURL:String = "http://172.26.32.93:9526/cancelLeave"
+let kLoginURL:String = "http://172.26.34.65:9526/login"
+let kAvailableLeavesURL:String = "http://172.26.34.65:9526/availableLeaves"
+let kgetUsersURL:String = "http://172.26.34.65:9526/users"
+let kApplyLeaveURL:String = "http://172.26.34.65:9526/leave"
+let kApproveLeaveURL:String = "http://172.26.34.65:9526/approveLeave"
+let kLeaveRequestsURL:String = "http://172.26.34.65:9526/leaveRequests"
+let kUserRequestsURL:String = "http://172.26.34.65:9526/leaveHistory"
+let kCancelLeaveURL:String = "http://172.26.34.65:9526/cancelLeave"
 
 let kAppTitle = "Lexmark Hub"
 
