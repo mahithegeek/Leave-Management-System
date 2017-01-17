@@ -12,8 +12,8 @@ class LeaveHistoryViewController: UITableViewController {
 
     var leaveHistory: [LeaveRequest]?
 
-    @IBAction func leaveHistoryBack (segue: UIStoryboardSegue){
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func leaveHistoryBack (_ segue: UIStoryboardSegue){
+        self.navigationController?.popViewController(animated: true)
     }
 
     override func viewDidLoad() {
@@ -49,33 +49,33 @@ class LeaveHistoryViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 0
     }
 
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("leaveHistory", forIndexPath: indexPath) as? LeaveHistoryCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "leaveHistory", for: indexPath) as? LeaveHistoryCell
 
         // Configure the cell...
 
         let leaveRequest = leaveHistory![indexPath.row] as LeaveRequest
 
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM yyyy"
-        cell?.nameLabel.text = dateFormatter.stringFromDate(leaveRequest.leave.startDate!)
+        cell?.nameLabel.text = dateFormatter.string(from: leaveRequest.leave.startDate! as Date)
         cell?.reasonLabel.text = "Reason: \(leaveRequest.leave.reason)"
         cell?.statusLabel.text = leaveRequest.status
         return cell!
     }
 
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }
 

@@ -13,37 +13,32 @@ class AppUtilities: NSObject {
     let showLogs:Bool = true
 
     func setupReachability() {
-        do {
-            let reachability = try Reachability.reachabilityForInternetConnection()
-            self.reachability = reachability
-        } catch ReachabilityError.FailedToCreateWithAddress( _) {
-            Log("Unable to setup rechability")
-            return
-        } catch {}
+        let reachability = Reachability.init()
+        self.reachability = reachability
     }
 
     func isReachable() -> Bool {
         setupReachability()
-        return (self.reachability?.isReachable())!
+        return (self.reachability?.isReachable)!
     }
 
-    func Log(message:String, function:String = #function) {
+    func Log(_ message:String, function:String = #function) {
         if showLogs == true {
             print("\(function): \(message)")
         }
     }
-    func dateStringFromDate(date:NSDate) -> String {
+    func dateStringFromDate(_ date:Date) -> String {
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd" //format style. you can change according to yours
-        let dateString = dateFormatter.stringFromDate(date)
+        let dateString = dateFormatter.string(from: date)
         return dateString
     }
-    func dateFromString(dateString:String) -> NSDate {
+    func dateFromString(_ dateString:String) -> Date {
         
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd" //format style. you can change according to yours
-        let date = dateFormatter.dateFromString(dateString)
+        let date = dateFormatter.date(from: dateString)
         return date!
     }
 }

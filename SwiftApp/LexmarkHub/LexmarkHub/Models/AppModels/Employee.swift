@@ -18,9 +18,9 @@ let kEmail:String = "email"
 let kSupervisor = "supervisor"
 
 class Employee: NSObject {
-    private (set)var id: NSNumber?
-    private (set)var name, role,  email: String?
-    private (set)var supervisorName, supervisorEmail :String?
+    fileprivate (set)var id: String?
+    fileprivate (set)var name, role,  email: String?
+    fileprivate (set)var supervisorName, supervisorEmail :String?
     
     
     init(withDictionary dict:NSDictionary){
@@ -30,7 +30,7 @@ class Employee: NSObject {
             self.name = firstName as? String
         }
         if let empId = dict[kEmployeeID] {
-            self.id = NSNumber.init(integer: (empId.integerValue)!)
+            self.id = empId as? String
         }
         if let lastName = dict[kLastName] {
             self.name = (self.name != nil) ? ("\(self.name!) " + (lastName as! String)): (lastName as! String)

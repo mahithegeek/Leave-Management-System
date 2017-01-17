@@ -23,7 +23,7 @@ public struct Loader {
         public static var FailColor = UIColor(red: 255/255, green: 75/255, blue: 56/255, alpha: 1.0)
         static var WidthDivision: CGFloat {
             get {
-                if UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad {
+                if UIDevice.current.userInterfaceIdiom == UIUserInterfaceIdiom.pad {
                     return  3.5
                 } else {
                     return 1.6
@@ -32,11 +32,11 @@ public struct Loader {
         }
     }
 
-    private static var instance: LoadingActivity?
-    private static var hidingInProgress = false
+    fileprivate static var instance: LoadingActivity?
+    fileprivate static var hidingInProgress = false
 
     /// Disable UI stops users touch actions until EZLoadingActivity is hidden. Return success status
-    public static func show(text: String, disableUI: Bool) -> Bool {
+    public static func show(_ text: String, disableUI: Bool) -> Bool {
         guard instance == nil else {
             print("KMCLoadingActivity: You still have an active activity, please stop that before creating a new one")
             return false
@@ -51,7 +51,7 @@ public struct Loader {
         return true
     }
 
-    public static func showWithDelay(text: String, disableUI: Bool, seconds: Double) -> Bool {
+    public static func showWithDelay(_ text: String, disableUI: Bool, seconds: Double) -> Bool {
         let showValue = show(text, disableUI: disableUI)
         delay(seconds) { () -> () in
             hide()
@@ -61,8 +61,8 @@ public struct Loader {
 
     /// Returns success status
     public static func hide() {
-        if !NSThread.currentThread().isMainThread {
-            dispatch_async(dispatch_get_main_queue()) {
+        if !Thread.current.isMainThread {
+            DispatchQueue.main.async {
                 instance?.hideLoadingActivity()
             }
         } else {
@@ -70,13 +70,13 @@ public struct Loader {
         }
     }
 
-    private static func delay(seconds: Double, after: ()->()) {
-        let queue = dispatch_get_main_queue()
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(seconds * Double(NSEC_PER_SEC)))
-        dispatch_after(time, queue, after)
+    fileprivate static func delay(_ seconds: Double, after: @escaping ()->()) {
+        let queue = DispatchQueue.main
+        let time = DispatchTime.now() + Double(Int64(seconds * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        queue.asyncAfter(deadline: time, execute: after)
     }
 
-    private class LoadingActivity: UIView {
+    fileprivate class LoadingActivity: UIView {
         var textLabel: UILabel!
         var activityView: UIActivityIndicatorView!
         var icon: UILabel!
@@ -93,7 +93,7 @@ public struct Loader {
 
             let yPosition = frame.height/2 - 20
 
-            activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+            activityView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
             activityView.frame = CGRect(x: 10, y: yPosition, width: 40, height: 40)
             activityView.color = Settings.ActivityColor
             activityView.startAnimating()
@@ -103,7 +103,7 @@ public struct Loader {
             textLabel.font = UIFont(name: Settings.FontName, size: 30)
             textLabel.adjustsFontSizeToFitWidth = true
             textLabel.minimumScaleFactor = 0.25
-            textLabel.textAlignment = NSTextAlignment.Center
+            textLabel.textAlignment = NSTextAlignment.center
             textLabel.text = text
 
             addSubview(activityView)
@@ -112,34 +112,34 @@ public struct Loader {
             topMostController!.view.addSubview(self)
 
             if disableUI {
-                UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+                UIApplication.shared.beginIgnoringInteractionEvents()
                 UIDisabled = true
             }
         }
 
         func createShadow() {
-            layer.shadowPath = createShadowPath().CGPath
+            layer.shadowPath = createShadowPath().cgPath
             layer.masksToBounds = false
-            layer.shadowColor = UIColor.blackColor().CGColor
-            layer.shadowOffset = CGSizeMake(0, 0)
+            layer.shadowColor = UIColor.black.cgColor
+            layer.shadowOffset = CGSize(width: 0, height: 0)
             layer.shadowRadius = 5
             layer.shadowOpacity = 0.5
         }
 
         func createShadowPath() -> UIBezierPath {
             let myBezier = UIBezierPath()
-            myBezier.moveToPoint(CGPoint(x: -3, y: -3))
-            myBezier.addLineToPoint(CGPoint(x: frame.width + 3, y: -3))
-            myBezier.addLineToPoint(CGPoint(x: frame.width + 3, y: frame.height + 3))
-            myBezier.addLineToPoint(CGPoint(x: -3, y: frame.height + 3))
-            myBezier.closePath()
+            myBezier.move(to: CGPoint(x: -3, y: -3))
+            myBezier.addLine(to: CGPoint(x: frame.width + 3, y: -3))
+            myBezier.addLine(to: CGPoint(x: frame.width + 3, y: frame.height + 3))
+            myBezier.addLine(to: CGPoint(x: -3, y: frame.height + 3))
+            myBezier.close()
             return myBezier
         }
 
         func hideLoadingActivity() {
             hidingInProgress = true
             if UIDisabled {
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                UIApplication.shared.endIgnoringInteractionEvents()
             }
             hidingInProgress = false
             instance = nil
@@ -150,50 +150,50 @@ public struct Loader {
 
 private extension UIView {
     /// Extension: insert view.fadeTransition right before changing content
-    func fadeTransition(duration: CFTimeInterval) {
+    func fadeTransition(_ duration: CFTimeInterval) {
         let animation: CATransition = CATransition()
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         animation.type = kCATransitionFade
         animation.duration = duration
-        self.layer.addAnimation(animation, forKey: kCATransitionFade)
+        self.layer.add(animation, forKey: kCATransitionFade)
     }
 }
 
 private extension NSObject {
-    func callSelectorAsync(selector: Selector, delay: NSTimeInterval) {
-        let timer = NSTimer.scheduledTimerWithTimeInterval(delay, target: self, selector: selector, userInfo: nil, repeats: false)
-        NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+    func callSelectorAsync(_ selector: Selector, delay: TimeInterval) {
+        let timer = Timer.scheduledTimer(timeInterval: delay, target: self, selector: selector, userInfo: nil, repeats: false)
+        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
     }
 }
 
 private extension UIScreen {
     class var Orientation: UIInterfaceOrientation {
         get {
-            return UIApplication.sharedApplication().statusBarOrientation
+            return UIApplication.shared.statusBarOrientation
         }
     }
     class var ScreenWidth: CGFloat {
         get {
             if UIInterfaceOrientationIsPortrait(Orientation) {
-                return UIScreen.mainScreen().bounds.size.width
+                return UIScreen.main.bounds.size.width
             } else {
-                return UIScreen.mainScreen().bounds.size.height
+                return UIScreen.main.bounds.size.height
             }
         }
     }
     class var ScreenHeight: CGFloat {
         get {
             if UIInterfaceOrientationIsPortrait(Orientation) {
-                return UIScreen.mainScreen().bounds.size.height
+                return UIScreen.main.bounds.size.height
             } else {
-                return UIScreen.mainScreen().bounds.size.width
+                return UIScreen.main.bounds.size.width
             }
         }
     }
 }
 
 private var topMostController: UIViewController? {
-    var presentedVC = UIApplication.sharedApplication().keyWindow?.rootViewController
+    var presentedVC = UIApplication.shared.keyWindow?.rootViewController
     while let pVC = presentedVC?.presentedViewController {
         presentedVC = pVC
     }

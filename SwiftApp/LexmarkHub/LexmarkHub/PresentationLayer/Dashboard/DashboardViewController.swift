@@ -36,13 +36,13 @@ class DashboardViewController: UIViewController {
         super.viewDidLoad()
         
         if employee?.role != role.manager.rawValue {
-            self.pendingRequestsButton.hidden = true
-            pendingRequestsLabel.hidden = true
+            self.pendingRequestsButton.isHidden = true
+            pendingRequestsLabel.isHidden = true
         }
         
         self.nameLbl.text = employee?.name
         self.emailIdLbl.text = employee?.email
-        self.empIdLbl.text = employee?.id?.stringValue
+        self.empIdLbl.text = employee?.id
         self.fetchProfilepic()
         self.fetchAvailableLeaves()
     }
@@ -50,14 +50,14 @@ class DashboardViewController: UIViewController {
     func fetchProfilepic(){
         appDelegate.oAuthManager?.requestUserinfo(withCompletion: { (response, error) in
             if(error != nil){
-                print(error?.description)
+                print(error?.description ?? "")
             }
             else{
-                print(response)
+//                print(response)
 
                 let imageUrl = response!["picture"] as! String
-                self.profileImgView.image = NSURL(string: imageUrl)
-                        .flatMap { NSData(contentsOfURL: $0) }
+                self.profileImgView.image = URL(string: imageUrl)
+                        .flatMap { (try? Data(contentsOf: $0)) }
                         .flatMap { UIImage(data: $0) }
             }
         })
@@ -75,16 +75,16 @@ class DashboardViewController: UIViewController {
                 let parameters = [
                     "tokenID": idToken!
                 ]
-                LMSServiceFactory.sharedInstance().getAvilableLeaves(withURL: kAvailableLeavesURL, withParams: parameters, completion: { (availableLeaves, error) in
+                LMSServiceFactory.sharedInstance().getAvilableLeaves(withURL: kAvailableLeavesURL, withParams: parameters as [String : AnyObject], completion: { (availableLeaves, error) in
                     Loader.hide();
                     if availableLeaves != nil {
-                        let availLeaves:Float? = availableLeaves?.objectForKey(VACATION_LEAVES_KEY)?.floatValue
+                        let availLeaves:String? = (availableLeaves?.object(forKey: VACATION_LEAVES_KEY) as AnyObject).stringValue
                         self.availableLeavesLabel.text = "\(availLeaves!)"
                     }
                         
                     else {
                         if error != nil {
-                            Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                            Popups.sharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                         }
                     }
                     
@@ -93,7 +93,7 @@ class DashboardViewController: UIViewController {
             else {
                 Loader.hide();
                 if error != nil {
-                    Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                    Popups.sharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                 }
             }
         })
@@ -110,16 +110,16 @@ class DashboardViewController: UIViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == kUserLeaveRequestsSegue {
-            if let userRequestsViewController = segue.destinationViewController as? UserRequestsViewController {
+            if let userRequestsViewController = segue.destination as? UserRequestsViewController {
                 if let employee = self.employee {
                     userRequestsViewController.employee = employee
                 }
             }
         }
         else if segue.identifier == kUserApplyLeaveSegue {
-            if let userRequestsViewController = segue.destinationViewController as? ApplyLeaveViewController {
+            if let userRequestsViewController = segue.destination as? ApplyLeaveViewController {
                 if let employee = self.employee {
                     userRequestsViewController.employee = employee
                 }
@@ -127,8 +127,8 @@ class DashboardViewController: UIViewController {
         }
     }
  
-    @IBAction func logoutButtonAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func logoutButtonAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
    
 }

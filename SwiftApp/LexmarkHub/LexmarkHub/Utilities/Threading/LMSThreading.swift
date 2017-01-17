@@ -10,15 +10,15 @@ import Foundation
 
 class LMSThreading {
     
-    class func dispatchOnMain(withBlock main: (Void) -> Void) {
-        dispatch_async(dispatch_get_main_queue(), {
+    class func dispatchOnMain(withBlock main: @escaping (Void) -> Void) {
+        DispatchQueue.main.async(execute: {
             main()
         })
     }
     
-    class func disptachOnBackground(withBlock background: (Void) -> Void) {
+    class func disptachOnBackground(withBlock background: @escaping (Void) -> Void) {
         
-       dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+       DispatchQueue.global(priority: DispatchQueue.GlobalQueuePriority.default).async {
         autoreleasepool {
             
             background()

@@ -32,7 +32,7 @@ class UserRequestsViewController: UIViewController, UserRequestsCellDelegate {
                 let parameters = [
                     "tokenID": idToken!
                 ]
-                LMSServiceFactory.sharedInstance().getUserLeaveRequests(withURL: kUserRequestsURL, withParams: parameters, completion: { (leaveRequests, error) in
+                LMSServiceFactory.sharedInstance().getUserLeaveRequests(withURL: kUserRequestsURL, withParams: parameters as [String : AnyObject], completion: { (leaveRequests, error) in
                     Loader.hide();
                     self.pendingRequests.removeAll()
                     
@@ -41,13 +41,19 @@ class UserRequestsViewController: UIViewController, UserRequestsCellDelegate {
                         
                         for leaveRequest in leaveRequests! {
                             
+                            let leaveRequestDict = leaveRequest as! NSDictionary
+                            
                             let employee=Employee.init(withDictionary: [
-                                kFirstName:(self.employee?.name?.componentsSeparatedByString(" ").first)!,
-                                kLastName:(self.employee?.name?.componentsSeparatedByString(" ").last)!
+                                kFirstName:(self.employee?.name?.components(separatedBy: " ").first)!,
+                                kLastName:(self.employee?.name?.components(separatedBy: " ").last)!
                                 ])
-                            let leave = Leave(reason: leaveRequest["reason"] as! String, employee: employee, startDate: AppUtilities().dateFromString(leaveRequest["fromDate"] as! String), endDate: AppUtilities().dateFromString(leaveRequest["toDate"] as! String),isHalfDay:leaveRequest["halfDay"] as! Bool,leaveType: leaveRequest["leaveType"] as! String)
-                            let leaveRequest = LeaveRequest(requestId: leaveRequest["id"] as! NSInteger
-                                , status: leaveRequest["status"] as! String, leave: leave)
+                            let leave = Leave(reason: leaveRequestDict["reason"] as! String, employee: employee, startDate: AppUtilities().dateFromString(leaveRequestDict["fromDate"] as! String), endDate: AppUtilities().dateFromString(leaveRequestDict["toDate"] as! String),isHalfDay:leaveRequestDict["halfDay"] as! Bool,leaveType: leaveRequestDict["leaveType"] as! String)
+                          
+                            
+                            
+                            let leaveRequest = LeaveRequest(requestId: leaveRequestDict["id"] as! NSNumber
+                                , status: leaveRequestDict["status"] as! String, leave: leave)
+
                             
                             let status = leaveRequest.status
                             if(status != "Cancelled"){
@@ -64,7 +70,7 @@ class UserRequestsViewController: UIViewController, UserRequestsCellDelegate {
                     }
                     else {
                         if error != nil {
-                            Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                            Popups.sharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                         }
                     }
                 })
@@ -72,7 +78,7 @@ class UserRequestsViewController: UIViewController, UserRequestsCellDelegate {
             else {
                 Loader.hide();
                 if error != nil {
-                    Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                    Popups.sharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                 }
             }
         })
@@ -85,20 +91,20 @@ class UserRequestsViewController: UIViewController, UserRequestsCellDelegate {
     
     // MARK: - Table view data source
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return pendingRequests.count
     }
     
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("UserRequests", forIndexPath: indexPath) as? UserRequestsCell
-        cell?.selectionStyle = .None
+    func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "UserRequests", for: indexPath) as? UserRequestsCell
+        cell?.selectionStyle = .none
         let pendingRequest = pendingRequests[indexPath.row] as LeaveRequest
         cell?.delegate = self
         cell?.nameLabel.text = pendingRequest.leave.employee!.name!
@@ -115,24 +121,24 @@ class UserRequestsViewController: UIViewController, UserRequestsCellDelegate {
         return cell!
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return 120
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
     
         
     }
     
-    @IBAction func backButtonAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
-    func didSelectUserRequestWithId(requestId: NSNumber) {
+    func didSelectUserRequestWithId(_ requestId: NSNumber) {
         cancelLeaveWithId(requestId)
     }
     
-    func cancelLeaveWithId(reqId: NSNumber){
+    func cancelLeaveWithId(_ reqId: NSNumber){
         Loader.show("Loading", disableUI: true)
         appDelegate.oAuthManager?.requestAccessToken(withCompletion: { (idToken, error) in
             
@@ -140,8 +146,8 @@ class UserRequestsViewController: UIViewController, UserRequestsCellDelegate {
                 let parameters = [
                     "tokenID": idToken!,
                     "requestID":reqId
-                ]
-                LMSServiceFactory.sharedInstance().cancelLeave(withURL: kCancelLeaveURL, withParams: parameters, completion: { (response, error) in
+                ] as [String : Any]
+                LMSServiceFactory.sharedInstance().cancelLeave(withURL: kCancelLeaveURL, withParams: parameters as [String : AnyObject], completion: { (response, error) in
                     Loader.hide();
                     if response != nil {
                         self.refreshUserLeaveRequests()
@@ -149,7 +155,7 @@ class UserRequestsViewController: UIViewController, UserRequestsCellDelegate {
                     }
                     else {
                         if error != nil {
-                            Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                            Popups.sharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                         }
                     }
                 })
@@ -157,7 +163,7 @@ class UserRequestsViewController: UIViewController, UserRequestsCellDelegate {
             else {
                 Loader.hide();
                 if error != nil {
-                    Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                    Popups.sharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                 }
             }
         })

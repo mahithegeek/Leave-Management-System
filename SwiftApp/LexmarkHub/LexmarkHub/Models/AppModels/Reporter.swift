@@ -14,8 +14,8 @@ let EMAIL_KEY:String = "email"
 let AVAILABLE_KEY:String = "available"
 
 class Reporter: NSObject {
-    private (set)var firstName, email: String
-    private (set)var availableLeaves, empId: NSInteger
+    fileprivate (set)var firstName, email: String
+    fileprivate (set)var availableLeaves, empId: NSInteger
 
     init(withDictionary dict:NSDictionary){
        print(dict)

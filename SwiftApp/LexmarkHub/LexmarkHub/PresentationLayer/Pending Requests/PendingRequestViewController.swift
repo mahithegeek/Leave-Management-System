@@ -13,8 +13,8 @@ class PendingRequestViewController: UIViewController {
     var pendingRequests = [LeaveRequest]()
 
     @IBOutlet var pendingRequestsTableView: UITableView!
-    @IBAction func pendingRequestBack (segue: UIStoryboardSegue){
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func pendingRequestBack (_ segue: UIStoryboardSegue){
+        self.navigationController?.popViewController(animated: true)
     }
 
     override func viewDidLoad() {
@@ -32,7 +32,7 @@ class PendingRequestViewController: UIViewController {
                 let parameters = [
                     "tokenID": idToken!
                 ]
-                LMSServiceFactory.sharedInstance().getLeaveRequests(withURL: kLeaveRequestsURL, withParams: parameters, completion: { (leaveRequests, error) in
+                LMSServiceFactory.sharedInstance().getLeaveRequests(withURL: kLeaveRequestsURL, withParams: parameters as [String : AnyObject], completion: { (leaveRequests, error) in
                     Loader.hide();
                     self.pendingRequests.removeAll()
                     
@@ -40,19 +40,22 @@ class PendingRequestViewController: UIViewController {
                         
                         for leaveRequest in leaveRequests! {
                             print(leaveRequest)
-                            let firstName = leaveRequest["firstName"] as! String
-                            let lastName = leaveRequest["lastName"] as! String
+                            let leaveRequestDict = leaveRequest as! NSDictionary
+                            
+                            
+                            let firstName = leaveRequestDict["firstName"] as! String
+                            let lastName = leaveRequestDict["lastName"] as! String
 
                             let employee=Employee.init(withDictionary: [
                                 kFirstName:firstName,
                                 kLastName:lastName
                                 ])
                             
-                            let reason = leaveRequest["reason"] as! String
-                            let leave = Leave(reason: reason, employee: employee, startDate: AppUtilities().dateFromString(leaveRequest["fromDate"] as! String), endDate: AppUtilities().dateFromString(leaveRequest["toDate"] as! String), isHalfDay:leaveRequest["halfDay"] as! Bool,leaveType: leaveRequest["leaveType"] as! String)
+                            let reason = leaveRequestDict["reason"] as! String
+                            let leave = Leave(reason: reason, employee: employee, startDate: AppUtilities().dateFromString(leaveRequestDict["fromDate"] as! String), endDate: AppUtilities().dateFromString(leaveRequestDict["toDate"] as! String), isHalfDay:leaveRequestDict["halfDay"] as! Bool,leaveType: leaveRequestDict["leaveType"] as! String)
                            
-                            let leaveRequest = LeaveRequest(requestId: leaveRequest["id"] as! NSInteger
-                                , status: leaveRequest["status"] as! String, leave: leave)
+                            let leaveRequest = LeaveRequest(requestId: leaveRequestDict["id"] as! NSNumber
+                                , status: leaveRequestDict["status"] as! String, leave: leave)
                             let leavestatus = leaveRequest.status
                             if (leavestatus == "Applied"){
                                 self.pendingRequests.append(leaveRequest)
@@ -68,7 +71,7 @@ class PendingRequestViewController: UIViewController {
                     }
                     else {
                         if error != nil {
-                            Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                            Popups.sharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                         }
                     }
                 })
@@ -76,7 +79,7 @@ class PendingRequestViewController: UIViewController {
             else {
                 Loader.hide();
                 if error != nil {
-                    Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                    Popups.sharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                 }
             }
         })
@@ -90,20 +93,20 @@ class PendingRequestViewController: UIViewController {
 
     // MARK: - Table view data source
 
-     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+     func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return pendingRequests.count
     }
 
 
-     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("pendingRequests", forIndexPath: indexPath) as? PendingRequestsCell
-        cell?.selectionStyle = .None
+     func tableView(_ tableView: UITableView, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "pendingRequests", for: indexPath) as? PendingRequestsCell
+        cell?.selectionStyle = .none
         let pendingRequest = pendingRequests[indexPath.row] as LeaveRequest
         cell?.nameLabel.text = pendingRequest.leave.employee!.name!
         cell?.leaveDatesLabel.text = AppUtilities().dateStringFromDate(pendingRequest.leave.startDate!) + " to " + AppUtilities().dateStringFromDate(pendingRequest.leave.endDate!)
@@ -112,14 +115,14 @@ class PendingRequestViewController: UIViewController {
         return cell!
     }
 
-     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+     func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
         return 120
     }
    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAtIndexPath indexPath: IndexPath) {
        
         let pendingRequest = pendingRequests[indexPath.row] as LeaveRequest
-        let viewController = self.storyboard?.instantiateViewControllerWithIdentifier("ApplyLeaveViewControllerIdentifier") as? ApplyLeaveViewController
+        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ApplyLeaveViewControllerIdentifier") as? ApplyLeaveViewController
         viewController?.leaveRequest = pendingRequest
         viewController?.leave = Leave(reason:pendingRequest.leave.reason! ,employee:pendingRequest.leave.employee ,startDate:pendingRequest.leave.startDate,endDate: pendingRequest.leave.endDate,isHalfDay:pendingRequest.leave.isHalfDay!,leaveType:pendingRequest.leave.leaveType!)
         viewController?.isFromPending = true
@@ -127,8 +130,8 @@ class PendingRequestViewController: UIViewController {
 
     }
 
-    @IBAction func backButtonAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
 }

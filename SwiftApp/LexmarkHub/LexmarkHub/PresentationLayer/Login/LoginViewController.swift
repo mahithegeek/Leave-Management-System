@@ -32,13 +32,13 @@ class LoginViewController: UIViewController {
     }
     */
 
-    @IBAction func signInWithGoogle(sender: UIButton){
-        let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    @IBAction func signInWithGoogle(_ sender: UIButton){
+        let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
 
-       appDelegate.oAuthManager  = OAuthManager.init(withIssuer: NSURL(string: kIssuer)!, clientID: kClientID, redirecURI: NSURL(string: kRedirectURI)!, viewController: self)
+       appDelegate.oAuthManager  = OAuthManager.init(withIssuer: URL(string: kIssuer)!, clientID: kClientID, redirecURI: URL(string: kRedirectURI)!, viewController: self)
         appDelegate.oAuthManager!.authWithAutoCodeExchange { (token, error) in
             if((token == nil)){
-                Popups.SharedInstance.ShowPopup(kAppTitle, message: "Problem occured while authenticating. Please try again.")
+                Popups.sharedInstance.ShowPopup(kAppTitle, message: "Problem occured while authenticating. Please try again.")
                 return
             }
             
@@ -52,17 +52,17 @@ class LoginViewController: UIViewController {
                 Loader.hide()
                 if(dictionary != nil){
                     self.employee = Employee.init(withDictionary: dictionary!)
-                    self.performSegueWithIdentifier(kDashboardSegue, sender: sender)
+                    self.performSegue(withIdentifier: kDashboardSegue, sender: sender)
                 } else {
-                    Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                    Popups.sharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                 }
             })
         }
     }
 
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == kDashboardSegue {
-            if let dashboardViewController = segue.destinationViewController as? DashboardViewController {
+            if let dashboardViewController = segue.destination as? DashboardViewController {
                 if let employee = self.employee {
                     dashboardViewController.employee = employee
                 }
@@ -70,7 +70,7 @@ class LoginViewController: UIViewController {
         }
     }
 
-    @IBAction func logoutButtonAction(segue: UIStoryboardSegue){
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func logoutButtonAction(_ segue: UIStoryboardSegue){
+        self.navigationController?.popViewController(animated: true)
     }
 }

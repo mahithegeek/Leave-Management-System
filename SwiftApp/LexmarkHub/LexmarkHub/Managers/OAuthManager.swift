@@ -15,23 +15,23 @@ import AppAuth
  */
 let kAppAuthExampleAuthStateKey:String = "authState"
 
-typealias OIDAuthCallback = (idToken:String?,NSError?) -> Void
-typealias OIDDataCallback = (response:AnyObject?,NSError?) -> Void
+typealias OIDAuthCallback = (_ idToken:String?,NSError?) -> Void
+typealias OIDDataCallback = (_ response:AnyObject?,NSError?) -> Void
 
 class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDelegate {
     
-    private var issuer: NSURL?
-    private var clientID: String?
-    private var redirectURI: NSURL?
-    private var viewController:UIViewController?
-    private var authorizationErrorCallback:OIDAuthCallback?
-    private var authState:OIDAuthState?
-    private (set) var idToken:String?
+    fileprivate var issuer: URL?
+    fileprivate var clientID: String?
+    fileprivate var redirectURI: URL?
+    fileprivate var viewController:UIViewController?
+    fileprivate var authorizationErrorCallback:OIDAuthCallback?
+    fileprivate var authState:OIDAuthState?
+    fileprivate (set) var idToken:String?
     
-    private override init() {
+    fileprivate override init() {
     }
     
-    required init(withIssuer issuer:NSURL, clientID:String, redirecURI:NSURL, viewController:UIViewController){
+    required init(withIssuer issuer:URL, clientID:String, redirecURI:URL, viewController:UIViewController){
         self.issuer = issuer
         self.clientID = clientID
         self.redirectURI = redirecURI
@@ -40,7 +40,7 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
         self.loadState()
     }
     
-    private func setAuthorizationState(withState authState:OIDAuthState?){
+    fileprivate func setAuthorizationState(withState authState:OIDAuthState?){
         if (self.authState == authState) {
             return
         }
@@ -52,22 +52,22 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
     /*! @fn saveState
      @brief Saves the @c OIDAuthState to @c NSUSerDefaults.
      */
-    private func saveState(){
+    fileprivate func saveState(){
         if self.authState != nil{
-            let archivedAuthState = NSKeyedArchiver.archivedDataWithRootObject(self.authState!)
-            NSUserDefaults.standardUserDefaults().setObject(archivedAuthState, forKey: kAppAuthExampleAuthStateKey)
-            NSUserDefaults.standardUserDefaults().synchronize()
+            let archivedAuthState = NSKeyedArchiver.archivedData(withRootObject: self.authState!)
+            UserDefaults.standard.set(archivedAuthState, forKey: kAppAuthExampleAuthStateKey)
+            UserDefaults.standard.synchronize()
         }
     }
     
     /*! @fn loadState
      @brief Loads the @c OIDAuthState from @c NSUSerDefaults.
      */
-    private func loadState() {
+    fileprivate func loadState() {
         // loads OIDAuthState from NSUSerDefaults
-        let archivedAuthState = NSUserDefaults.standardUserDefaults().objectForKey(kAppAuthExampleAuthStateKey)
+        let archivedAuthState = UserDefaults.standard.object(forKey: kAppAuthExampleAuthStateKey)
         if archivedAuthState != nil{
-            let authState:OIDAuthState? = NSKeyedUnarchiver .unarchiveObjectWithData(archivedAuthState! as! NSData) as? OIDAuthState
+            let authState:OIDAuthState? = NSKeyedUnarchiver .unarchiveObject(with: archivedAuthState! as! Data) as? OIDAuthState
             if authState != nil{
                 self.setAuthorizationState(withState: authState)
             }
@@ -76,61 +76,61 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
     
     // Callbacks for OIDAuthStateChangeDelegate, OIDAuthStateErrorDelegate
     
-    func didChangeState(state: OIDAuthState) {
+    func didChange(_ state: OIDAuthState) {
         self.saveState()
     }
     
-    func authState(state: OIDAuthState, didEncounterAuthorizationError error: NSError) {
-        self.authorizationErrorCallback!(idToken:nil,error)
+    func authState(_ state: OIDAuthState, didEncounterAuthorizationError error: Error) {
+        self.authorizationErrorCallback!(nil,error as NSError?)
     }
     
-    func discoveryService(withCompletion completion:OIDDiscoveryCallback) {
-        OIDAuthorizationService .discoverServiceConfigurationForIssuer(issuer!) { (oidServiceConfiguration, error) in
+    func discoveryService(withCompletion completion:@escaping OIDDiscoveryCallback) {
+        OIDAuthorizationService .discoverConfiguration(forIssuer: issuer!) { (oidServiceConfiguration, error) in
             completion(oidServiceConfiguration,error)
         }
     }
     
-    func authWithAutoCodeExchange(withCompletion completion:OIDAuthCallback){
+    func authWithAutoCodeExchange(withCompletion completion:@escaping OIDAuthCallback){
         self.authorizationErrorCallback = completion
         self.discoveryService { (serviceConfig, error) in
             guard serviceConfig != nil else{
                 NSLog("Error \(error)")
                 self.setAuthorizationState(withState: nil)
-                completion(idToken: nil,nil)
+                completion(nil,nil)
                 return
             }
             
             let request:OIDAuthorizationRequest = OIDAuthorizationRequest.init(configuration: serviceConfig!, clientId: self.clientID!, scopes: [OIDScopeProfile], redirectURL: self.redirectURI!, responseType: OIDResponseTypeCode, additionalParameters: nil)
-            let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+            let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
             
-            appDelegate.currentAuthorizationFlow = OIDAuthState.authStateByPresentingAuthorizationRequest(request, presentingViewController: self.viewController!, callback: { (authState, error) in
+            appDelegate.currentAuthorizationFlow = OIDAuthState.authState(byPresenting: request, presenting: self.viewController!, callback: { (authState, error) in
                 if (authState != nil){
-                    completion(idToken: authState?.lastTokenResponse!.idToken, nil)
+                    completion(authState?.lastTokenResponse!.idToken, nil)
                     self.idToken = authState?.lastTokenResponse!.idToken
                     self.setAuthorizationState(withState: authState)
                 }
                 else{
                     // Log Error
                     NSLog("Error \(error)")
-                    completion(idToken: nil,error!)
+                    completion(nil,error! as NSError?)
                     self.idToken = nil
                 }
             })
         }
     }
     
-    func requestAccessToken(withCompletion completion:OIDAuthCallback){
+    func requestAccessToken(withCompletion completion:@escaping OIDAuthCallback){
         self.authState?.withFreshTokensPerformAction({ (accessToken, idToken, error) in
-            completion(idToken: idToken,error)
+            completion(idToken,error as NSError?)
             self.idToken = accessToken
         })
     }
     
-    func requestUserinfo(withCompletion completion:OIDDataCallback) {
+    func requestUserinfo(withCompletion completion:@escaping OIDDataCallback) {
         let userInfoEndpoint = authState?.lastAuthorizationResponse.request.configuration.discoveryDocument?.userinfoEndpoint
         if userInfoEndpoint == nil{
             //Userinfo endpoint not declared in discovery document
-            completion(response: nil,nil)
+            completion(nil,nil)
             return
         }
         let currentAccessToken = authState?.lastTokenResponse?.accessToken
@@ -138,7 +138,7 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
         authState?.withFreshTokensPerformAction(){
             accessToken,idToken,error in
             if error != nil{
-                completion(response: nil,error)
+                completion(nil,error as NSError?)
                 return
             }
             
@@ -151,45 +151,78 @@ class OAuthManager: NSObject, OIDAuthStateChangeDelegate, OIDAuthStateErrorDeleg
             }
             
             // creates request to the userinfo endpoint, with access token in the Authorization header
-            let request = NSMutableURLRequest(URL: userInfoEndpoint!)
+            let request = NSMutableURLRequest(url: userInfoEndpoint!)
             let authorizationHeaderValue = "Bearer \(accessToken!)"
             request.addValue(authorizationHeaderValue, forHTTPHeaderField: "Authorization")
             
-            let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-            let session = NSURLSession(configuration: configuration)
-            
-            // performs HTTP request
-            let postDataTask = session.dataTaskWithRequest(request){
-                data,response,error in
-                dispatch_async(dispatch_get_main_queue()){
-                    guard let httpResponse = response as? NSHTTPURLResponse else{
-                        completion(response: nil,error)
+//            let configuration = URLSessionConfiguration.default
+//            let session = URLSession(configuration: configuration)
+            let postDataTask = URLSession.shared.dataTask(with: request as URLRequest) {data,response,error in
+                
+                DispatchQueue.main.async{
+                    guard let httpResponse = response as? HTTPURLResponse else{
+                        completion(nil,error as NSError?)
                         return
                     }
                     do{
-                        let jsonDictionaryOrArray = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableContainers)
+                        let jsonDictionaryOrArray = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
                         if httpResponse.statusCode != 200{
                             if httpResponse.statusCode == 401{
                                 // "401 Unauthorized" generally indicates there is an issue with the authorization
                                 // grant. Puts OIDAuthState into an error state.
-                                let oauthError = OIDErrorUtilities.resourceServerAuthorizationErrorWithCode(0, errorResponse: jsonDictionaryOrArray as? [NSObject : AnyObject], underlyingError: error)
-                                self.authState?.updateWithAuthorizationError(oauthError!)
+                                let oauthError = OIDErrorUtilities.resourceServerAuthorizationError(withCode: 0, errorResponse: jsonDictionaryOrArray as? [AnyHashable: Any], underlyingError: error)
+                                self.authState?.update(withAuthorizationError: oauthError!)
                                 //log error
-                                completion(response: nil,oauthError)
+                                completion(nil,oauthError as NSError?)
                             }
                             else{
-                                completion(response: nil,nil)
+                                completion(nil,nil)
                             }
                             return
                         }
-                        completion(response: jsonDictionaryOrArray,error)
+                        completion(jsonDictionaryOrArray as AnyObject?,error as NSError?)
                     }
                     catch{
-                       completion(response: nil,nil)
+                        completion(nil,nil)
                     }
                 }
-            }
-            postDataTask.resume()
+                
+                
+            };
+            postDataTask.resume();
+
+//            // performs HTTP request
+//            let poDataTask = URLSession.shared.dataTask(with: request, completionHandler: {
+//                data,response,error in
+//                DispatchQueue.main.async{
+//                    guard let httpResponse = response as? HTTPURLResponse else{
+//                        completion(response: nil,error)
+//                        return
+//                    }
+//                    do{
+//                        let jsonDictionaryOrArray = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
+//                        if httpResponse.statusCode != 200{
+//                            if httpResponse.statusCode == 401{
+//                                // "401 Unauthorized" generally indicates there is an issue with the authorization
+//                                // grant. Puts OIDAuthState into an error state.
+//                                let oauthError = OIDErrorUtilities.resourceServerAuthorizationError(withCode: 0, errorResponse: jsonDictionaryOrArray as? [AnyHashable: Any], underlyingError: error)
+//                                self.authState?.update(withAuthorizationError: oauthError!)
+//                                //log error
+//                                completion(response: nil,oauthError)
+//                            }
+//                            else{
+//                                completion(response: nil,nil)
+//                            }
+//                            return
+//                        }
+//                        completion(response: jsonDictionaryOrArray,error)
+//                    }
+//                    catch{
+//                       completion(response: nil,nil)
+//                    }
+//                }
+//            })
+//            postDataTask.resume()
         }
     }
 

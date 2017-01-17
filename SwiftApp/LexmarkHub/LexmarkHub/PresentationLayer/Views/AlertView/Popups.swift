@@ -7,36 +7,41 @@
 
 import Foundation
 import UIKit
-
 class Popups {
-    class var SharedInstance: Popups {
-        struct Static {
-            static var onceToken: dispatch_once_t = 0
-            static var instance: Popups? = nil
-        }
-        dispatch_once(&Static.onceToken) {
-            Static.instance = Popups()
-        }
-        return Static.instance!
-    }
+//    private static var __once: () = {
+//            _ = Popups.__once
+//        }()
+//    class var SharedInstance: Popups {
+//        struct Static {
+//            static var onceToken: Int = 0
+//            static var instance: Popups? = nil
+//        }
+//        _ = Popups.__once
+//        return Static.instance!
+//    }
+    
+    static let sharedInstance : Popups = {
+        let instance = Popups()
+        return instance
+    }()
     
     var alertComletion : ((String) -> Void)!
     var alertButtons : [String]!
     
-    func ShowAlert(sender: UIViewController, title: String, message: String, buttons : [String], completion: ((buttonPressed: String) -> Void)?) {
+    func ShowAlert(_ sender: UIViewController, title: String, message: String, buttons : [String], completion: ((_ buttonPressed: String) -> Void)?) {
         
         let aboveIOS7 = floor(NSFoundationVersionNumber) > floor(NSFoundationVersionNumber_iOS_7_1)
         if(aboveIOS7) {
             
-            let alertView = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+            let alertView = UIAlertController(title: title, message: message, preferredStyle: .alert)
             for b in buttons {
                 
-                alertView.addAction(UIAlertAction(title: b, style: UIAlertActionStyle.Default, handler: {
+                alertView.addAction(UIAlertAction(title: b, style: UIAlertActionStyle.default, handler: {
                     (action : UIAlertAction) -> Void in
-                    completion!(buttonPressed: action.title!)
+                    completion!(action.title!)
                 }))
             }
-            sender.presentViewController(alertView, animated: true, completion: nil)
+            sender.present(alertView, animated: true, completion: nil)
             
         } else {
             
@@ -48,7 +53,7 @@ class Popups {
             alertView.message = message
             for b in buttons {
                 
-                alertView.addButtonWithTitle(b)
+                alertView.addButton(withTitle: b)
                 
             }
             alertView.show()
@@ -56,7 +61,7 @@ class Popups {
         
     }
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if(self.alertComletion != nil) {
             self.alertComletion!(self.alertButtons[buttonIndex])
         }
@@ -64,11 +69,11 @@ class Popups {
     
     
     
-    func ShowPopup(title : String, message : String) {
+    func ShowPopup(_ title : String, message : String) {
         let alert: UIAlertView = UIAlertView()
         alert.title = title
         alert.message = message
-        alert.addButtonWithTitle("Ok")
+        alert.addButton(withTitle: "Ok")
         alert.show()
     }
 }

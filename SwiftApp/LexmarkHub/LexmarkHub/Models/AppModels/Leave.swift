@@ -11,10 +11,10 @@ import Foundation
 class Leave: NSObject {
     var reason:String?
     var employee: Employee?
-    var startDate, endDate:NSDate?
+    var startDate, endDate:Date?
     var leaveType:String?
     var isHalfDay:Bool?
-    init(reason:String, employee: Employee?, startDate: NSDate?, endDate: NSDate?,isHalfDay: Bool,leaveType:String){
+    init(reason:String, employee: Employee?, startDate: Date?, endDate: Date?,isHalfDay: Bool,leaveType:String){
         self.reason = reason
         self.employee = employee
         self.startDate = startDate
