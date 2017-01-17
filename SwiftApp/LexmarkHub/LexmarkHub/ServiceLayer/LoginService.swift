@@ -14,8 +14,8 @@ typealias LoginCallback = (NSDictionary?,NSError?) -> Void
 
 class LoginService: AnyObject {
     
-    private var urlString:String
-    private let headers = [
+    fileprivate var urlString:String
+    fileprivate let headers = [
         "Accept": "application/json"
     ]
     required init(withURLString url:String){
@@ -23,16 +23,18 @@ class LoginService: AnyObject {
     }
     
     
-    func fireService(withParams params:[String: String], completion:LoginCallback){
+    func fireService(withParams params:[String: String], completion:@escaping LoginCallback){
         print(self.urlString)
-        Alamofire.request(.POST, self.urlString, parameters: params, encoding: .JSON, headers: self.headers).responseJSON{ response in
+        
+
+        Alamofire.request(self.urlString, method: .post, parameters: params, encoding: JSONEncoding.default, headers: self.headers).responseJSON {response in
             if let JSON = response.result.value{
                 completion(JSON as? NSDictionary,nil)
             }else{
-                completion(nil,response.result.error)
+                completion(nil,response.result.error as NSError?)
             }
-            
         }
+        
     }
 }
 

@@ -47,6 +47,6 @@ let kCancelLeaveURL:String = "http://172.26.32.93:9526/cancelLeave"
 
 let kAppTitle = "Lexmark Hub"
 
-let appDelegate:AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
 
 

@@ -13,12 +13,9 @@
 		1BE855471D6C703500BEAE45 /* LexmarkHub.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855451D6C703500BEAE45 /* LexmarkHub.xcdatamodeld */; };
 		1BE855491D6C703500BEAE45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BE855481D6C703500BEAE45 /* Assets.xcassets */; };
 		1BE8554C1D6C703500BEAE45 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1BE8554A1D6C703500BEAE45 /* LaunchScreen.storyboard */; };
-		1BE855571D6C703500BEAE45 /* LexmarkHubTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855561D6C703500BEAE45 /* LexmarkHubTests.swift */; };
-		1BE855621D6C703500BEAE45 /* LexmarkHubUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855611D6C703500BEAE45 /* LexmarkHubUITests.swift */; };
 		1BE855961D6C729A00BEAE45 /* Leave.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855841D6C729A00BEAE45 /* Leave.swift */; };
 		1BE855971D6C729A00BEAE45 /* LeaveRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855851D6C729A00BEAE45 /* LeaveRequest.swift */; };
 		1BE855981D6C729A00BEAE45 /* LHCallBacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BE855901D6C729A00BEAE45 /* LHCallBacks.swift */; };
-		2422BFCCFF441991780B1E14 /* Pods_LexmarkHubTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 374CE452A1EC4C0C6D9046AE /* Pods_LexmarkHubTests.framework */; };
 		41AFAADF1D813288009EB7CC /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AFAADE1D813288009EB7CC /* LoginService.swift */; };
 		41B0A7621D76DD9500577998 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B0A7611D76DD9500577998 /* AppConstants.swift */; };
 		41B0A7641D76DDC900577998 /* OAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B0A7631D76DDC900577998 /* OAuthManager.swift */; };
@@ -45,28 +42,10 @@
 		AEE9F0DB1D9975C800DD1752 /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE9F0DA1D9975C800DD1752 /* DatePickerDialog.swift */; };
 		AEF3A3661DAF7F92003EFC5F /* UserRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF3A3651DAF7F92003EFC5F /* UserRequestsViewController.swift */; };
 		AEF3A3681DAF7FEF003EFC5F /* UserRequestsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEF3A3671DAF7FEF003EFC5F /* UserRequestsCell.swift */; };
-		BB3B2E415F157E4533B8D6AF /* Pods_LexmarkHubUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3535017D056CD00D2D212BF9 /* Pods_LexmarkHubUITests.framework */; };
 		C6F541101D7E9A9600A48776 /* ApplyLeaveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6F5410F1D7E9A9600A48776 /* ApplyLeaveCell.swift */; };
 		C6F541141D7E9FC600A48776 /* Calender.png in Resources */ = {isa = PBXBuildFile; fileRef = C6F541131D7E9FC600A48776 /* Calender.png */; };
 		CA314C49B2F7A5210C0FD433 /* Pods_LexmarkHub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A13F641B2771F745C24E15C /* Pods_LexmarkHub.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		1BE855531D6C703500BEAE45 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1BE855331D6C703400BEAE45 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1BE8553A1D6C703400BEAE45;
-			remoteInfo = LexmarkHub;
-		};
-		1BE8555E1D6C703500BEAE45 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1BE855331D6C703400BEAE45 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1BE8553A1D6C703400BEAE45;
-			remoteInfo = LexmarkHub;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1A13F641B2771F745C24E15C /* Pods_LexmarkHub.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LexmarkHub.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,10 +57,8 @@
 		1BE855481D6C703500BEAE45 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1BE8554B1D6C703500BEAE45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1BE8554D1D6C703500BEAE45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1BE855521D6C703500BEAE45 /* LexmarkHubTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LexmarkHubTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BE855561D6C703500BEAE45 /* LexmarkHubTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LexmarkHubTests.swift; sourceTree = "<group>"; };
 		1BE855581D6C703500BEAE45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1BE8555D1D6C703500BEAE45 /* LexmarkHubUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LexmarkHubUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1BE855611D6C703500BEAE45 /* LexmarkHubUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LexmarkHubUITests.swift; sourceTree = "<group>"; };
 		1BE855631D6C703500BEAE45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1BE855841D6C729A00BEAE45 /* Leave.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Leave.swift; sourceTree = "<group>"; };
@@ -134,22 +111,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1BE8554F1D6C703500BEAE45 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2422BFCCFF441991780B1E14 /* Pods_LexmarkHubTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1BE8555A1D6C703500BEAE45 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BB3B2E415F157E4533B8D6AF /* Pods_LexmarkHubUITests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -182,8 +143,6 @@
 			isa = PBXGroup;
 			children = (
 				1BE8553B1D6C703400BEAE45 /* LexmarkHub.app */,
-				1BE855521D6C703500BEAE45 /* LexmarkHubTests.xctest */,
-				1BE8555D1D6C703500BEAE45 /* LexmarkHubUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -468,47 +427,6 @@
 			productReference = 1BE8553B1D6C703400BEAE45 /* LexmarkHub.app */;
 			productType = "com.apple.product-type.application";
 		};
-		1BE855511D6C703500BEAE45 /* LexmarkHubTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1BE855691D6C703500BEAE45 /* Build configuration list for PBXNativeTarget "LexmarkHubTests" */;
-			buildPhases = (
-				84119077CD33A0FC28CA8B44 /* [CP] Check Pods Manifest.lock */,
-				1BE8554E1D6C703500BEAE45 /* Sources */,
-				1BE8554F1D6C703500BEAE45 /* Frameworks */,
-				1BE855501D6C703500BEAE45 /* Resources */,
-				EDAB70F76043CA2FFF1FDDD9 /* [CP] Embed Pods Frameworks */,
-				A0B022DAD62B39FE333BB748 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				1BE855541D6C703500BEAE45 /* PBXTargetDependency */,
-			);
-			name = LexmarkHubTests;
-			productName = LexmarkHubTests;
-			productReference = 1BE855521D6C703500BEAE45 /* LexmarkHubTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		1BE8555C1D6C703500BEAE45 /* LexmarkHubUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1BE8556C1D6C703500BEAE45 /* Build configuration list for PBXNativeTarget "LexmarkHubUITests" */;
-			buildPhases = (
-				4C57D9ED6BFC4F2135AB64B2 /* [CP] Check Pods Manifest.lock */,
-				1BE855591D6C703500BEAE45 /* Sources */,
-				1BE8555A1D6C703500BEAE45 /* Frameworks */,
-				1BE8555B1D6C703500BEAE45 /* Resources */,
-				634820E9B7289B532D8CAD34 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				1BE8555F1D6C703500BEAE45 /* PBXTargetDependency */,
-			);
-			name = LexmarkHubUITests;
-			productName = LexmarkHubUITests;
-			productReference = 1BE8555D1D6C703500BEAE45 /* LexmarkHubUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -521,14 +439,8 @@
 				TargetAttributes = {
 					1BE8553A1D6C703400BEAE45 = {
 						CreatedOnToolsVersion = 7.3.1;
-					};
-					1BE855511D6C703500BEAE45 = {
-						CreatedOnToolsVersion = 7.3.1;
-						TestTargetID = 1BE8553A1D6C703400BEAE45;
-					};
-					1BE8555C1D6C703500BEAE45 = {
-						CreatedOnToolsVersion = 7.3.1;
-						TestTargetID = 1BE8553A1D6C703400BEAE45;
+						DevelopmentTeam = B9C7GRQCYQ;
+						LastSwiftMigration = 0820;
 					};
 				};
 			};
@@ -546,8 +458,6 @@
 			projectRoot = "";
 			targets = (
 				1BE8553A1D6C703400BEAE45 /* LexmarkHub */,
-				1BE855511D6C703500BEAE45 /* LexmarkHubTests */,
-				1BE8555C1D6C703500BEAE45 /* LexmarkHubUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -564,68 +474,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1BE855501D6C703500BEAE45 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1BE8555B1D6C703500BEAE45 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4C57D9ED6BFC4F2135AB64B2 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		634820E9B7289B532D8CAD34 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LexmarkHubUITests/Pods-LexmarkHubUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84119077CD33A0FC28CA8B44 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		91D01B6F5FB34578B7EFEEB1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -638,22 +489,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		A0B022DAD62B39FE333BB748 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LexmarkHubTests/Pods-LexmarkHubTests-resources.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A32D9692352AFD7C58265E6D /* [CP] Embed Pods Frameworks */ = {
@@ -669,21 +505,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LexmarkHub/Pods-LexmarkHub-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EDAB70F76043CA2FFF1FDDD9 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LexmarkHubTests/Pods-LexmarkHubTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EEC27DBDE4BCC84C0D26BB59 /* [CP] Copy Pods Resources */ = {
@@ -744,36 +565,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		1BE8554E1D6C703500BEAE45 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1BE855571D6C703500BEAE45 /* LexmarkHubTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1BE855591D6C703500BEAE45 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1BE855621D6C703500BEAE45 /* LexmarkHubUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		1BE855541D6C703500BEAE45 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1BE8553A1D6C703400BEAE45 /* LexmarkHub */;
-			targetProxy = 1BE855531D6C703500BEAE45 /* PBXContainerItemProxy */;
-		};
-		1BE8555F1D6C703500BEAE45 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1BE8553A1D6C703400BEAE45 /* LexmarkHub */;
-			targetProxy = 1BE8555E1D6C703500BEAE45 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		1BE855421D6C703500BEAE45 /* Main.storyboard */ = {
@@ -884,12 +676,15 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B27CAE5472134FBA60CCE0D3 /* Pods-LexmarkHub.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = B9C7GRQCYQ;
 				INFOPLIST_FILE = LexmarkHub/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kofax.LexmarkHub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -898,63 +693,16 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8A2BBF62A89793EB643AF1E9 /* Pods-LexmarkHub.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = B9C7GRQCYQ;
 				INFOPLIST_FILE = LexmarkHub/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.kofax.LexmarkHub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		1BE8556A1D6C703500BEAE45 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C8770A988FEF18E3EDD1333C /* Pods-LexmarkHubTests.debug.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = LexmarkHubTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kofax.LexmarkHubTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LexmarkHub.app/LexmarkHub";
-			};
-			name = Debug;
-		};
-		1BE8556B1D6C703500BEAE45 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 70AD746EE54A47FB18C2A87F /* Pods-LexmarkHubTests.release.xcconfig */;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				INFOPLIST_FILE = LexmarkHubTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kofax.LexmarkHubTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LexmarkHub.app/LexmarkHub";
-			};
-			name = Release;
-		};
-		1BE8556D1D6C703500BEAE45 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 586848E8E6D2FB7A7525C535 /* Pods-LexmarkHubUITests.debug.xcconfig */;
-			buildSettings = {
-				INFOPLIST_FILE = LexmarkHubUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kofax.LexmarkHubUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = LexmarkHub;
-			};
-			name = Debug;
-		};
-		1BE8556E1D6C703500BEAE45 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3CDDACF7080A8B0B729520D4 /* Pods-LexmarkHubUITests.release.xcconfig */;
-			buildSettings = {
-				INFOPLIST_FILE = LexmarkHubUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.kofax.LexmarkHubUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = LexmarkHub;
 			};
 			name = Release;
 		};
@@ -975,24 +723,6 @@
 			buildConfigurations = (
 				1BE855671D6C703500BEAE45 /* Debug */,
 				1BE855681D6C703500BEAE45 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		1BE855691D6C703500BEAE45 /* Build configuration list for PBXNativeTarget "LexmarkHubTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1BE8556A1D6C703500BEAE45 /* Debug */,
-				1BE8556B1D6C703500BEAE45 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		1BE8556C1D6C703500BEAE45 /* Build configuration list for PBXNativeTarget "LexmarkHubUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1BE8556D1D6C703500BEAE45 /* Debug */,
-				1BE8556E1D6C703500BEAE45 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

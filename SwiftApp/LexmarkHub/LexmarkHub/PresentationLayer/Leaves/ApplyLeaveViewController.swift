@@ -35,7 +35,7 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
     let leaveTypes = ["Vacation", "Comp-off", "Bereavement", "Business Trip","Forgot Id","Loss Of Pay","Maternity","Paternity","Work From Home"]
     var pickerView = UIPickerView()
     var leaveRequest:LeaveRequest?
-    var leave=Leave(reason:"Vacation",employee:nil ,startDate:NSDate(),endDate: NSDate(),isHalfDay: false,leaveType:"")
+    var leave=Leave(reason:"Vacation",employee:nil ,startDate:Date(),endDate: Date(),isHalfDay: false,leaveType:"")
     var isFromPending:Bool = false
     var employee: Employee?
     
@@ -43,27 +43,27 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         super.viewDidLoad()
         pickerView.delegate = self
         
-        startDateWidthConstraint.constant = (UIScreen.mainScreen().bounds.size.width - 2 * padding - gapBetweenDates) / 2
+        startDateWidthConstraint.constant = (UIScreen.main.bounds.size.width - 2 * padding - gapBetweenDates) / 2
         self.startDateLabel.text = AppUtilities().dateStringFromDate(leave.startDate!)
         self.endDateLabel.text = AppUtilities().dateStringFromDate(leave.endDate!)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ApplyLeaveViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ApplyLeaveViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ApplyLeaveViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ApplyLeaveViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         if isFromPending == true {
-            applyButtonWidthConstraint.constant = (UIScreen.mainScreen().bounds.size.width - 2 * padding - gapBetweenDates) / 2
+            applyButtonWidthConstraint.constant = (UIScreen.main.bounds.size.width - 2 * padding - gapBetweenDates) / 2
             self.reportToLabel.text = "From: " + (leave.employee?.name)!
             self.titleLabel.text = "Pending Request"
             reasonTextView.text = leave.reason
             self.leaveTypeLabel.text = "Reason: " + leave.leaveType!
-            approveButton.hidden = false
-            rejectButton.hidden = false
-            startDateButton.userInteractionEnabled = false
-            endDateButton.userInteractionEnabled = false
-            reasonTextView.editable = false
-            submitButton.hidden = true
-            leaveTypeButton.userInteractionEnabled = false
-            self.halfDayLeaveButton.selected = leave.isHalfDay!
-            self.halfDayLeaveButton.userInteractionEnabled = false
+            approveButton.isHidden = false
+            rejectButton.isHidden = false
+            startDateButton.isUserInteractionEnabled = false
+            endDateButton.isUserInteractionEnabled = false
+            reasonTextView.isEditable = false
+            submitButton.isHidden = true
+            leaveTypeButton.isUserInteractionEnabled = false
+            self.halfDayLeaveButton.isSelected = leave.isHalfDay!
+            self.halfDayLeaveButton.isUserInteractionEnabled = false
         }
         else if let supervisorName = self.employee!.supervisorName {
             self.reportToLabel.text = "To: " + supervisorName
@@ -87,7 +87,7 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
      }
      */
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if(text == "\n") {
             textView.resignFirstResponder()
             return false
@@ -95,12 +95,12 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         return true
     }
     
-    func keyboardWillShow(notification:NSNotification) {
+    func keyboardWillShow(_ notification:Notification) {
         
-        if reasonTextView.isFirstResponder() {
-            let userInfo:NSDictionary = notification.userInfo!
-            let keyboardFrame:NSValue = userInfo.valueForKey(UIKeyboardFrameEndUserInfoKey) as! NSValue
-            let keyboardRectangle = keyboardFrame.CGRectValue()
+        if reasonTextView.isFirstResponder {
+            let userInfo:NSDictionary = notification.userInfo! as NSDictionary
+            let keyboardFrame:NSValue = userInfo.value(forKey: UIKeyboardFrameEndUserInfoKey) as! NSValue
+            let keyboardRectangle = keyboardFrame.cgRectValue
             let keyboardHeight = keyboardRectangle.height
             var viewRect:CGRect = self.view.frame
             viewRect.origin.y =  -keyboardHeight
@@ -110,32 +110,32 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         }
     }
 
-    func keyboardWillHide(notification:NSNotification) {
+    func keyboardWillHide(_ notification:Notification) {
         var viewRect:CGRect = self.view.frame
         viewRect.origin.y = 0
         self.view.frame = viewRect
     }
 
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.inputView = pickerView
     }
     
     
-    @IBAction func backButtonAction(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonAction(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
     
-    @IBAction func leaveTypesButtonAction(sender: AnyObject) {
+    @IBAction func leaveTypesButtonAction(_ sender: AnyObject) {
         
-        let alertController = UIAlertController(title: kAppTitle, message: "Please select leave type.", preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: kAppTitle, message: "Please select leave type.", preferredStyle: .actionSheet)
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
         }
         alertController.addAction(cancelAction)
         
         for leaveType in leaveTypes {
             
-            let OKAction = UIAlertAction(title: leaveType, style: .Default) { (action) in
+            let OKAction = UIAlertAction(title: leaveType, style: .default) { (action) in
                 print(action.title!)
                 self.leaveTypeLabel.text = "Reason: " + action.title!
                 self.leave.leaveType = action.title!
@@ -145,28 +145,28 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         
         
         
-        self.presentViewController(alertController, animated: true) {
+        self.present(alertController, animated: true) {
         }
 
     }
     
-    @IBAction func startDateButtonAction(sender: AnyObject) {
+    @IBAction func startDateButtonAction(_ sender: AnyObject) {
     
         
-        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .Date, minDate:NSDate(), maxDate:nil) {
+        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .date, minDate:Date(), maxDate:nil) {
             (date) -> Void in
             self.leave.startDate = date
             self.startDateLabel.text = AppUtilities().dateStringFromDate(date)
-            if (self.halfDayLeaveButton.selected) {
+            if (self.halfDayLeaveButton.isSelected) {
                 self.leave.endDate! = self.leave.startDate!
                 self.endDateLabel.text = AppUtilities().dateStringFromDate(self.leave.endDate!)
             }
         }
     }
     
-    @IBAction func endDateButtonAction(sender: AnyObject) {
+    @IBAction func endDateButtonAction(_ sender: AnyObject) {
         
-        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .Date, minDate:NSDate(), maxDate:nil) {
+        DatePickerDialog().show("Select Date", doneButtonTitle: "Done", cancelButtonTitle: "Cancel", datePickerMode: .date, minDate:Date(), maxDate:nil) {
             (date) -> Void in
             self.leave.endDate = date
             self.endDateLabel.text = AppUtilities().dateStringFromDate(date)
@@ -179,10 +179,10 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         if leave.startDate == nil || leave.endDate == nil {
             return(false, "Please Select start/end date.")
         }
-        if compareDate(NSDate(), toDate: leave.startDate!) == .OrderedDescending || compareDate(NSDate(), toDate: leave.endDate!) == .OrderedDescending {
+        if compareDate(Date(), toDate: leave.startDate!) == .orderedDescending || compareDate(Date(), toDate: leave.endDate!) == .orderedDescending {
             return(false, "Please select valid dates")
         }
-        if compareDate(leave.startDate!, toDate: leave.endDate!) == .OrderedDescending  {
+        if compareDate(leave.startDate!, toDate: leave.endDate!) == .orderedDescending  {
             return(false, "Start date should be greater than(equal to)  end date")
         }
         if daysBetweenDates(leave.startDate!, endDate: leave.endDate!) > kMaxLeaves - 1 {
@@ -197,55 +197,55 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
         return(true, "Success")
     }
     
-    func daysBetweenDates(startDate: NSDate, endDate: NSDate) -> Int
+    func daysBetweenDates(_ startDate: Date, endDate: Date) -> Int
     {
-        let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components([.Day], fromDate: startDate, toDate: endDate, options: [])
-        return components.day
+        let calendar = Calendar.current
+        let components = (calendar as NSCalendar).components([.day], from: startDate, to: endDate, options: [])
+        return components.day!
     }
     
-    func numberOfWeekendsBeetweenDates(startDate startDate:NSDate,endDate:NSDate)->Int{
+    func numberOfWeekendsBeetweenDates(startDate:Date,endDate:Date)->Int{
         var count = 0
-        let oneDay = NSDateComponents()
+        var oneDay = DateComponents()
         oneDay.day = 1;
         // Using a Gregorian calendar.
-        let calendar = NSCalendar.currentCalendar()
+        let calendar = Calendar.current
         var currentDate = startDate;
         // Iterate from fromDate until toDate
-        while (currentDate.compare(endDate) != .OrderedDescending) {
-            let dateComponents = calendar.components(.Weekday, fromDate: currentDate)
+        while (currentDate.compare(endDate) != .orderedDescending) {
+            let dateComponents = (calendar as NSCalendar).components(.weekday, from: currentDate)
             if (dateComponents.weekday == 1 || dateComponents.weekday == 7 ) {
                 count += 1;
             }
             // "Increment" currentDate by one day.
-            currentDate = calendar.dateByAddingComponents(oneDay, toDate: currentDate, options: [])!
+            currentDate = (calendar as NSCalendar).date(byAdding: oneDay, to: currentDate, options: [])!
         }
         return count
     }
 
-    @IBAction func halfDayButtonAction(sender: UIButton) {
-        sender.selected = !sender.selected
-        if sender.selected {
-            endDateButton.userInteractionEnabled = false
-            if compareDate(leave.startDate!, toDate: leave.endDate!) != .OrderedSame {
+    @IBAction func halfDayButtonAction(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        if sender.isSelected {
+            endDateButton.isUserInteractionEnabled = false
+            if compareDate(leave.startDate!, toDate: leave.endDate!) != .orderedSame {
                 leave.endDate! = leave.startDate!
                 self.endDateLabel.text = AppUtilities().dateStringFromDate(leave.endDate!)
             }
         }
         else {
-            endDateButton.userInteractionEnabled = true
+            endDateButton.isUserInteractionEnabled = true
         }
         
         
         
     }
-    @IBAction func submitButtonAction(sender: AnyObject) {
+    @IBAction func submitButtonAction(_ sender: AnyObject) {
         
         
         let validationResult:(Bool, String) = checkValidation()
         
         if validationResult.0 == false {
-            Popups.SharedInstance.ShowPopup(kAppTitle, message: validationResult.1)
+            Popups.sharedInstance.ShowPopup(kAppTitle, message: validationResult.1)
             return
         }
 
@@ -254,32 +254,32 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
             
             if idToken?.isEmpty == false {
                 
-                let ishalfDay = self.halfDayLeaveButton.selected
+                let ishalfDay = self.halfDayLeaveButton.isSelected
                 let parameters = [
                     "tokenID": idToken!,
                     "leave": [
                         "fromDate": AppUtilities().dateStringFromDate(self.leave.startDate!),
                         "toDate" : AppUtilities().dateStringFromDate(self.leave.endDate!),
                         "isHalfDay" : ishalfDay,
-                        "leaveType" : self.leave.leaveType!.lowercaseString,
-                        "reason" : (self.reasonTextView.text as NSString).stringByReplacingOccurrencesOfString("Notes :", withString: "")
+                        "leaveType" : self.leave.leaveType!.lowercased(),
+                        "reason" : (self.reasonTextView.text as NSString).replacingOccurrences(of: "Notes :", with: "")
                         ]
-                ]
+                ] as [String : Any]
                 //Notes :
                 print(parameters)
-                LMSServiceFactory.sharedInstance().applyLeave(withURL: kApplyLeaveURL, withParams: parameters as! [String : AnyObject], completion: { (responseDict, error) in
+                LMSServiceFactory.sharedInstance().applyLeave(withURL: kApplyLeaveURL, withParams: parameters as [String : AnyObject], completion: { (responseDict, error) in
                     
-                    print(responseDict)
-                    Loader.hide();
+                    print("response: \(responseDict)" )
+                    Loader.hide()
                     
                     if responseDict != nil {
-                        Popups.SharedInstance.ShowAlert(self, title: kAppTitle, message: "Applied leave successfully.", buttons: ["OK"], completion: { (buttonPressed) in
+                        Popups.sharedInstance.ShowAlert(self, title: kAppTitle, message: "Applied leave successfully.", buttons: ["OK"], completion: { (buttonPressed) in
                             LMSThreading.dispatchOnMain(withBlock: { (Void) in
-                                self.navigationController?.popViewControllerAnimated(true)
+                                self.navigationController?.popViewController(animated: true)
                             })
                         })
                     } else {
-                        Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                        Popups.sharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                     }
 
                 })
@@ -288,23 +288,23 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
             else {
                 Loader.hide();
                 if error != nil {
-                    Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                    Popups.sharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                 }
             }
         })
         
     }
     
-    @IBAction func approveLeaveButtonAction(sender: AnyObject) {
+    @IBAction func approveLeaveButtonAction(_ sender: AnyObject) {
         approveLeave(true)
     }
     
-    @IBAction func rejectLeaveButtonAction(sender: AnyObject) {
+    @IBAction func rejectLeaveButtonAction(_ sender: AnyObject) {
         approveLeave(false)
     }
     
     
-    func approveLeave(approve:Bool) -> Void {
+    func approveLeave(_ approve:Bool) -> Void {
         
         Loader.show("Loading", disableUI: true)
         appDelegate.oAuthManager?.requestAccessToken(withCompletion: { (idToken, error) in
@@ -314,22 +314,22 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
                     "tokenID": idToken!,
                     "requestID": self.leaveRequest!.requestId,
                     "leaveStatus":(approve ? "Approve":"Reject")
-                ]
+                ] as [String : Any]
                 
                 print(parameters)
-                LMSServiceFactory.sharedInstance().approveLeave(withURL: kApproveLeaveURL, withParams: parameters, completion: { (responseDict, error) in
+                LMSServiceFactory.sharedInstance().approveLeave(withURL: kApproveLeaveURL, withParams: parameters as [String : AnyObject], completion: { (responseDict, error) in
                     
                     
                     Loader.hide();
                     if responseDict != nil {
                         print(responseDict)
-                        Popups.SharedInstance.ShowAlert(self, title: kAppTitle, message: responseDict!["success"] as! String, buttons: ["OK"], completion: { (buttonPressed) in
+                        Popups.sharedInstance.ShowAlert(self, title: kAppTitle, message: responseDict!["success"] as! String, buttons: ["OK"], completion: { (buttonPressed) in
                             LMSThreading.dispatchOnMain(withBlock: { (Void) in
-                                self.navigationController?.popViewControllerAnimated(true)
+                                self.navigationController?.popViewController(animated: true)
                             })
                         })
                     } else {
-                        Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                        Popups.sharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                     }
                     
                 })
@@ -338,16 +338,16 @@ class ApplyLeaveViewController: UIViewController, UIPickerViewDelegate {
             else {
                 Loader.hide();
                 if error != nil {
-                    Popups.SharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
+                    Popups.sharedInstance.ShowPopup(kAppTitle, message: (error?.localizedDescription)!)
                 }
             }
         })
     }
 
-    func compareDate(fromDate:NSDate, toDate:NSDate) -> NSComparisonResult{
+    func compareDate(_ fromDate:Date, toDate:Date) -> ComparisonResult{
         
-        let order = NSCalendar.currentCalendar().compareDate(fromDate, toDate: toDate,
-                                                         toUnitGranularity: .Day)
+        let order = (Calendar.current as NSCalendar).compare(fromDate, to: toDate,
+                                                         toUnitGranularity: .day)
         return order
     }
     

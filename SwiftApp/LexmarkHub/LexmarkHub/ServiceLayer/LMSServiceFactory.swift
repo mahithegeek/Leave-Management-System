@@ -17,58 +17,59 @@ let successCode = 200
 
 class LMSServiceFactory: BaseServiceFactory {
     
-    private static let lmsFactorySharedInstance:LMSServiceFactory = LMSServiceFactory()
-    private override init(){
+    fileprivate static let lmsFactorySharedInstance:LMSServiceFactory = LMSServiceFactory()
+    fileprivate override init(){
         super.init()
     }
     class func sharedInstance()->LMSServiceFactory{
         return lmsFactorySharedInstance
     }
     
-    func getAvilableLeaves(withURL url:String, withParams parameters: [String : AnyObject], completion:lmsCallback){
+    func getAvilableLeaves(withURL url:String, withParams parameters: [String : AnyObject], completion:@escaping lmsCallback){
         
-        Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON, headers: self.headers).responseJSON{ response in
+        Alamofire.request(url, method:.post, parameters: parameters, encoding: JSONEncoding.default, headers: self.headers).responseJSON{ response in
            
             if let JSON = response.result.value{
+                print(response.result.value)
                 let responseArray = JSON as? NSArray
                 if responseArray != nil {
-                    completion(responseArray!.firstObject as? NSDictionary, response.result.error)
+                    completion(responseArray!.firstObject as? NSDictionary, response.result.error as NSError?)
                 } else {
-                    completion(nil, response.result.error)
+                    completion(nil, response.result.error as NSError?)
                 }
                 
             }else{
-                completion(nil,response.result.error)
+                completion(nil,response.result.error as NSError?)
             }
         }
     }
     
-    func getUsers(withURL url:String, withParams parameters: [String : AnyObject], completion:reportiesCallback){
+    func getUsers(withURL url:String, withParams parameters: [String : AnyObject], completion:@escaping reportiesCallback){
         
-        Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON, headers: self.headers).responseJSON{ response in
+        Alamofire.request(url, method:.post,  parameters: parameters, encoding: JSONEncoding.default, headers: self.headers).responseJSON{ response in
             
             if let JSON = response.result.value{
-                completion(JSON as? NSArray, response.result.error)
+                completion(JSON as? NSArray, response.result.error as NSError?)
                 
             }else{
-                completion(nil,response.result.error)
+                completion(nil,response.result.error as NSError?)
             }
         }
     }
     
-    func getLeaveRequests(withURL url:String, withParams parameters: [String : AnyObject], completion:reportiesCallback){
+    func getLeaveRequests(withURL url:String, withParams parameters: [String : AnyObject], completion:@escaping reportiesCallback){
         
-        Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON, headers: self.headers).responseJSON{ response in
+        Alamofire.request(url, method:.post, parameters: parameters, encoding: JSONEncoding.default, headers: self.headers).responseJSON{ response in
             
             if response.response?.statusCode == successCode {
                 print(response.result.value)
                 if let JSON = response.result.value{
                     let leaveRquestsDict = JSON as? NSDictionary
                     completion(leaveRquestsDict!["leaveRequests"]
-                        as? NSArray, response.result.error)
+                        as? NSArray, response.result.error as NSError?)
                     
                 }else{
-                    completion(nil,response.result.error)
+                    completion(nil,response.result.error as NSError?)
                 }
 
             }
@@ -77,7 +78,7 @@ class LMSServiceFactory: BaseServiceFactory {
                     let errorDict = JSON as? NSDictionary
                     completion(nil, self.getError(FromDict: errorDict!, errorCode: (response.response?.statusCode)!))
                 } else {
-                    completion(nil,response.result.error)
+                    completion(nil,response.result.error as NSError?)
                 }
                 
             }
@@ -86,19 +87,19 @@ class LMSServiceFactory: BaseServiceFactory {
         }
     }
     
-    func getUserLeaveRequests(withURL url:String, withParams parameters: [String : AnyObject], completion:reportiesCallback){
+    func getUserLeaveRequests(withURL url:String, withParams parameters: [String : AnyObject], completion:@escaping reportiesCallback){
         
-        Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON, headers: self.headers).responseJSON{ response in
+        Alamofire.request(url, method:.post, parameters: parameters, encoding: JSONEncoding.default, headers: self.headers).responseJSON{ response in
             
             if response.response?.statusCode == successCode {
                 print(response.result.value)
                 if let JSON = response.result.value{
                     let leaveRquestsArray = JSON as? NSDictionary
                     completion(leaveRquestsArray!["leaveHistory"]
-                        as? NSArray, response.result.error)
+                        as? NSArray, response.result.error as NSError?)
                     
                 }else{
-                    completion(nil,response.result.error)
+                    completion(nil,response.result.error as NSError?)
                 }
                 
             }
@@ -107,7 +108,7 @@ class LMSServiceFactory: BaseServiceFactory {
                     let errorDict = JSON as? NSDictionary
                     completion(nil, self.getError(FromDict: errorDict!, errorCode: (response.response?.statusCode)!))
                 } else {
-                    completion(nil,response.result.error)
+                    completion(nil,response.result.error as NSError?)
                 }
                 
             }
@@ -115,16 +116,16 @@ class LMSServiceFactory: BaseServiceFactory {
             
         }
     }
-    func cancelLeave(withURL url:String, withParams parameters: [String : AnyObject], completion:lmsCallback){
+    func cancelLeave(withURL url:String, withParams parameters: [String : AnyObject], completion:@escaping lmsCallback){
         
-        Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON, headers: self.headers).responseJSON{ response in
+        Alamofire.request(url, method:.post, parameters: parameters, encoding: JSONEncoding.default, headers: self.headers).responseJSON{ response in
             
             if response.response?.statusCode == successCode {
                 if let JSON = response.result.value{
-                    completion(JSON as? NSDictionary, response.result.error)
+                    completion(JSON as? NSDictionary, response.result.error as NSError?)
                     
                 }else{
-                    completion(nil,response.result.error)
+                    completion(nil,response.result.error as NSError?)
                 }
             }
             else {
@@ -132,22 +133,22 @@ class LMSServiceFactory: BaseServiceFactory {
                     let errorDict = JSON as? NSDictionary
                     completion(nil, self.getError(FromDict: errorDict!, errorCode: (response.response?.statusCode)!))
                 } else {
-                    completion(nil,response.result.error)
+                    completion(nil,response.result.error as NSError?)
                 }
             }
         }
     }
     
-    func applyLeave(withURL url:String, withParams parameters: [String : AnyObject], completion:lmsCallback){
+    func applyLeave(withURL url:String, withParams parameters: [String : AnyObject], completion:@escaping lmsCallback){
         
-        Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON, headers: self.headers).responseJSON{ response in
+        Alamofire.request(url, method:.post, parameters: parameters, encoding: JSONEncoding.default, headers: self.headers).responseJSON{ response in
             
             if response.response?.statusCode == successCode {
                 if let JSON = response.result.value{
-                    completion(JSON as? NSDictionary, response.result.error)
+                    completion(JSON as? NSDictionary, response.result.error as NSError?)
                     
                 }else{
-                    completion(nil,response.result.error)
+                    completion(nil,response.result.error as NSError?)
                 }
             }
             else {
@@ -155,7 +156,7 @@ class LMSServiceFactory: BaseServiceFactory {
                     let errorDict = JSON as? NSDictionary
                     completion(nil, self.getError(FromDict: errorDict!, errorCode: (response.response?.statusCode)!))
                 } else {
-                    completion(nil,response.result.error)
+                    completion(nil,response.result.error as NSError?)
                 }
 
             }
@@ -163,16 +164,16 @@ class LMSServiceFactory: BaseServiceFactory {
         }
     }
     
-    func approveLeave(withURL url:String, withParams parameters: [String : AnyObject], completion:lmsCallback){
+    func approveLeave(withURL url:String, withParams parameters: [String : AnyObject], completion:@escaping lmsCallback){
         
-        Alamofire.request(.POST, url, parameters: parameters, encoding: .JSON, headers: self.headers).responseJSON{ response in
+        Alamofire.request(url, method:.post, parameters: parameters, encoding: JSONEncoding.default, headers: self.headers).responseJSON{ response in
             
             if response.response?.statusCode == successCode {
                 if let JSON = response.result.value{
-                    completion(JSON as? NSDictionary, response.result.error)
+                    completion(JSON as? NSDictionary, response.result.error as NSError?)
                     
                 }else{
-                    completion(nil,response.result.error)
+                    completion(nil,response.result.error as NSError?)
                 }
             }
             else {
@@ -180,7 +181,7 @@ class LMSServiceFactory: BaseServiceFactory {
                     let errorDict = JSON as? NSDictionary
                     completion(nil, self.getError(FromDict: errorDict!, errorCode: (response.response?.statusCode)!))
                 } else {
-                    completion(nil,response.result.error)
+                    completion(nil,response.result.error as NSError?)
                 }
                 
             }
@@ -192,7 +193,7 @@ class LMSServiceFactory: BaseServiceFactory {
     
     func getError(FromDict dict:NSDictionary, errorCode:Int) -> NSError {
         
-        let userInfo: [NSObject : AnyObject] =
+        let userInfo: [AnyHashable: Any] =
             [
                 NSLocalizedDescriptionKey :  NSLocalizedString("Unauthorized", value: dict["description"] as! String, comment: ""),
                 NSLocalizedFailureReasonErrorKey : NSLocalizedString("Unauthorized", value: dict["description"] as! String, comment: "")
