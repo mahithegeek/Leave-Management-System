@@ -20,6 +20,9 @@ accessresolver.prototype.fetchUser = function fetchUser (email,callback) {
 				callback(null,createUser(data[0]));
 				return;
 			}
+			else{
+				callback("No User Found",null);
+			}
 		}
 		else {
 			callback(err,null);

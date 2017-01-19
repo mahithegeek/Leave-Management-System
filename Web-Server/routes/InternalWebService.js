@@ -32,7 +32,13 @@ InternalWebService.prototype.login = function (req, response) {
 			
 		}
 		else {
-			response.status(500).send(error.DatabaseError(err));
+			if(err == "No user found"){
+				response.status(500).send(error.UserNotFoundError());
+			}
+			else{
+				response.status(500).send(error.DatabaseError(err));
+			}
+			
 		}
 	};
 
