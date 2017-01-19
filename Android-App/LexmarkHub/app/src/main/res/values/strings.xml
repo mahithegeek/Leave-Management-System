@@ -19,7 +19,7 @@
     <string name="leave_type_Paternity">Paternity</string>
     <string name="leave_type_WorkFromHome">Work From Home</string>
     <string name="HalfDayLeave">Half Day Leave</string>
-
+    <string name="loading">Loading...</string>
     <!--screen titles-->
     <string name="new_request_title">New Request</string>
     <string name="pending_requests_title">Pending Requests</string>

@@ -99,23 +99,23 @@ public class MainActivity extends Activity {
     }
     public void loginWithTokenId(String tokenId){
         if (!tokenId.isEmpty()) {
-            showSpinner();
+            Utility.showSpinner(this);
             LoginService loginTask = new LoginService(MainActivity.this);
             loginTask.setLoginServiceCallBack(new LoginServiceCallBack() {
                 @Override
                 public void didFinishLogin(User user) {
-                    removeSpinner();
+                    Utility.removeSpinner();
                     //save user details in preferences and proceed
                     SharedPreferences.saveLoggedInUser(user,MainActivity.this);
                     Intent intent = new Intent(MainActivity.this,LandingPageActivity.class);
                     startActivity(intent);
                 }
                 @Override
-                public void didFailLogin(final int responseCode) {
+                public void didFailLogin(final int responseCode, final String errorResponse) {
                     MainActivity.this.runOnUiThread(new Runnable() {
                         public void run() {
-                            removeSpinner();
-                            Toast.makeText(MainActivity.this, Utility.getErrorMessageForCode(responseCode,null),
+                            Utility.removeSpinner();
+                            Toast.makeText(MainActivity.this, Utility.getErrorMessageForCode(responseCode,errorResponse),
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -127,7 +127,7 @@ public class MainActivity extends Activity {
         }
     }
     public void toastError(String message){
-        removeSpinner();
+        Utility.removeSpinner();
         final String toastMessage = message;
         this.runOnUiThread(new Runnable() {
             public void run() {
@@ -137,10 +137,7 @@ public class MainActivity extends Activity {
     }
     public void showSpinner(){
         mProgress = new ProgressDialog(this);
-        mProgress.setMessage("Wait while loading...");
+        mProgress.setMessage(getResources().getString(R.string.loading));
         mProgress.show();
-    }
-    private void removeSpinner(){
-        mProgress.dismiss();
     }
 }

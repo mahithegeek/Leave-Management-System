@@ -42,6 +42,7 @@ import static com.kofax.lexmarkhub.Constants.REASON;
 import static com.kofax.lexmarkhub.Constants.SUCCESS;
 import static com.kofax.lexmarkhub.Constants.TOKEN_ID;
 import static com.kofax.lexmarkhub.Constants.TO_DATE;
+import static com.kofax.lexmarkhub.Utility.Utility.removeSpinner;
 
 public class NewLeaveRequestActivity extends AppCompatActivity implements OnDateSetListener{
     private static final int START_DATE_PICKER_TAG = 1298;//random tag numbers
@@ -136,12 +137,12 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
         if (validateDate() == false){
             return;
         }
-        showSpinner();
+        Utility.showSpinner(this);
         LMS_ServiceHandler lms_serviceHandler = new LMS_ServiceHandler(this);
         lms_serviceHandler.setLmsServiceCallBack(new LMS_ServiceHandlerCallBack() {
             @Override
             public void didFinishServiceWithResponse(final String response, LMS_ServiceHandler.RequestType requestType) {
-                removeSpinner();
+                Utility.removeSpinner();
                 NewLeaveRequestActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         Log.d("new request page", ""+response);
@@ -253,14 +254,7 @@ public class NewLeaveRequestActivity extends AppCompatActivity implements OnDate
         fromDateTxtView.setText(s);
         toDateTxtView.setText(s);
     }
-    public void showSpinner(){
-        mProgress = new ProgressDialog(this);
-        mProgress.setMessage("Wait while loading...");
-        mProgress.show();
-    }
-    private void removeSpinner(){
-        mProgress.dismiss();
-    }
+
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear,int dayOfMonth) {
         Calendar calendar = Calendar.getInstance();

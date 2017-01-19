@@ -45,7 +45,7 @@ let kLeaveRequestsURL:String = "http://172.26.32.93:9526/leaveRequests"
 let kUserRequestsURL:String = "http://172.26.32.93:9526/leaveHistory"
 let kCancelLeaveURL:String = "http://172.26.32.93:9526/cancelLeave"
 
-let kAppTitle = "Lexmark Hub"
+let kAppTitle = "Kofax Hub"
 
 let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
 
