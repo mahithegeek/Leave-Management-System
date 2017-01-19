@@ -111,8 +111,14 @@ public class MainActivity extends Activity {
                     startActivity(intent);
                 }
                 @Override
-                public void didFailLogin(int responseCode) {
-                    toastError(""+responseCode);
+                public void didFailLogin(final int responseCode) {
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        public void run() {
+                            removeSpinner();
+                            Toast.makeText(MainActivity.this, Utility.getErrorMessageForCode(responseCode,null),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             });
             loginTask.execute(tokenId);
