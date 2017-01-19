@@ -79,13 +79,13 @@ public class EditRequestActivity extends AppCompatActivity {
     }
 
     public void responseAction(View view){
-        showSpinner();
+        Utility.showSpinner(this);
         LMS_ServiceHandler lms_serviceHandler = new LMS_ServiceHandler(this);
         lms_serviceHandler.setLmsServiceCallBack(new LMS_ServiceHandlerCallBack() {
             @Override
             public void didFinishServiceWithResponse(final String response,
                                                      LMS_ServiceHandler.RequestType requestType) {
-                removeSpinner();
+                Utility.removeSpinner();
                 EditRequestActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         Log.d("EditRequest Page", "response :"+response);
@@ -98,7 +98,7 @@ public class EditRequestActivity extends AppCompatActivity {
                                        LMS_ServiceHandler.RequestType requestType) {
                 EditRequestActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
-                        removeSpinner();
+                        Utility.removeSpinner();
                         Toast.makeText(EditRequestActivity.this,
                                 Utility.getErrorMessageForCode(responseCode,errorResponse),
                                 Toast.LENGTH_SHORT).show();
@@ -109,12 +109,7 @@ public class EditRequestActivity extends AppCompatActivity {
         lms_serviceHandler.startRequest(LMS_ServiceHandler.RequestType.ApproveLeave,
                 getJsonBodyForPendingRequests(view).toString());
     }
-    public void showSpinner(){
-        mProgress = new ProgressDialog(this);
-        mProgress.setMessage("Loading...");
-        //mProgress.setCancelable(false);
-        mProgress.show();
-    }
+
     private void showResult(String response){
         try{
             JSONObject productsJson = new JSONObject(response);
@@ -128,9 +123,7 @@ public class EditRequestActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
         }
     }
-    private void removeSpinner(){
-        mProgress.dismiss();
-    }
+
     private JSONObject getJsonBodyForPendingRequests(View view) {
         JSONObject parameters = new JSONObject();
         try {

@@ -24,12 +24,15 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import okhttp3.internal.Util;
+
 import static com.kofax.lexmarkhub.Constants.LEAVE_REQUESTS;
 import static com.kofax.lexmarkhub.Constants.PARSING_ERROR;
 import static com.kofax.lexmarkhub.Constants.REQUEST_OBJECT_EXTRA;
 import static com.kofax.lexmarkhub.Constants.STATUS;
 import static com.kofax.lexmarkhub.Constants.STATUS_APPLIED;
 import static com.kofax.lexmarkhub.Constants.TOKEN_ID;
+import static com.kofax.lexmarkhub.Utility.Utility.removeSpinner;
 
 public class PendingRequestsActivity extends AppCompatActivity {
     private  ProgressDialog mProgress;
@@ -75,12 +78,12 @@ public class PendingRequestsActivity extends AppCompatActivity {
     }
 
     public void  getPendingRequests(){
-        showSpinner();
+        Utility.showSpinner(this);
         LMS_ServiceHandler lms_serviceHandler = new LMS_ServiceHandler(this);
         lms_serviceHandler.setLmsServiceCallBack(new LMS_ServiceHandlerCallBack() {
             @Override
             public void didFinishServiceWithResponse(final String response, LMS_ServiceHandler.RequestType requestType) {
-                removeSpinner();
+                Utility.removeSpinner();
                 PendingRequestsActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
                         Log.d("pendingRequests Page", ""+response);
@@ -102,7 +105,7 @@ public class PendingRequestsActivity extends AppCompatActivity {
             public void didFailService(final int responseCode, final String errorResponse, LMS_ServiceHandler.RequestType requestType) {
                 PendingRequestsActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
-                        removeSpinner();
+                        Utility.removeSpinner();
                         Toast.makeText(PendingRequestsActivity.this, Utility.getErrorMessageForCode(responseCode,errorResponse),
                                 Toast.LENGTH_SHORT).show();
 
@@ -126,13 +129,5 @@ public class PendingRequestsActivity extends AppCompatActivity {
         return parameters;
     }
 
-    public void showSpinner(){
-        mProgress = new ProgressDialog(this);
-        mProgress.setMessage("Wait while loading...");
-        mProgress.show();
-    }
 
-    private void removeSpinner(){
-        mProgress.dismiss();
-    }
 }

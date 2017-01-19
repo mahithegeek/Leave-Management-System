@@ -23,10 +23,12 @@ import java.util.Arrays;
 
 import static com.kofax.lexmarkhub.Constants.PARSING_ERROR;
 import static com.kofax.lexmarkhub.Constants.REC_ID;
+import static com.kofax.lexmarkhub.Constants.REQUEST_ID;
 import static com.kofax.lexmarkhub.Constants.STATUS;
 import static com.kofax.lexmarkhub.Constants.STATUS_CANCELLED;
 import static com.kofax.lexmarkhub.Constants.SUCCESS;
 import static com.kofax.lexmarkhub.Constants.TOKEN_ID;
+import static com.kofax.lexmarkhub.Utility.Utility.removeSpinner;
 
 public class ViewStatusActivity extends AppCompatActivity implements RequestListAdapter.RequestListAdapterCallBack,LMS_ServiceHandlerCallBack{
     private  ProgressDialog mProgress;
@@ -58,7 +60,7 @@ public class ViewStatusActivity extends AppCompatActivity implements RequestList
         listview.setAdapter(requestListAdapter);
     }
     public void  getLeaveHistory(){
-        showSpinner();
+        Utility.showSpinner(this);
         LMS_ServiceHandler lms_serviceHandler = new LMS_ServiceHandler(this);
         lms_serviceHandler.lmsServiceHandlerCallBack = this;
         lms_serviceHandler.startRequest(LMS_ServiceHandler.RequestType.LeaveHistory,
@@ -74,19 +76,12 @@ public class ViewStatusActivity extends AppCompatActivity implements RequestList
         }
         return parameters;
     }
-    public void showSpinner(){
-        mProgress = new ProgressDialog(this);
-        mProgress.setMessage("Wait while loading...");
-        mProgress.show();
-    }
-    private void removeSpinner(){
-        mProgress.dismiss();
-    }
+
     private JSONObject getJsonBodyForCancelLeave(JSONObject leaveObject) {
         JSONObject parameters = new JSONObject();
         try {
             parameters.put(TOKEN_ID, SharedPreferences.getAuthToken(this));
-            parameters.put("requestID", leaveObject.getString(REC_ID));
+            parameters.put(REQUEST_ID, leaveObject.getString(REC_ID));
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -109,7 +104,7 @@ public class ViewStatusActivity extends AppCompatActivity implements RequestList
         final int serResponseCode = responseCode;
         ViewStatusActivity.this.runOnUiThread(new Runnable() {
             public void run() {
-                removeSpinner();
+                Utility.removeSpinner();
                 Toast.makeText(ViewStatusActivity.this, Utility.getErrorMessageForCode(serResponseCode,errorResponse),
                         Toast.LENGTH_SHORT).show();
             }
@@ -122,7 +117,7 @@ public class ViewStatusActivity extends AppCompatActivity implements RequestList
         final LMS_ServiceHandler.RequestType reqType = requestType;
         ViewStatusActivity.this.runOnUiThread(new Runnable() {
             public void run() {
-                removeSpinner();
+                Utility.removeSpinner();
                 Log.d("viewStatus Page", ""+serviceRes);
                 try{
                     switch (reqType){

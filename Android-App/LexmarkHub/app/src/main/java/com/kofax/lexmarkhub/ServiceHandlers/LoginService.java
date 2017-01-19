@@ -87,7 +87,22 @@ public class LoginService  extends AsyncTask<String, Void, String[]> {
             InputStream errorStream = urlConnection.getErrorStream();
 
             if (urlConnection.getResponseCode() != ERROR_CODE_SUCCESS){
-                mLoginServiceCallBack.didFailLogin(urlConnection.getResponseCode());
+
+                StringBuffer errorBuffer = new StringBuffer();
+                reader = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream()));
+
+                String errorLine;
+                while ((errorLine = reader.readLine()) != null) {
+                    errorBuffer.append(errorLine);
+                }
+
+                if (errorBuffer.length() == 0) {
+                    mLoginServiceCallBack.didFailLogin(urlConnection.getResponseCode(), null);
+                }
+                else{
+                    String errorString = errorBuffer.toString();
+                    mLoginServiceCallBack.didFailLogin(urlConnection.getResponseCode(), errorString);
+                }
                 return null;
             }
 
@@ -119,7 +134,7 @@ public class LoginService  extends AsyncTask<String, Void, String[]> {
             parseResponse(mProductsJsonStr);
         } catch (IOException e) {
             //hardcoding this error code because we could't get the error code here from exception object
-            mLoginServiceCallBack.didFailLogin(EXCEPTION_ERROR);
+            mLoginServiceCallBack.didFailLogin(EXCEPTION_ERROR, null);
             return null;
         } finally {
             if (urlConnection != null) {
@@ -131,7 +146,7 @@ public class LoginService  extends AsyncTask<String, Void, String[]> {
                 } catch (final IOException e) {
                     //check
                     //hardcoding this error code because we could't get the error code here from exception object
-                    mLoginServiceCallBack.didFailLogin(EXCEPTION_ERROR);
+                    mLoginServiceCallBack.didFailLogin(EXCEPTION_ERROR, null);
                 }
             }
         }
@@ -175,7 +190,7 @@ public class LoginService  extends AsyncTask<String, Void, String[]> {
         catch (JSONException e){
             //send Random Error code as the parsing failed
             // need toc change
-            mLoginServiceCallBack.didFailLogin(PARSING_ERROR);
+            mLoginServiceCallBack.didFailLogin(PARSING_ERROR,null);
             e.printStackTrace();
         }
     }

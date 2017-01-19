@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import static com.kofax.lexmarkhub.Constants.PARSING_ERROR;
 import static com.kofax.lexmarkhub.Constants.TOKEN_ID;
 import static com.kofax.lexmarkhub.Constants.VACATION;
+import static com.kofax.lexmarkhub.Utility.Utility.removeSpinner;
 
 public class LandingPageActivity extends Activity {
 
@@ -133,7 +134,7 @@ public class LandingPageActivity extends Activity {
     }
 
     public void  getAvailableLeaves(){
-        showSpinner();
+        Utility.showSpinner(this);
         LMS_ServiceHandler lms_serviceHandler = new LMS_ServiceHandler(this);
         lms_serviceHandler.setLmsServiceCallBack(new LMS_ServiceHandlerCallBack() {
             @Override
@@ -163,7 +164,7 @@ public class LandingPageActivity extends Activity {
             public void didFailService(final int responseCode, final String errorResponse, LMS_ServiceHandler.RequestType requestType) {
                 LandingPageActivity.this.runOnUiThread(new Runnable() {
                     public void run() {
-                        removeSpinner();
+                        Utility.removeSpinner();
                         Toast.makeText(LandingPageActivity.this, Utility.getErrorMessageForCode(responseCode,errorResponse),
                                 Toast.LENGTH_SHORT).show();
                     }
@@ -185,13 +186,5 @@ public class LandingPageActivity extends Activity {
         }
         return parameters;
     }
-    public void showSpinner(){
-        mProgress = new ProgressDialog(this);
-        mProgress.setMessage("Wait while loading...");
-        mProgress.show();
-    }
 
-    private void removeSpinner(){
-        mProgress.dismiss();
-    }
 }

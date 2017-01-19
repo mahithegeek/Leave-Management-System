@@ -4,5 +4,5 @@ import com.kofax.lexmarkhub.Objects.User;
 
 public interface LoginServiceCallBack{
     void didFinishLogin(User user);
-    void didFailLogin(int responseCode);
+    void didFailLogin(int responseCode, String errorResponse);
 }
